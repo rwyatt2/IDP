@@ -70,35 +70,35 @@ export function useToast() {
 
 // Toast icons
 const toastIcons: Record<ToastType, React.ReactNode> = {
-  success: <CheckCircle className="w-4 h-4" />,
-  error: <XCircle className="w-4 h-4" />,
-  warning: <AlertTriangle className="w-4 h-4" />,
-  info: <Info className="w-4 h-4" />,
+  success: <CheckCircle className="w-4 h-4" aria-hidden="true" />,
+  error: <XCircle className="w-4 h-4" aria-hidden="true" />,
+  warning: <AlertTriangle className="w-4 h-4" aria-hidden="true" />,
+  info: <Info className="w-4 h-4" aria-hidden="true" />,
 };
 
-// Toast colors (dark mode aesthetic)
+// WCAG AA compliant toast styles
 const toastStyles: Record<ToastType, { bg: string; border: string; icon: string; text: string }> = {
   success: {
-    bg: 'bg-success-bg/90',
-    border: 'border-success-border',
+    bg: 'bg-emerald-950/60',
+    border: 'border-emerald-800/40',
     icon: 'text-emerald-400',
     text: 'text-emerald-300',
   },
   error: {
-    bg: 'bg-danger-bg/90',
-    border: 'border-danger-border',
+    bg: 'bg-red-950/60',
+    border: 'border-red-800/40',
     icon: 'text-red-400',
     text: 'text-red-300',
   },
   warning: {
-    bg: 'bg-warning-bg/90',
-    border: 'border-warning-border',
+    bg: 'bg-amber-950/60',
+    border: 'border-amber-800/40',
     icon: 'text-amber-400',
     text: 'text-amber-300',
   },
   info: {
-    bg: 'bg-info-bg/90',
-    border: 'border-info-border',
+    bg: 'bg-blue-950/60',
+    border: 'border-blue-800/40',
     icon: 'text-blue-400',
     text: 'text-blue-300',
   },
@@ -117,11 +117,13 @@ function ToastItem({ toast, onDismiss }: { toast: Toast; onDismiss: () => void }
   return (
     <div
       className={cn(
-        'flex items-start gap-3 p-3 rounded-lg border backdrop-blur-md transition-all duration-150',
+        'flex items-start gap-3 p-3 rounded-lg border backdrop-blur-sm transition-all duration-150',
         style.bg,
         style.border,
         isExiting ? 'opacity-0 translate-x-2 scale-95' : 'opacity-100 translate-x-0 scale-100'
       )}
+      role="alert"
+      aria-live="polite"
     >
       <span className={cn('mt-0.5', style.icon)}>{toastIcons[toast.type]}</span>
       <div className="flex-1 min-w-0">
@@ -132,7 +134,7 @@ function ToastItem({ toast, onDismiss }: { toast: Toast; onDismiss: () => void }
         {toast.action && (
           <button
             onClick={toast.action.onClick}
-            className={cn('text-xs font-medium underline mt-1.5 hover:no-underline', style.text)}
+            className={cn('text-xs font-medium underline mt-1.5 hover:no-underline focus-visible-ring rounded px-1', style.text)}
           >
             {toast.action.label}
           </button>
@@ -140,9 +142,10 @@ function ToastItem({ toast, onDismiss }: { toast: Toast; onDismiss: () => void }
       </div>
       <button
         onClick={handleDismiss}
-        className="p-0.5 rounded text-zinc-500 hover:text-zinc-300 hover:bg-white/[0.06] transition-colors"
+        className="p-1 rounded text-zinc-500 hover:text-zinc-300 hover:bg-white/[0.08] transition-colors focus-visible-ring"
+        aria-label="Dismiss notification"
       >
-        <X className="w-3.5 h-3.5" />
+        <X className="w-3.5 h-3.5" aria-hidden="true" />
       </button>
     </div>
   );
@@ -155,7 +158,11 @@ export function ToastContainer() {
   if (toasts.length === 0) return null;
 
   return (
-    <div className="fixed bottom-4 right-4 z-50 flex flex-col gap-2 max-w-sm">
+    <div 
+      className="fixed bottom-4 right-4 z-50 flex flex-col gap-2 max-w-sm"
+      aria-label="Notifications"
+      role="region"
+    >
       {toasts.map((toast) => (
         <ToastItem
           key={toast.id}

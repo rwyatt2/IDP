@@ -31,7 +31,7 @@ import {
   Layers,
 } from 'lucide-react';
 import type { Phase } from '@/types';
-import { useState } from 'react';
+import { useState, useId } from 'react';
 
 interface NavItem {
   label: string;
@@ -45,7 +45,6 @@ interface NavSection {
   label: string;
   icon: React.ReactNode;
   accentColor: string;
-  glowColor: string;
   items: NavItem[];
   defaultPath: string;
 }
@@ -54,58 +53,54 @@ const navigation: NavSection[] = [
   {
     phase: 'discover',
     label: 'Discover',
-    icon: <Compass className="w-[18px] h-[18px]" />,
+    icon: <Compass className="w-[18px] h-[18px]" aria-hidden="true" />,
     accentColor: 'text-blue-400',
-    glowColor: 'rgba(96, 165, 250, 0.4)',
     defaultPath: '/discover/catalog',
     items: [
-      { label: 'System Catalog', href: '/discover/catalog', icon: <Database className="w-4 h-4" /> },
-      { label: 'Search', href: '/discover/search', icon: <Search className="w-4 h-4" /> },
-      { label: 'Dependencies', href: '/discover/dependencies', icon: <Network className="w-4 h-4" /> },
-      { label: 'API Docs', href: '/discover/docs', icon: <FileText className="w-4 h-4" /> },
+      { label: 'System Catalog', href: '/discover/catalog', icon: <Database className="w-4 h-4" aria-hidden="true" /> },
+      { label: 'Search', href: '/discover/search', icon: <Search className="w-4 h-4" aria-hidden="true" /> },
+      { label: 'Dependencies', href: '/discover/dependencies', icon: <Network className="w-4 h-4" aria-hidden="true" /> },
+      { label: 'API Docs', href: '/discover/docs', icon: <FileText className="w-4 h-4" aria-hidden="true" /> },
     ],
   },
   {
     phase: 'build',
     label: 'Build',
-    icon: <Wrench className="w-[18px] h-[18px]" />,
+    icon: <Wrench className="w-[18px] h-[18px]" aria-hidden="true" />,
     accentColor: 'text-emerald-400',
-    glowColor: 'rgba(52, 211, 153, 0.4)',
     defaultPath: '/build/create',
     items: [
-      { label: 'Create App', href: '/build/create', icon: <Plus className="w-4 h-4" /> },
-      { label: 'Configure', href: '/build/configure', icon: <Settings className="w-4 h-4" /> },
-      { label: 'Pipelines', href: '/build/pipelines', icon: <GitBranch className="w-4 h-4" /> },
-      { label: 'Infrastructure', href: '/build/infrastructure', icon: <Server className="w-4 h-4" /> },
+      { label: 'Create App', href: '/build/create', icon: <Plus className="w-4 h-4" aria-hidden="true" /> },
+      { label: 'Configure', href: '/build/configure', icon: <Settings className="w-4 h-4" aria-hidden="true" /> },
+      { label: 'Pipelines', href: '/build/pipelines', icon: <GitBranch className="w-4 h-4" aria-hidden="true" /> },
+      { label: 'Infrastructure', href: '/build/infrastructure', icon: <Server className="w-4 h-4" aria-hidden="true" /> },
     ],
   },
   {
     phase: 'deploy',
     label: 'Deploy',
-    icon: <Rocket className="w-[18px] h-[18px]" />,
+    icon: <Rocket className="w-[18px] h-[18px]" aria-hidden="true" />,
     accentColor: 'text-violet-400',
-    glowColor: 'rgba(167, 139, 250, 0.4)',
     defaultPath: '/deploy/deployments',
     items: [
-      { label: 'Releases', href: '/deploy/releases', icon: <GitPullRequest className="w-4 h-4" /> },
-      { label: 'Deployments', href: '/deploy/deployments', icon: <Rocket className="w-4 h-4" />, badge: 2 },
-      { label: 'History', href: '/deploy/history', icon: <History className="w-4 h-4" /> },
-      { label: 'Environments', href: '/deploy/environments', icon: <Globe className="w-4 h-4" /> },
-      { label: 'Change Gates', href: '/deploy/gates', icon: <ShieldCheck className="w-4 h-4" /> },
+      { label: 'Releases', href: '/deploy/releases', icon: <GitPullRequest className="w-4 h-4" aria-hidden="true" /> },
+      { label: 'Deployments', href: '/deploy/deployments', icon: <Rocket className="w-4 h-4" aria-hidden="true" />, badge: 2 },
+      { label: 'History', href: '/deploy/history', icon: <History className="w-4 h-4" aria-hidden="true" /> },
+      { label: 'Environments', href: '/deploy/environments', icon: <Globe className="w-4 h-4" aria-hidden="true" /> },
+      { label: 'Change Gates', href: '/deploy/gates', icon: <ShieldCheck className="w-4 h-4" aria-hidden="true" /> },
     ],
   },
   {
     phase: 'manage',
     label: 'Manage',
-    icon: <Gauge className="w-[18px] h-[18px]" />,
+    icon: <Gauge className="w-[18px] h-[18px]" aria-hidden="true" />,
     accentColor: 'text-amber-400',
-    glowColor: 'rgba(251, 191, 36, 0.4)',
     defaultPath: '/manage/observability',
     items: [
-      { label: 'Observability', href: '/manage/observability', icon: <Activity className="w-4 h-4" /> },
-      { label: 'Costs', href: '/manage/costs', icon: <DollarSign className="w-4 h-4" /> },
-      { label: 'Incidents', href: '/manage/incidents', icon: <AlertTriangle className="w-4 h-4" />, badge: 1 },
-      { label: 'Analytics', href: '/manage/analytics', icon: <BarChart3 className="w-4 h-4" /> },
+      { label: 'Observability', href: '/manage/observability', icon: <Activity className="w-4 h-4" aria-hidden="true" /> },
+      { label: 'Costs', href: '/manage/costs', icon: <DollarSign className="w-4 h-4" aria-hidden="true" /> },
+      { label: 'Incidents', href: '/manage/incidents', icon: <AlertTriangle className="w-4 h-4" aria-hidden="true" />, badge: 1 },
+      { label: 'Analytics', href: '/manage/analytics', icon: <BarChart3 className="w-4 h-4" aria-hidden="true" /> },
     ],
   },
 ];
@@ -115,6 +110,7 @@ export function Sidebar() {
   const navigate = useNavigate();
   const { sidebarCollapsed, toggleSidebar } = useNavigationStore();
   const { favoriteIds, extensions } = useExtensionStore();
+  const baseId = useId();
 
   const [expandedSections, setExpandedSections] = useState<Set<Phase>>(
     new Set(['discover', 'build', 'deploy', 'manage'])
@@ -151,43 +147,36 @@ export function Sidebar() {
         'transition-all duration-200',
         sidebarCollapsed ? 'w-14' : 'w-60'
       )}
+      aria-label="Main navigation"
     >
       {/* Logo */}
       <div className="h-14 flex items-center justify-between px-3 border-b border-white/[0.04]">
         {!sidebarCollapsed && (
-          <NavLink to="/" className="flex items-center gap-2.5 group">
-            <div 
-              className="w-7 h-7 rounded-lg flex items-center justify-center relative overflow-hidden"
-              style={{
-                background: 'linear-gradient(135deg, #9333ea 0%, #7c3aed 50%, #6b21a8 100%)',
-                boxShadow: 'inset 0 1px 0 0 rgba(255, 255, 255, 0.2), 0 0 20px -5px rgba(124, 58, 237, 0.5)'
-              }}
-            >
-              <Layers className="w-4 h-4 text-white relative z-10" />
+          <NavLink to="/" className="flex items-center gap-2.5 group focus-visible-ring rounded-lg">
+            <div className="w-7 h-7 rounded-lg bg-violet-600 flex items-center justify-center">
+              <Layers className="w-4 h-4 text-white" aria-hidden="true" />
             </div>
-            <span className="font-semibold text-sm tracking-tight text-luminous">DevPortal</span>
+            <span className="font-semibold text-sm text-zinc-200 tracking-tight">DevPortal</span>
           </NavLink>
         )}
         {sidebarCollapsed && (
           <NavLink 
             to="/" 
-            className="w-7 h-7 rounded-lg flex items-center justify-center mx-auto relative overflow-hidden group"
-            style={{
-              background: 'linear-gradient(135deg, #9333ea 0%, #7c3aed 50%, #6b21a8 100%)',
-              boxShadow: 'inset 0 1px 0 0 rgba(255, 255, 255, 0.2), 0 0 20px -5px rgba(124, 58, 237, 0.5)'
-            }}
+            className="w-7 h-7 rounded-lg bg-violet-600 flex items-center justify-center mx-auto focus-visible-ring"
+            aria-label="DevPortal home"
           >
-            <Layers className="w-4 h-4 text-white" />
+            <Layers className="w-4 h-4 text-white" aria-hidden="true" />
           </NavLink>
         )}
         <button
           onClick={toggleSidebar}
           className={cn(
-            'p-1 rounded-md text-zinc-500 hover:text-zinc-300 hover:bg-white/[0.04] transition-all',
+            'p-1.5 rounded-md text-zinc-500 hover:text-zinc-400 hover:bg-white/[0.04] transition-colors focus-visible-ring',
             sidebarCollapsed && 'hidden'
           )}
+          aria-label={sidebarCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
         >
-          <ChevronLeft className="w-4 h-4" />
+          <ChevronLeft className="w-4 h-4" aria-hidden="true" />
         </button>
       </div>
 
@@ -197,21 +186,22 @@ export function Sidebar() {
           to="/"
           className={({ isActive }) =>
             cn(
-              'sidebar-item group',
+              'sidebar-item group focus-visible-ring',
               isActive && location.pathname === '/' && 'sidebar-item-active'
             )
           }
         >
-          <Home className="w-[18px] h-[18px]" />
+          <Home className="w-[18px] h-[18px]" aria-hidden="true" />
           {!sidebarCollapsed && <span className="text-sm">Dashboard</span>}
         </NavLink>
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 overflow-y-auto py-3 px-2 no-scrollbar">
+      <nav className="flex-1 overflow-y-auto py-3 px-2 no-scrollbar" aria-label="Primary navigation">
         {navigation.map((section) => {
           const isExpanded = expandedSections.has(section.phase);
           const isSectionActive = activePhase === section.phase;
+          const menuId = `${baseId}-${section.phase}-menu`;
 
           return (
             <div key={section.phase} className="mb-0.5">
@@ -219,15 +209,14 @@ export function Sidebar() {
               <button
                 onClick={() => handlePhaseClick(section)}
                 className={cn(
-                  'w-full flex items-center justify-between px-2.5 py-2 rounded-lg group',
+                  'w-full flex items-center justify-between px-2.5 py-2 rounded-lg group focus-visible-ring',
                   'transition-all duration-150',
                   isSectionActive
-                    ? 'bg-white/[0.06] text-zinc-100'
-                    : 'text-zinc-400 hover:bg-white/[0.04] hover:text-zinc-200'
+                    ? 'bg-white/[0.05] text-zinc-300'
+                    : 'text-zinc-500 hover:bg-white/[0.03] hover:text-zinc-400'
                 )}
-                style={isSectionActive ? {
-                  boxShadow: `inset 0 1px 0 0 rgba(255, 255, 255, 0.06), 0 0 20px -10px ${section.glowColor}`
-                } : undefined}
+                aria-expanded={!sidebarCollapsed ? isExpanded : undefined}
+                aria-controls={!sidebarCollapsed ? menuId : undefined}
               >
                 <div className="flex items-center gap-2.5">
                   <span className={isSectionActive ? section.accentColor : ''}>{section.icon}</span>
@@ -238,66 +227,60 @@ export function Sidebar() {
                 {!sidebarCollapsed && (
                   <ChevronDown
                     className={cn(
-                      'w-3.5 h-3.5 text-zinc-500 transition-transform duration-150',
+                      'w-3.5 h-3.5 text-zinc-600 transition-transform duration-150',
                       isExpanded ? 'rotate-0' : '-rotate-90'
                     )}
+                    aria-hidden="true"
                   />
                 )}
               </button>
 
               {/* Phase Items */}
               {!sidebarCollapsed && isExpanded && (
-                <div className="mt-0.5 ml-4 pl-2.5 border-l border-white/[0.04] space-y-0.5">
+                <ul 
+                  id={menuId}
+                  className="mt-0.5 ml-4 pl-2.5 border-l border-white/[0.04] space-y-0.5"
+                  role="list"
+                >
                   {section.items.map((item) => (
-                    <NavLink
-                      key={item.href}
-                      to={item.href}
-                      className={({ isActive }) =>
-                        cn(
-                          'flex items-center justify-between gap-2 px-2.5 py-1.5 rounded-md text-sm group',
-                          'transition-all duration-150',
-                          isActive
-                            ? 'text-white'
-                            : 'text-zinc-500 hover:bg-white/[0.04] hover:text-zinc-300'
-                        )
-                      }
-                      style={({ isActive }) => isActive ? {
-                        background: 'rgba(124, 58, 237, 0.1)',
-                        boxShadow: `inset 0 1px 0 0 rgba(255, 255, 255, 0.05), 0 0 20px -10px ${section.glowColor}`,
-                        border: '1px solid rgba(124, 58, 237, 0.2)'
-                      } : undefined}
-                    >
-                      <div className="flex items-center gap-2">
-                        {item.icon}
-                        <span>{item.label}</span>
-                      </div>
-                      {item.badge && (
-                        <span 
-                          className="px-1.5 py-0.5 rounded text-[10px] font-semibold text-violet-300"
-                          style={{
-                            background: 'rgba(124, 58, 237, 0.2)',
-                            boxShadow: 'inset 0 0 8px rgba(124, 58, 237, 0.2)'
-                          }}
-                        >
-                          {item.badge}
-                        </span>
-                      )}
-                    </NavLink>
+                    <li key={item.href}>
+                      <NavLink
+                        to={item.href}
+                        className={({ isActive }) =>
+                          cn(
+                            'flex items-center justify-between gap-2 px-2.5 py-1.5 rounded-md text-sm group focus-visible-ring',
+                            'transition-all duration-150',
+                            isActive
+                              ? 'text-zinc-200 bg-white/[0.05]'
+                              : 'text-zinc-500 hover:bg-white/[0.03] hover:text-zinc-400'
+                          )
+                        }
+                      >
+                        <div className="flex items-center gap-2">
+                          {item.icon}
+                          <span>{item.label}</span>
+                        </div>
+                        {item.badge && (
+                          <span 
+                            className="min-w-[18px] h-[18px] px-1 rounded-full text-[10px] font-semibold text-white bg-accent flex items-center justify-center"
+                            aria-label={`${item.badge} items`}
+                          >
+                            {item.badge}
+                          </span>
+                        )}
+                      </NavLink>
+                    </li>
                   ))}
-                </div>
+                </ul>
               )}
 
               {/* Collapsed hover menu */}
               {sidebarCollapsed && (
                 <div className="relative group">
                   <div 
-                    className="absolute left-full top-0 ml-2 w-44 rounded-lg py-1.5 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50"
-                    style={{
-                      background: 'linear-gradient(180deg, rgba(20, 20, 31, 0.98) 0%, rgba(14, 14, 24, 0.99) 100%)',
-                      backdropFilter: 'blur(20px)',
-                      border: '1px solid rgba(255, 255, 255, 0.06)',
-                      boxShadow: 'inset 0 1px 0 0 rgba(255, 255, 255, 0.05), 0 16px 48px -12px rgba(0, 0, 0, 0.7)'
-                    }}
+                    className="absolute left-full top-0 ml-2 w-44 rounded-lg py-1.5 opacity-0 invisible group-hover:opacity-100 group-hover:visible group-focus-within:opacity-100 group-focus-within:visible transition-all z-50 glass-panel-strong"
+                    role="menu"
+                    aria-label={`${section.label} submenu`}
                   >
                     <div className="px-3 py-1.5 text-[10px] font-medium text-zinc-500 uppercase tracking-wider">
                       {section.label}
@@ -308,17 +291,18 @@ export function Sidebar() {
                         to={item.href}
                         className={({ isActive }) =>
                           cn(
-                            'flex items-center gap-2 px-3 py-2 text-sm transition-colors',
+                            'flex items-center gap-2 px-3 py-2 text-sm transition-colors focus-visible-ring',
                             isActive
-                              ? 'text-white bg-white/[0.06]'
-                              : 'text-zinc-400 hover:bg-white/[0.04] hover:text-zinc-200'
+                              ? 'text-zinc-200 bg-white/[0.05]'
+                              : 'text-zinc-500 hover:bg-white/[0.04] hover:text-zinc-400'
                           )
                         }
+                        role="menuitem"
                       >
                         {item.icon}
                         <span>{item.label}</span>
                         {item.badge && (
-                          <span className="ml-auto px-1.5 py-0.5 rounded bg-violet-500/20 text-violet-300 text-[10px] font-semibold">
+                          <span className="ml-auto min-w-[18px] h-[18px] px-1 rounded-full bg-accent text-white text-[10px] font-semibold flex items-center justify-center">
                             {item.badge}
                           </span>
                         )}
@@ -337,12 +321,12 @@ export function Sidebar() {
             to="/extensions"
             className={({ isActive }) =>
               cn(
-                'sidebar-item',
+                'sidebar-item focus-visible-ring',
                 isActive && 'sidebar-item-active'
               )
             }
           >
-            <Boxes className="w-[18px] h-[18px]" />
+            <Boxes className="w-[18px] h-[18px]" aria-hidden="true" />
             {!sidebarCollapsed && <span className="text-sm">Extensions</span>}
           </NavLink>
         </div>
@@ -355,25 +339,26 @@ export function Sidebar() {
                 Favorites
               </span>
             </div>
-            <div className="space-y-0.5">
+            <ul className="space-y-0.5" role="list">
               {favoriteExtensions.slice(0, 4).map((ext) => (
-                <NavLink
-                  key={ext.id}
-                  to={`/extensions/${ext.id}`}
-                  className={({ isActive }) =>
-                    cn(
-                      'flex items-center gap-2 px-2.5 py-1.5 rounded-md text-sm transition-colors',
-                      isActive
-                        ? 'text-amber-300 bg-amber-500/10'
-                        : 'text-zinc-500 hover:bg-white/[0.04] hover:text-zinc-300'
-                    )
-                  }
-                >
-                  <Star className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />
-                  <span className="truncate">{ext.name}</span>
-                </NavLink>
+                <li key={ext.id}>
+                  <NavLink
+                    to={`/extensions/${ext.id}`}
+                    className={({ isActive }) =>
+                      cn(
+                        'flex items-center gap-2 px-2.5 py-1.5 rounded-md text-sm transition-colors focus-visible-ring',
+                        isActive
+                          ? 'text-amber-400 bg-amber-500/10'
+                          : 'text-zinc-500 hover:bg-white/[0.03] hover:text-zinc-400'
+                      )
+                    }
+                  >
+                    <Star className="w-3.5 h-3.5 text-amber-500 fill-amber-500" aria-hidden="true" />
+                    <span className="truncate">{ext.name}</span>
+                  </NavLink>
+                </li>
               ))}
-            </div>
+            </ul>
           </div>
         )}
       </nav>
@@ -384,21 +369,22 @@ export function Sidebar() {
           to="/settings"
           className={({ isActive }) =>
             cn(
-              'sidebar-item',
+              'sidebar-item focus-visible-ring',
               isActive && 'sidebar-item-active'
             )
           }
         >
-          <Settings className="w-[18px] h-[18px]" />
+          <Settings className="w-[18px] h-[18px]" aria-hidden="true" />
           {!sidebarCollapsed && <span className="text-sm">Settings</span>}
         </NavLink>
 
         {sidebarCollapsed && (
           <button
             onClick={toggleSidebar}
-            className="w-full flex items-center justify-center p-2 mt-1 rounded-md text-zinc-500 hover:text-zinc-300 hover:bg-white/[0.04] transition-colors"
+            className="w-full flex items-center justify-center p-2 mt-1 rounded-md text-zinc-500 hover:text-zinc-400 hover:bg-white/[0.04] transition-colors focus-visible-ring"
+            aria-label="Expand sidebar"
           >
-            <ChevronRight className="w-4 h-4" />
+            <ChevronRight className="w-4 h-4" aria-hidden="true" />
           </button>
         )}
       </div>

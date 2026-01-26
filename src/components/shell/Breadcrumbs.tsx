@@ -44,30 +44,38 @@ export function Breadcrumbs() {
   });
 
   return (
-    <nav className="flex items-center gap-1 text-sm">
-      <Link
-        to="/"
-        className="p-1 rounded text-zinc-500 hover:text-zinc-300 hover:bg-white/[0.04] transition-colors"
-      >
-        <Home className="w-3.5 h-3.5" />
-      </Link>
-      {breadcrumbs.map((crumb) => (
-        <div key={crumb.path} className="flex items-center gap-1">
-          <ChevronRight className="w-3.5 h-3.5 text-zinc-700" />
-          {crumb.isLast ? (
-            <span className="px-1.5 py-0.5 font-medium text-zinc-200 text-sm">
-              {crumb.label}
-            </span>
-          ) : (
-            <Link
-              to={crumb.path}
-              className="px-1.5 py-0.5 rounded text-zinc-500 hover:text-zinc-300 hover:bg-white/[0.04] transition-colors text-sm"
-            >
-              {crumb.label}
-            </Link>
-          )}
-        </div>
-      ))}
+    <nav aria-label="Breadcrumb">
+      <ol className="flex items-center gap-1 text-sm" role="list">
+        <li>
+          <Link
+            to="/"
+            className="p-1 rounded text-zinc-500 hover:text-zinc-300 hover:bg-white/[0.04] transition-colors focus-visible-ring"
+            aria-label="Home"
+          >
+            <Home className="w-3.5 h-3.5" aria-hidden="true" />
+          </Link>
+        </li>
+        {breadcrumbs.map((crumb) => (
+          <li key={crumb.path} className="flex items-center gap-1">
+            <ChevronRight className="w-3.5 h-3.5 text-zinc-600" aria-hidden="true" />
+            {crumb.isLast ? (
+              <span 
+                className="px-1.5 py-0.5 font-medium text-zinc-200 text-sm"
+                aria-current="page"
+              >
+                {crumb.label}
+              </span>
+            ) : (
+              <Link
+                to={crumb.path}
+                className="px-1.5 py-0.5 rounded text-zinc-500 hover:text-zinc-300 hover:bg-white/[0.04] transition-colors text-sm focus-visible-ring"
+              >
+                {crumb.label}
+              </Link>
+            )}
+          </li>
+        ))}
+      </ol>
     </nav>
   );
 }

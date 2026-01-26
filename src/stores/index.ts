@@ -3,3 +3,8 @@ export { useDashboardStore } from './dashboard-store';
 export { useExtensionStore } from './extension-store';
 export { useNavigationStore } from './navigation-store';
 export { useInteractionStore } from './interaction-store';
+export { usePersonaStore, usePersona } from './persona-store';
+export { useDevPanelStore, useTourNavigation } from './dev-panel-store';
+export { useSettingsStore, formatDateWithPreference, getTimezoneAdjustedDate } from './settings-store';
+export { useDocumentationStore } from './documentation-store';
+export type { NotificationSettings, AppearanceSettings, LocalizationSettings, SecuritySettings } from './settings-store';

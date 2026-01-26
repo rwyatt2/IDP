@@ -25,15 +25,15 @@ export function CostTrendsWidget() {
     <div className="space-y-4">
       {/* Current Month */}
       <div>
-        <p className="text-sm text-slate-500">Current Month</p>
+        <p className="text-sm text-text-tertiary">Current Month</p>
         <div className="flex items-end gap-3">
-          <p className="text-3xl font-bold text-slate-900">
+          <p className="text-3xl font-bold text-text-primary">
             {formatCurrency(costs.currentMonth)}
           </p>
           <div
             className={cn(
               'flex items-center gap-1 mb-1',
-              isIncreasing ? 'text-danger-600' : 'text-success-600'
+              isIncreasing ? 'text-success' : 'text-error'
             )}
           >
             {isIncreasing ? (
@@ -46,16 +46,16 @@ export function CostTrendsWidget() {
             </span>
           </div>
         </div>
-        <p className="text-sm text-slate-500 mt-1">
+        <p className="text-sm text-text-tertiary mt-1">
           vs {formatCurrency(costs.previousMonth)} last month
         </p>
       </div>
 
       {/* Forecast */}
-      <div className="p-3 rounded-lg bg-slate-50">
+      <div className="p-3 rounded-lg bg-surface-raised">
         <div className="flex items-center justify-between mb-2">
-          <span className="text-sm text-slate-600">Forecasted</span>
-          <span className="text-sm font-medium text-slate-900">
+          <span className="text-sm text-text-secondary">Forecasted</span>
+          <span className="text-sm font-medium text-text-primary">
             {formatCurrency(costs.forecast)}
           </span>
         </div>
@@ -65,22 +65,22 @@ export function CostTrendsWidget() {
           variant="primary"
           size="sm"
         />
-        <p className="text-xs text-slate-500 mt-1 text-right">
+        <p className="text-xs text-text-tertiary mt-1 text-right">
           {formatPercentage((costs.currentMonth / costs.forecast) * 100)} of forecast
         </p>
       </div>
 
       {/* Quick Stats */}
       <div className="grid grid-cols-2 gap-3">
-        <div className="p-2 rounded-lg border border-slate-200">
-          <p className="text-xs text-slate-500">Avg Daily</p>
-          <p className="font-semibold text-slate-900">
+        <div className="p-2 rounded-lg border border-border-subtle">
+          <p className="text-xs text-text-tertiary">Avg Daily</p>
+          <p className="font-semibold text-text-primary">
             {formatCurrency(costs.currentMonth / 25)}
           </p>
         </div>
-        <div className="p-2 rounded-lg border border-slate-200">
-          <p className="text-xs text-slate-500">Projected</p>
-          <p className="font-semibold text-slate-900">
+        <div className="p-2 rounded-lg border border-border-subtle">
+          <p className="text-xs text-text-tertiary">Projected</p>
+          <p className="font-semibold text-text-primary">
             {formatCurrency(costs.forecast)}
           </p>
         </div>
@@ -89,7 +89,7 @@ export function CostTrendsWidget() {
       {/* Link to Costs */}
       <Link
         to="/manage/costs"
-        className="flex items-center justify-center gap-1 text-sm text-primary-600 hover:text-primary-700 pt-2"
+        className="flex items-center justify-center gap-1 text-sm text-accent hover:text-accent-hover pt-2"
       >
         View cost details
         <ChevronRight className="w-4 h-4" />

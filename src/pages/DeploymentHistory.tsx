@@ -62,13 +62,13 @@ export function DeploymentHistory() {
   }, []);
 
   const statusIcons = {
-    succeeded: <CheckCircle className="w-4 h-4 text-success-500" />,
-    failed: <XCircle className="w-4 h-4 text-danger-500" />,
-    'in-progress': <Loader2 className="w-4 h-4 text-primary-500 animate-spin" />,
-    pending: <Clock className="w-4 h-4 text-slate-400" />,
-    'awaiting-approval': <Clock className="w-4 h-4 text-warning-500" />,
-    'rolled-back': <RotateCcw className="w-4 h-4 text-slate-500" />,
-    cancelled: <XCircle className="w-4 h-4 text-slate-400" />,
+    succeeded: <CheckCircle className="w-4 h-4 text-success" />,
+    failed: <XCircle className="w-4 h-4 text-error" />,
+    'in-progress': <Loader2 className="w-4 h-4 text-accent animate-spin" />,
+    pending: <Clock className="w-4 h-4 text-text-disabled" />,
+    'awaiting-approval': <Clock className="w-4 h-4 text-warning" />,
+    'rolled-back': <RotateCcw className="w-4 h-4 text-text-tertiary" />,
+    cancelled: <XCircle className="w-4 h-4 text-text-disabled" />,
   };
 
   // Group deployments by date
@@ -92,8 +92,8 @@ export function DeploymentHistory() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">Deployment History</h1>
-          <p className="text-slate-500 mt-1">
+          <h1 className="text-2xl font-bold text-text-primary">Deployment History</h1>
+          <p className="text-text-tertiary mt-1">
             View and analyze past deployments
           </p>
         </div>
@@ -106,47 +106,47 @@ export function DeploymentHistory() {
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <Card className="p-4">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center">
-              <History className="w-5 h-5 text-slate-600" />
+            <div className="w-10 h-10 rounded-lg bg-surface-raised flex items-center justify-center">
+              <History className="w-5 h-5 text-text-tertiary" />
             </div>
             <div>
-              <p className="text-2xl font-bold text-slate-900">{stats.total}</p>
-              <p className="text-sm text-slate-500">Total Deployments</p>
+              <p className="text-2xl font-bold text-text-primary">{stats.total}</p>
+              <p className="text-sm text-text-tertiary">Total Deployments</p>
             </div>
           </div>
         </Card>
         <Card className="p-4">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-success-100 flex items-center justify-center">
-              <CheckCircle className="w-5 h-5 text-success-600" />
+            <div className="w-10 h-10 rounded-lg bg-success/10 flex items-center justify-center">
+              <CheckCircle className="w-5 h-5 text-success" />
             </div>
             <div>
-              <p className="text-2xl font-bold text-slate-900">{stats.successRate.toFixed(0)}%</p>
-              <p className="text-sm text-slate-500">Success Rate</p>
+              <p className="text-2xl font-bold text-text-primary">{stats.successRate.toFixed(0)}%</p>
+              <p className="text-sm text-text-tertiary">Success Rate</p>
             </div>
           </div>
         </Card>
         <Card className="p-4">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-danger-100 flex items-center justify-center">
-              <XCircle className="w-5 h-5 text-danger-600" />
+            <div className="w-10 h-10 rounded-lg bg-error/10 flex items-center justify-center">
+              <XCircle className="w-5 h-5 text-error" />
             </div>
             <div>
-              <p className="text-2xl font-bold text-slate-900">{stats.failed}</p>
-              <p className="text-sm text-slate-500">Failed</p>
+              <p className="text-2xl font-bold text-text-primary">{stats.failed}</p>
+              <p className="text-sm text-text-tertiary">Failed</p>
             </div>
           </div>
         </Card>
         <Card className="p-4">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-primary-100 flex items-center justify-center">
-              <Clock className="w-5 h-5 text-primary-600" />
+            <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center">
+              <Clock className="w-5 h-5 text-accent" />
             </div>
             <div>
-              <p className="text-2xl font-bold text-slate-900">
+              <p className="text-2xl font-bold text-text-primary">
                 {formatDuration(stats.avgDuration * 1000)}
               </p>
-              <p className="text-sm text-slate-500">Avg Duration</p>
+              <p className="text-sm text-text-tertiary">Avg Duration</p>
             </div>
           </div>
         </Card>
@@ -187,9 +187,9 @@ export function DeploymentHistory() {
       {/* Timeline */}
       {filteredDeployments.length === 0 ? (
         <Card className="text-center py-12">
-          <History className="w-12 h-12 text-slate-300 mx-auto mb-4" />
-          <p className="font-medium text-slate-900">No deployments found</p>
-          <p className="text-sm text-slate-500 mt-1">
+          <History className="w-12 h-12 text-text-disabled mx-auto mb-4" />
+          <p className="font-medium text-text-primary">No deployments found</p>
+          <p className="text-sm text-text-tertiary mt-1">
             Try adjusting your filters
           </p>
         </Card>
@@ -198,26 +198,26 @@ export function DeploymentHistory() {
           {Object.entries(groupedDeployments).map(([date, deploys]) => (
             <div key={date}>
               <div className="flex items-center gap-3 mb-4">
-                <Calendar className="w-5 h-5 text-slate-400" />
-                <h3 className="font-semibold text-slate-900">{date}</h3>
+                <Calendar className="w-5 h-5 text-text-tertiary" />
+                <h3 className="font-semibold text-text-secondary">{date}</h3>
                 <Badge variant="neutral">{deploys.length}</Badge>
               </div>
-              <div className="space-y-2 ml-8 border-l-2 border-slate-200 pl-6">
+              <div className="space-y-2 ml-8 border-l-2 border-border-subtle pl-6">
                 {deploys.map((deployment) => (
                   <Link
                     key={deployment.id}
                     to={`/deploy/deployments/${deployment.id}`}
-                    className="flex items-center gap-4 p-4 bg-white rounded-lg border border-slate-200 hover:border-slate-300 hover:shadow-soft transition-all relative"
+                    className="flex items-center gap-4 p-4 bg-surface rounded-lg border border-border-subtle hover:border-border-default hover:bg-surface-raised transition-all relative"
                   >
                     {/* Timeline dot */}
                     <div
                       className={cn(
-                        'absolute -left-[31px] w-4 h-4 rounded-full border-2 border-white',
-                        deployment.status === 'succeeded' && 'bg-success-500',
-                        deployment.status === 'failed' && 'bg-danger-500',
-                        deployment.status === 'in-progress' && 'bg-primary-500',
-                        (deployment.status === 'pending' || deployment.status === 'awaiting-approval') && 'bg-warning-500',
-                        (deployment.status === 'rolled-back' || deployment.status === 'cancelled') && 'bg-slate-400'
+                        'absolute -left-[31px] w-4 h-4 rounded-full border-2 border-canvas',
+                        deployment.status === 'succeeded' && 'bg-success',
+                        deployment.status === 'failed' && 'bg-error',
+                        deployment.status === 'in-progress' && 'bg-accent',
+                        (deployment.status === 'pending' || deployment.status === 'awaiting-approval') && 'bg-warning',
+                        (deployment.status === 'rolled-back' || deployment.status === 'cancelled') && 'bg-text-disabled'
                       )}
                     />
 
@@ -227,7 +227,7 @@ export function DeploymentHistory() {
 
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2">
-                        <span className="font-medium text-slate-900">
+                        <span className="font-medium text-text-secondary">
                           {deployment.applicationName}
                         </span>
                         <Badge variant="info" size="sm">{deployment.version}</Badge>
@@ -235,7 +235,7 @@ export function DeploymentHistory() {
                           {deployment.environment}
                         </Badge>
                       </div>
-                      <div className="flex items-center gap-4 mt-1 text-sm text-slate-500">
+                      <div className="flex items-center gap-4 mt-1 text-sm text-text-tertiary">
                         <div className="flex items-center gap-1">
                           <User className="w-3.5 h-3.5" />
                           {deployment.triggeredBy}
@@ -253,14 +253,14 @@ export function DeploymentHistory() {
                       </div>
                     </div>
 
-                    <div className="text-right text-sm text-slate-500">
+                    <div className="text-right text-sm text-text-tertiary">
                       {new Date(deployment.triggeredAt).toLocaleTimeString('en-US', {
                         hour: 'numeric',
                         minute: '2-digit',
                       })}
                     </div>
 
-                    <ChevronRight className="w-5 h-5 text-slate-400" />
+                    <ChevronRight className="w-5 h-5 text-text-disabled" />
                   </Link>
                 ))}
               </div>

@@ -36,35 +36,35 @@ export function SystemHealthWidget() {
           showLabel
         />
         <div>
-          <p className="text-2xl font-bold text-slate-900">
+          <p className="text-2xl font-bold text-text-primary">
             {health.healthy}/{health.total}
           </p>
-          <p className="text-sm text-slate-500">Services Healthy</p>
+          <p className="text-sm text-text-tertiary">Services Healthy</p>
         </div>
       </div>
 
       {/* Status Breakdown */}
       <div className="grid grid-cols-3 gap-2">
-        <div className="p-2 rounded-lg bg-success-50 text-center">
+        <div className="p-2 rounded-lg bg-success/10 text-center">
           <div className="flex items-center justify-center gap-1 mb-1">
-            <CheckCircle className="w-4 h-4 text-success-600" />
-            <span className="font-semibold text-success-700">{health.healthy}</span>
+            <CheckCircle className="w-4 h-4 text-success" />
+            <span className="font-semibold text-success">{health.healthy}</span>
           </div>
-          <p className="text-xs text-success-600">Healthy</p>
+          <p className="text-xs text-success">Healthy</p>
         </div>
-        <div className="p-2 rounded-lg bg-warning-50 text-center">
+        <div className="p-2 rounded-lg bg-warning/10 text-center">
           <div className="flex items-center justify-center gap-1 mb-1">
-            <AlertTriangle className="w-4 h-4 text-warning-600" />
-            <span className="font-semibold text-warning-700">{health.degraded}</span>
+            <AlertTriangle className="w-4 h-4 text-warning" />
+            <span className="font-semibold text-warning">{health.degraded}</span>
           </div>
-          <p className="text-xs text-warning-600">Degraded</p>
+          <p className="text-xs text-warning">Degraded</p>
         </div>
-        <div className="p-2 rounded-lg bg-danger-50 text-center">
+        <div className="p-2 rounded-lg bg-error/10 text-center">
           <div className="flex items-center justify-center gap-1 mb-1">
-            <XCircle className="w-4 h-4 text-danger-600" />
-            <span className="font-semibold text-danger-700">{health.critical}</span>
+            <XCircle className="w-4 h-4 text-error" />
+            <span className="font-semibold text-error">{health.critical}</span>
           </div>
-          <p className="text-xs text-danger-600">Critical</p>
+          <p className="text-xs text-error">Critical</p>
         </div>
       </div>
 
@@ -72,15 +72,15 @@ export function SystemHealthWidget() {
       {health.activeIncidents > 0 && (
         <Link
           to="/manage/incidents"
-          className="flex items-center justify-between p-2 rounded-lg bg-danger-50 border border-danger-200 hover:bg-danger-100 transition-colors"
+          className="flex items-center justify-between p-2 rounded-lg bg-error/10 border border-error/30 hover:bg-error/20 transition-colors"
         >
           <div className="flex items-center gap-2">
-            <AlertTriangle className="w-4 h-4 text-danger-600" />
-            <span className="text-sm font-medium text-danger-700">
+            <AlertTriangle className="w-4 h-4 text-error" />
+            <span className="text-sm font-medium text-error">
               {health.activeIncidents} active incident{health.activeIncidents > 1 ? 's' : ''}
             </span>
           </div>
-          <ChevronRight className="w-4 h-4 text-danger-600" />
+          <ChevronRight className="w-4 h-4 text-error" />
         </Link>
       )}
     </div>

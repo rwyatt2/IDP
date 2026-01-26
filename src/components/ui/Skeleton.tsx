@@ -56,7 +56,7 @@ export function SkeletonList({ count = 3 }: { count?: number }) {
 export function SkeletonTable({ rows = 5 }: { rows?: number }) {
   return (
     <div className="space-y-2">
-      <div className="flex gap-4 pb-2 border-b border-slate-200">
+      <div className="flex gap-4 pb-2 border-b border-border-subtle">
         <Skeleton className="h-4 w-24" />
         <Skeleton className="h-4 w-32" />
         <Skeleton className="h-4 w-20" />

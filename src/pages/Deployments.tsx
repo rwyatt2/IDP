@@ -19,20 +19,20 @@ import {
 import type { Deployment, DeploymentStatus } from '@/types';
 
 const statusIcons: Record<DeploymentStatus, React.ReactNode> = {
-  succeeded: <CheckCircle className="w-5 h-5 text-success-500" />,
-  failed: <XCircle className="w-5 h-5 text-danger-500" />,
-  'in-progress': <Loader2 className="w-5 h-5 text-primary-500 animate-spin" />,
-  pending: <Clock className="w-5 h-5 text-slate-400" />,
-  'awaiting-approval': <AlertCircle className="w-5 h-5 text-warning-500" />,
-  'rolled-back': <RotateCcw className="w-5 h-5 text-slate-500" />,
-  cancelled: <XCircle className="w-5 h-5 text-slate-400" />,
+  succeeded: <CheckCircle className="w-5 h-5 text-success" />,
+  failed: <XCircle className="w-5 h-5 text-error" />,
+  'in-progress': <Loader2 className="w-5 h-5 text-accent animate-spin" />,
+  pending: <Clock className="w-5 h-5 text-text-disabled" />,
+  'awaiting-approval': <AlertCircle className="w-5 h-5 text-warning" />,
+  'rolled-back': <RotateCcw className="w-5 h-5 text-text-tertiary" />,
+  cancelled: <XCircle className="w-5 h-5 text-text-disabled" />,
 };
 
 function DeploymentRow({ deployment }: { deployment: Deployment }) {
   return (
     <Link
       to={`/deploy/deployments/${deployment.id}`}
-      className="flex items-center gap-4 p-4 bg-white rounded-lg border border-slate-200 hover:border-slate-300 hover:shadow-soft transition-all"
+      className="flex items-center gap-4 p-4 bg-surface rounded-lg border border-border-subtle hover:border-border-default hover:bg-surface-raised transition-all group"
     >
       <div className="flex-shrink-0">
         {statusIcons[deployment.status]}
@@ -40,10 +40,10 @@ function DeploymentRow({ deployment }: { deployment: Deployment }) {
       
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2">
-          <span className="font-medium text-slate-900">{deployment.applicationName}</span>
+          <span className="font-medium text-text-primary">{deployment.applicationName}</span>
           <Badge variant="info" size="sm">{deployment.version}</Badge>
         </div>
-        <div className="flex items-center gap-3 mt-1 text-sm text-slate-500">
+        <div className="flex items-center gap-3 mt-1 text-sm text-text-tertiary">
           <span className="capitalize">{deployment.environment}</span>
           <span>·</span>
           <div className="flex items-center gap-1">
@@ -55,24 +55,24 @@ function DeploymentRow({ deployment }: { deployment: Deployment }) {
       
       <div className="hidden md:flex items-center gap-6 flex-shrink-0">
         <div className="text-right">
-          <div className="flex items-center gap-1 text-sm text-slate-500">
+          <div className="flex items-center gap-1 text-sm text-text-tertiary">
             <User className="w-3 h-3" />
             <span>{deployment.triggeredBy}</span>
           </div>
-          <p className="text-xs text-slate-400">{formatRelativeTime(deployment.triggeredAt)}</p>
+          <p className="text-xs text-text-disabled">{formatRelativeTime(deployment.triggeredAt)}</p>
         </div>
         {deployment.duration && (
           <div className="text-right">
-            <p className="text-sm font-medium text-slate-900">
+            <p className="text-sm font-medium text-text-primary">
               {formatDuration(deployment.duration * 1000)}
             </p>
-            <p className="text-xs text-slate-400">Duration</p>
+            <p className="text-xs text-text-disabled">Duration</p>
           </div>
         )}
       </div>
       
       <StatusBadge status={deployment.status} />
-      <ChevronRight className="w-5 h-5 text-slate-400" />
+      <ChevronRight className="w-5 h-5 text-text-disabled group-hover:text-text-tertiary transition-colors" />
     </Link>
   );
 }
@@ -129,8 +129,8 @@ export function Deployments() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">Deployments</h1>
-          <p className="text-slate-500 mt-1">
+          <h1 className="text-2xl font-bold text-text-primary">Deployments</h1>
+          <p className="text-text-tertiary mt-1">
             Track and manage deployments across all environments
           </p>
         </div>
@@ -170,7 +170,7 @@ export function Deployments() {
         {isLoading ? (
           <div className="space-y-3">
             {[1, 2, 3, 4, 5].map((i) => (
-              <Card key={i} className="p-4">
+              <Card key={i} className="p-4 bg-surface border-border-subtle">
                 <div className="flex items-center gap-4">
                   <Skeleton variant="circular" width={40} height={40} />
                   <div className="flex-1 space-y-2">
@@ -183,9 +183,9 @@ export function Deployments() {
             ))}
           </div>
         ) : filteredDeployments.length === 0 ? (
-          <Card className="text-center py-12">
-            <Rocket className="w-12 h-12 text-slate-300 mx-auto mb-4" />
-            <p className="text-slate-500">No deployments found</p>
+          <Card className="text-center py-12 bg-surface border-border-subtle">
+            <Rocket className="w-12 h-12 text-text-disabled mx-auto mb-4" />
+            <p className="text-text-tertiary">No deployments found</p>
             {search && (
               <Button
                 variant="ghost"

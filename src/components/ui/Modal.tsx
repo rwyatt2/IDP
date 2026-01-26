@@ -57,7 +57,7 @@ export function Modal({
       <div
         ref={contentRef}
         className={cn(
-          'bg-white rounded-xl shadow-elevated w-full animate-scale-in',
+          'bg-surface-overlay border border-border-default rounded-xl shadow-2xl w-full animate-scale-in',
           sizes[size],
           className
         )}
@@ -66,15 +66,15 @@ export function Modal({
         aria-labelledby={title ? 'modal-title' : undefined}
       >
         {(title || showClose) && (
-          <div className="flex items-start justify-between p-4 border-b border-slate-200">
+          <div className="flex items-start justify-between p-5 border-b border-border-subtle bg-surface-raised">
             <div>
               {title && (
-                <h2 id="modal-title" className="text-lg font-semibold text-slate-900">
+                <h2 id="modal-title" className="text-lg font-semibold text-text-primary">
                   {title}
                 </h2>
               )}
               {description && (
-                <p className="mt-1 text-sm text-slate-500">{description}</p>
+                <p className="mt-1 text-sm text-text-tertiary">{description}</p>
               )}
             </div>
             {showClose && (
@@ -82,14 +82,14 @@ export function Modal({
                 variant="ghost"
                 size="icon"
                 onClick={onClose}
-                className="text-slate-400 hover:text-slate-600"
+                className="text-text-tertiary hover:text-text-primary hover:bg-surface"
               >
                 <X className="w-5 h-5" />
               </Button>
             )}
           </div>
         )}
-        <div className="p-4">{children}</div>
+        <div className="p-5 bg-surface">{children}</div>
       </div>
     </div>,
     document.body
@@ -121,7 +121,7 @@ export function ConfirmModal({
 }: ConfirmModalProps) {
   return (
     <Modal isOpen={isOpen} onClose={onClose} title={title} size="sm">
-      <p className="text-slate-600">{message}</p>
+      <p className="text-text-secondary">{message}</p>
       <div className="flex justify-end gap-3 mt-6">
         <Button variant="secondary" onClick={onClose} disabled={isLoading}>
           {cancelText}

@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useMemo } from 'react';
+import { useState, useRef, useEffect, useMemo, useId } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createPortal } from 'react-dom';
 import { cn } from '@/lib/utils';
@@ -42,13 +42,16 @@ export function CommandPalette() {
   const inputRef = useRef<HTMLInputElement>(null);
   const [query, setQuery] = useState('');
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const baseId = useId();
+  const listboxId = `${baseId}-listbox`;
+  const statusId = `${baseId}-status`;
 
   const commands: CommandItem[] = useMemo(
     () => [
       {
         id: 'dashboard',
         label: 'Go to Dashboard',
-        icon: <Home className="w-4 h-4" />,
+        icon: <Home className="w-4 h-4" aria-hidden="true" />,
         shortcut: '⌘1',
         action: () => {
           navigate('/');
@@ -60,7 +63,7 @@ export function CommandPalette() {
         id: 'search',
         label: 'Search Everything',
         description: 'Search applications, services, and docs',
-        icon: <Search className="w-4 h-4" />,
+        icon: <Search className="w-4 h-4" aria-hidden="true" />,
         shortcut: '/',
         action: () => {
           openSearch();
@@ -71,7 +74,7 @@ export function CommandPalette() {
         id: 'create-app',
         label: 'Create New Application',
         description: 'Start the application creation wizard',
-        icon: <Plus className="w-4 h-4" />,
+        icon: <Plus className="w-4 h-4" aria-hidden="true" />,
         shortcut: '⌘⇧N',
         action: () => {
           navigate('/build/create');
@@ -83,63 +86,63 @@ export function CommandPalette() {
       {
         id: 'catalog',
         label: 'Browse System Catalog',
-        icon: <Database className="w-4 h-4" />,
+        icon: <Database className="w-4 h-4" aria-hidden="true" />,
         action: () => navigate('/discover/catalog'),
         category: 'Navigation',
       },
       {
         id: 'deployments',
         label: 'View Deployments',
-        icon: <Rocket className="w-4 h-4" />,
+        icon: <Rocket className="w-4 h-4" aria-hidden="true" />,
         action: () => navigate('/deploy/deployments'),
         category: 'Navigation',
       },
       {
         id: 'pipelines',
         label: 'Manage Pipelines',
-        icon: <GitBranch className="w-4 h-4" />,
+        icon: <GitBranch className="w-4 h-4" aria-hidden="true" />,
         action: () => navigate('/build/pipelines'),
         category: 'Navigation',
       },
       {
         id: 'observability',
         label: 'View Observability',
-        icon: <Activity className="w-4 h-4" />,
+        icon: <Activity className="w-4 h-4" aria-hidden="true" />,
         action: () => navigate('/manage/observability'),
         category: 'Navigation',
       },
       {
         id: 'incidents',
         label: 'View Incidents',
-        icon: <AlertTriangle className="w-4 h-4" />,
+        icon: <AlertTriangle className="w-4 h-4" aria-hidden="true" />,
         action: () => navigate('/manage/incidents'),
         category: 'Navigation',
       },
       {
         id: 'costs',
         label: 'View Costs',
-        icon: <DollarSign className="w-4 h-4" />,
+        icon: <DollarSign className="w-4 h-4" aria-hidden="true" />,
         action: () => navigate('/manage/costs'),
         category: 'Navigation',
       },
       {
         id: 'extensions',
         label: 'Browse Extensions',
-        icon: <Store className="w-4 h-4" />,
+        icon: <Store className="w-4 h-4" aria-hidden="true" />,
         action: () => navigate('/extensions'),
         category: 'Navigation',
       },
       {
         id: 'environments',
         label: 'Manage Environments',
-        icon: <Globe className="w-4 h-4" />,
+        icon: <Globe className="w-4 h-4" aria-hidden="true" />,
         action: () => navigate('/deploy/environments'),
         category: 'Navigation',
       },
       {
         id: 'teams',
         label: 'View API Documentation',
-        icon: <FileText className="w-4 h-4" />,
+        icon: <FileText className="w-4 h-4" aria-hidden="true" />,
         action: () => navigate('/discover/docs'),
         category: 'Navigation',
       },
@@ -147,7 +150,7 @@ export function CommandPalette() {
         id: 'sync-catalog',
         label: 'Refresh Catalog',
         description: 'Sync the service catalog',
-        icon: <RefreshCw className="w-4 h-4" />,
+        icon: <RefreshCw className="w-4 h-4" aria-hidden="true" />,
         action: () => {
           logAction('Refreshed', 'Service catalog');
           toast.success('Catalog Synced', 'Service catalog has been refreshed');
@@ -157,14 +160,14 @@ export function CommandPalette() {
       {
         id: 'settings',
         label: 'Open Settings',
-        icon: <Settings className="w-4 h-4" />,
+        icon: <Settings className="w-4 h-4" aria-hidden="true" />,
         action: () => navigate('/settings'),
         category: 'Actions',
       },
       {
         id: 'help',
         label: 'Help & Documentation',
-        icon: <HelpCircle className="w-4 h-4" />,
+        icon: <HelpCircle className="w-4 h-4" aria-hidden="true" />,
         action: () => navigate('/help'),
         category: 'Actions',
       },
@@ -207,6 +210,20 @@ export function CommandPalette() {
     setSelectedIndex(0);
   }, [filteredCommands]);
 
+  // Focus trap
+  useEffect(() => {
+    if (!commandPaletteOpen) return;
+    
+    const handleTab = (e: KeyboardEvent) => {
+      if (e.key !== 'Tab') return;
+      e.preventDefault();
+      inputRef.current?.focus();
+    };
+    
+    document.addEventListener('keydown', handleTab);
+    return () => document.removeEventListener('keydown', handleTab);
+  }, [commandPaletteOpen]);
+
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'ArrowDown') {
       e.preventDefault();
@@ -214,6 +231,12 @@ export function CommandPalette() {
     } else if (e.key === 'ArrowUp') {
       e.preventDefault();
       setSelectedIndex((i) => Math.max(i - 1, 0));
+    } else if (e.key === 'Home') {
+      e.preventDefault();
+      setSelectedIndex(0);
+    } else if (e.key === 'End') {
+      e.preventDefault();
+      setSelectedIndex(filteredCommands.length - 1);
     } else if (e.key === 'Enter' && filteredCommands[selectedIndex]) {
       e.preventDefault();
       handleSelect(filteredCommands[selectedIndex]);
@@ -227,12 +250,22 @@ export function CommandPalette() {
 
   if (!commandPaletteOpen) return null;
 
+  const statusMessage = filteredCommands.length > 0 
+    ? `${filteredCommands.length} commands available` 
+    : 'No commands found';
+
   return createPortal(
-    <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-start justify-center pt-[15vh] px-4 animate-fade-in">
-      <div className="w-full max-w-lg rounded-xl overflow-hidden animate-slide-down glass-panel-strong border border-white/[0.08]">
+    <div 
+      className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-start justify-center pt-[15vh] px-4 animate-fade-in"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Command palette"
+      onClick={(e) => e.target === e.currentTarget && closeCommandPalette()}
+    >
+      <div className="w-full max-w-lg rounded-xl overflow-hidden animate-slide-down bg-surface-overlay border border-border-default shadow-2xl">
         {/* Input */}
-        <div className="flex items-center gap-3 px-4 py-3 border-b border-white/[0.06]">
-          <Command className="w-5 h-5 text-accent-400" />
+        <div className="flex items-center gap-3 px-4 py-3 border-b border-border-subtle bg-surface-raised">
+          <Command className="w-5 h-5 text-accent" aria-hidden="true" />
           <input
             ref={inputRef}
             type="text"
@@ -240,21 +273,37 @@ export function CommandPalette() {
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder="Type a command or search..."
-            className="flex-1 text-base text-zinc-100 placeholder:text-zinc-500 outline-none bg-transparent"
+            className="flex-1 text-base text-text-primary placeholder:text-text-disabled outline-none bg-transparent"
+            role="combobox"
+            aria-expanded={filteredCommands.length > 0}
+            aria-controls={listboxId}
+            aria-activedescendant={filteredCommands.length > 0 ? `${baseId}-option-${selectedIndex}` : undefined}
+            aria-autocomplete="list"
+            aria-label="Command search"
           />
         </div>
 
+        {/* Live region for screen reader announcements */}
+        <div id={statusId} className="sr-only" role="status" aria-live="polite">
+          {statusMessage}
+        </div>
+
         {/* Commands */}
-        <div className="max-h-[50vh] overflow-y-auto py-1.5">
+        <div 
+          id={listboxId}
+          className="max-h-[50vh] overflow-y-auto py-1.5 bg-surface"
+          role="listbox"
+          aria-label="Commands"
+        >
           {filteredCommands.length === 0 ? (
-            <div className="p-8 text-center text-zinc-500 text-sm">
+            <div className="p-8 text-center text-text-tertiary text-sm">
               No commands found
             </div>
           ) : (
             Object.entries(groupedCommands).map(([category, items]) => (
-              <div key={category}>
+              <div key={category} role="group" aria-label={category}>
                 <div className="px-4 py-2">
-                  <span className="text-[10px] font-medium text-zinc-600 uppercase tracking-wider">
+                  <span className="text-[10px] font-medium text-text-disabled uppercase tracking-wider">
                     {category}
                   </span>
                 </div>
@@ -263,21 +312,24 @@ export function CommandPalette() {
                   return (
                     <button
                       key={command.id}
+                      id={`${baseId}-option-${globalIndex}`}
                       onClick={() => handleSelect(command)}
                       onMouseEnter={() => setSelectedIndex(globalIndex)}
                       className={cn(
                         'w-full flex items-center gap-3 px-4 py-2 text-left transition-all duration-100',
                         selectedIndex === globalIndex
-                          ? 'bg-accent-500/10'
-                          : 'hover:bg-white/[0.04]'
+                          ? 'bg-accent/10'
+                          : 'hover:bg-surface-raised'
                       )}
+                      role="option"
+                      aria-selected={selectedIndex === globalIndex}
                     >
                       <div
                         className={cn(
                           'w-8 h-8 rounded-lg flex items-center justify-center transition-colors',
                           selectedIndex === globalIndex
-                            ? 'bg-accent-500/20 text-accent-400'
-                            : 'bg-white/[0.04] text-zinc-500'
+                            ? 'bg-accent/20 text-accent'
+                            : 'bg-surface-raised text-text-tertiary'
                         )}
                       >
                         {command.icon}
@@ -285,23 +337,26 @@ export function CommandPalette() {
                       <div className="flex-1 min-w-0">
                         <p className={cn(
                           'font-medium text-sm truncate',
-                          selectedIndex === globalIndex ? 'text-zinc-100' : 'text-zinc-300'
+                          selectedIndex === globalIndex ? 'text-text-primary' : 'text-text-secondary'
                         )}>
                           {command.label}
                         </p>
                         {command.description && (
-                          <p className="text-xs text-zinc-500 truncate">
+                          <p className="text-xs text-text-tertiary truncate">
                             {command.description}
                           </p>
                         )}
                       </div>
                       {command.shortcut && (
-                        <kbd className={cn(
-                          'px-1.5 py-0.5 rounded text-[10px] font-medium transition-colors',
-                          selectedIndex === globalIndex
-                            ? 'bg-accent-500/20 text-accent-300 border border-accent-500/20'
-                            : 'bg-white/[0.04] text-zinc-500 border border-white/[0.06]'
-                        )}>
+                        <kbd 
+                          className={cn(
+                            'px-1.5 py-0.5 rounded text-[10px] font-medium transition-colors',
+                            selectedIndex === globalIndex
+                              ? 'bg-accent/20 text-accent border border-accent/30'
+                              : 'bg-surface-raised text-text-disabled border border-border-subtle'
+                          )}
+                          aria-hidden="true"
+                        >
                           {command.shortcut}
                         </kbd>
                       )}
@@ -314,22 +369,22 @@ export function CommandPalette() {
         </div>
 
         {/* Footer */}
-        <div className="px-4 py-2.5 border-t border-white/[0.06] bg-white/[0.02]">
-          <div className="flex items-center gap-4 text-[10px] text-zinc-600">
+        <div className="px-4 py-2.5 border-t border-border-subtle bg-surface-raised">
+          <div className="flex items-center gap-4 text-[10px] text-text-disabled" aria-hidden="true">
             <span className="flex items-center gap-1.5">
-              <kbd className="px-1.5 py-0.5 rounded bg-white/[0.04] border border-white/[0.06] font-medium text-zinc-500">
+              <kbd className="px-1.5 py-0.5 rounded bg-surface border border-border-subtle font-medium text-text-tertiary">
                 ↑↓
               </kbd>
               Navigate
             </span>
             <span className="flex items-center gap-1.5">
-              <kbd className="px-1.5 py-0.5 rounded bg-white/[0.04] border border-white/[0.06] font-medium text-zinc-500">
+              <kbd className="px-1.5 py-0.5 rounded bg-surface border border-border-subtle font-medium text-text-tertiary">
                 ↵
               </kbd>
               Run
             </span>
             <span className="flex items-center gap-1.5">
-              <kbd className="px-1.5 py-0.5 rounded bg-white/[0.04] border border-white/[0.06] font-medium text-zinc-500">
+              <kbd className="px-1.5 py-0.5 rounded bg-surface border border-border-subtle font-medium text-text-tertiary">
                 ESC
               </kbd>
               Close

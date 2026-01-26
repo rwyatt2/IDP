@@ -30,7 +30,7 @@ export function QuickActionsWidget() {
       id: 'create-app',
       label: 'Create App',
       icon: <Plus className="w-5 h-5" />,
-      color: 'bg-green-100 text-green-600 hover:bg-green-200',
+      color: 'bg-success/20 text-success hover:bg-success/30',
       action: () => {
         navigate('/build/create');
         toast.info('Create Application', 'Starting the application creation wizard');
@@ -40,7 +40,7 @@ export function QuickActionsWidget() {
       id: 'deploy',
       label: 'Deploy',
       icon: <Rocket className="w-5 h-5" />,
-      color: 'bg-purple-100 text-purple-600 hover:bg-purple-200',
+      color: 'bg-accent/20 text-accent hover:bg-accent/30',
       action: () => {
         navigate('/deploy/deployments');
         toast.info('Deployments', 'View and manage your deployments');
@@ -50,7 +50,7 @@ export function QuickActionsWidget() {
       id: 'search',
       label: 'Search',
       icon: <Search className="w-5 h-5" />,
-      color: 'bg-blue-100 text-blue-600 hover:bg-blue-200',
+      color: 'bg-info/20 text-info hover:bg-info/30',
       action: () => {
         openSearch();
       },
@@ -59,7 +59,7 @@ export function QuickActionsWidget() {
       id: 'docs',
       label: 'API Docs',
       icon: <FileText className="w-5 h-5" />,
-      color: 'bg-slate-100 text-slate-600 hover:bg-slate-200',
+      color: 'bg-surface-raised text-text-secondary hover:bg-border-subtle',
       action: () => {
         navigate('/discover/docs');
       },
@@ -68,7 +68,7 @@ export function QuickActionsWidget() {
       id: 'incident',
       label: 'Report Issue',
       icon: <AlertTriangle className="w-5 h-5" />,
-      color: 'bg-danger-100 text-danger-600 hover:bg-danger-200',
+      color: 'bg-error/20 text-error hover:bg-error/30',
       action: () => {
         navigate('/manage/incidents');
         toast.info('Incidents', 'Report or view active incidents');
@@ -78,7 +78,7 @@ export function QuickActionsWidget() {
       id: 'pipeline',
       label: 'Pipelines',
       icon: <GitBranch className="w-5 h-5" />,
-      color: 'bg-orange-100 text-orange-600 hover:bg-orange-200',
+      color: 'bg-warning/20 text-warning hover:bg-warning/30',
       action: () => {
         navigate('/build/pipelines');
       },
@@ -87,7 +87,7 @@ export function QuickActionsWidget() {
       id: 'catalog',
       label: 'Catalog',
       icon: <Database className="w-5 h-5" />,
-      color: 'bg-cyan-100 text-cyan-600 hover:bg-cyan-200',
+      color: 'bg-cyan-500/20 text-cyan-400 hover:bg-cyan-500/30',
       action: () => {
         navigate('/discover/catalog');
       },
@@ -96,7 +96,7 @@ export function QuickActionsWidget() {
       id: 'analytics',
       label: 'Analytics',
       icon: <BarChart3 className="w-5 h-5" />,
-      color: 'bg-pink-100 text-pink-600 hover:bg-pink-200',
+      color: 'bg-pink-500/20 text-pink-400 hover:bg-pink-500/30',
       action: () => {
         navigate('/manage/analytics');
       },

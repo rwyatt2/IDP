@@ -31,14 +31,14 @@ const categoryIcons: Record<ExtensionCategory, React.ReactNode> = {
 };
 
 const categoryColors: Record<ExtensionCategory, string> = {
-  catalog: 'bg-blue-100 text-blue-600',
-  deployment: 'bg-purple-100 text-purple-600',
-  monitoring: 'bg-green-100 text-green-600',
-  security: 'bg-red-100 text-red-600',
-  cost: 'bg-amber-100 text-amber-600',
-  infrastructure: 'bg-cyan-100 text-cyan-600',
-  collaboration: 'bg-pink-100 text-pink-600',
-  automation: 'bg-orange-100 text-orange-600',
+  catalog: 'bg-blue-500/20 text-blue-400',
+  deployment: 'bg-purple-500/20 text-purple-400',
+  monitoring: 'bg-green-500/20 text-green-400',
+  security: 'bg-red-500/20 text-red-400',
+  cost: 'bg-amber-500/20 text-amber-400',
+  infrastructure: 'bg-cyan-500/20 text-cyan-400',
+  collaboration: 'bg-pink-500/20 text-pink-400',
+  automation: 'bg-orange-500/20 text-orange-400',
 };
 
 function ExtensionCard({ extension }: { extension: Extension }) {
@@ -85,20 +85,20 @@ function ExtensionCard({ extension }: { extension: Extension }) {
             className={cn(
               'p-1.5 rounded-lg transition-colors',
               isFavorite
-                ? 'text-amber-500 bg-amber-50'
-                : 'text-slate-400 hover:text-amber-500 hover:bg-slate-100'
+                ? 'text-amber-400 bg-amber-500/20'
+                : 'text-text-tertiary hover:text-amber-400 hover:bg-surface-raised'
             )}
           >
             <Star className={cn('w-5 h-5', isFavorite && 'fill-current')} />
           </button>
         </div>
         
-        <h3 className="font-semibold text-slate-900 mb-1">{extension.name}</h3>
-        <p className="text-sm text-slate-500 line-clamp-2 mb-3">
+        <h3 className="font-semibold text-text-primary mb-1">{extension.name}</h3>
+        <p className="text-sm text-text-tertiary line-clamp-2 mb-3">
           {extension.shortDescription}
         </p>
         
-        <div className="flex items-center gap-3 text-sm text-slate-500 mb-4">
+        <div className="flex items-center gap-3 text-sm text-text-tertiary mb-4">
           <div className="flex items-center gap-1">
             <Star className="w-4 h-4 text-amber-500 fill-amber-500" />
             <span>{extension.rating}</span>
@@ -118,15 +118,15 @@ function ExtensionCard({ extension }: { extension: Extension }) {
         </div>
       </div>
       
-      <div className="px-5 py-3 border-t border-slate-100 bg-slate-50 flex items-center justify-between">
-        <span className="text-xs text-slate-500">by {extension.author}</span>
+      <div className="px-5 py-3 border-t border-border-subtle bg-surface-raised flex items-center justify-between">
+        <span className="text-xs text-text-tertiary">by {extension.author}</span>
         {extension.installed ? (
           <div className="flex items-center gap-2">
             <Button
               variant="ghost"
               size="sm"
               onClick={handleUninstall}
-              className="text-slate-500"
+              className="text-text-tertiary"
             >
               Uninstall
             </Button>
@@ -203,35 +203,35 @@ export function Extensions() {
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-bold text-slate-900">Extension Marketplace</h1>
-        <p className="text-slate-500 mt-1">
+        <h1 className="text-2xl font-bold text-text-primary">Extension Marketplace</h1>
+        <p className="text-text-tertiary mt-1">
           Discover and install extensions to enhance your developer platform
         </p>
       </div>
 
       {/* Featured Banner */}
       {activeTab === 'all' && (
-        <Card className="bg-gradient-to-r from-primary-800 to-primary-600 text-white border-0">
-          <div className="flex items-center justify-between">
-            <div>
-              <Badge variant="info" className="bg-white/20 text-white mb-2">
+        <Card className="bg-gradient-to-r from-accent/20 to-violet-600/20 border-accent/30">
+          <div className="flex items-center justify-between gap-6">
+            <div className="flex-1">
+              <Badge variant="info" className="mb-3">
                 Featured
               </Badge>
-              <h2 className="text-xl font-semibold">Incident Commander</h2>
-              <p className="text-primary-100 mt-1 max-w-md">
+              <h2 className="text-xl font-semibold text-text-primary">Incident Commander</h2>
+              <p className="text-text-secondary mt-2 max-w-lg">
                 Complete incident management with automated runbooks, on-call scheduling, and post-mortem workflows.
               </p>
               <Button
-                variant="secondary"
-                className="mt-4 bg-white text-primary-800 hover:bg-primary-50"
+                variant="primary"
+                className="mt-5"
               >
                 Learn More
                 <ChevronRight className="w-4 h-4 ml-1" />
               </Button>
             </div>
-            <div className="hidden lg:block">
-              <div className="w-32 h-32 rounded-2xl bg-white/10 flex items-center justify-center">
-                <Zap className="w-16 h-16 text-white/50" />
+            <div className="hidden lg:flex items-center justify-center">
+              <div className="w-24 h-24 rounded-2xl bg-accent/20 flex items-center justify-center">
+                <Zap className="w-12 h-12 text-accent" />
               </div>
             </div>
           </div>

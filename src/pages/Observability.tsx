@@ -59,8 +59,8 @@ export function Observability() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">Observability</h1>
-          <p className="text-slate-500 mt-1">
+          <h1 className="text-2xl font-bold text-text-primary">Observability</h1>
+          <p className="text-text-tertiary mt-1">
             Monitor metrics, logs, traces, and alerts
           </p>
         </div>
@@ -115,10 +115,10 @@ export function Observability() {
         {mockMetrics.map((metric) => (
           <Card key={metric.name} className="p-4">
             <div className="flex items-center justify-between mb-2">
-              <span className="text-sm text-slate-500">{metric.name}</span>
+              <span className="text-sm text-text-tertiary">{metric.name}</span>
               <div className={cn(
                 'flex items-center gap-1 text-sm',
-                metric.change > 0 ? 'text-success-600' : 'text-danger-600'
+                metric.change > 0 ? 'text-success' : 'text-error'
               )}>
                 {metric.change > 0 ? (
                   <TrendingUp className="w-4 h-4" />
@@ -128,18 +128,18 @@ export function Observability() {
                 {Math.abs(metric.change)}%
               </div>
             </div>
-            <p className="text-2xl font-bold text-slate-900">{metric.value}</p>
+            <p className="text-2xl font-bold text-text-primary">{metric.value}</p>
             <div className={cn(
               'mt-2 h-1 rounded-full',
-              metric.status === 'good' && 'bg-success-200',
-              metric.status === 'warning' && 'bg-warning-200',
-              metric.status === 'critical' && 'bg-danger-200'
+              metric.status === 'good' && 'bg-success/30',
+              metric.status === 'warning' && 'bg-warning/30',
+              metric.status === 'critical' && 'bg-error/30'
             )}>
               <div className={cn(
                 'h-1 rounded-full w-3/4',
-                metric.status === 'good' && 'bg-success-500',
-                metric.status === 'warning' && 'bg-warning-500',
-                metric.status === 'critical' && 'bg-danger-500'
+                metric.status === 'good' && 'bg-success',
+                metric.status === 'warning' && 'bg-warning',
+                metric.status === 'critical' && 'bg-error'
               )} />
             </div>
           </Card>
@@ -168,20 +168,20 @@ export function Observability() {
                   <Link
                     key={app.id}
                     to={`/discover/catalog/${app.id}`}
-                    className="flex items-center gap-4 p-3 rounded-lg bg-slate-50 hover:bg-slate-100 transition-colors"
+                    className="flex items-center gap-4 p-3 rounded-lg bg-surface-raised hover:bg-surface-raised/80 transition-colors"
                   >
                     <div className={cn(
                       'w-2 h-2 rounded-full',
-                      app.status === 'healthy' && 'bg-success-500',
-                      app.status === 'degraded' && 'bg-warning-500',
-                      app.status === 'critical' && 'bg-danger-500'
+                      app.status === 'healthy' && 'bg-success',
+                      app.status === 'degraded' && 'bg-warning',
+                      app.status === 'critical' && 'bg-error'
                     )} />
                     <div className="flex-1">
-                      <p className="font-medium text-slate-900">{app.displayName}</p>
+                      <p className="font-medium text-text-primary">{app.displayName}</p>
                     </div>
                     <div className="text-right text-sm">
-                      <p className="text-slate-900">{app.metrics.requestsPerSecond.toLocaleString()} rps</p>
-                      <p className="text-slate-500">{app.metrics.latencyP99}ms p99</p>
+                      <p className="text-text-primary">{app.metrics.requestsPerSecond.toLocaleString()} rps</p>
+                      <p className="text-text-tertiary">{app.metrics.latencyP99}ms p99</p>
                     </div>
                     <StatusBadge status={app.status} />
                   </Link>
@@ -205,17 +205,17 @@ export function Observability() {
                     key={alert.id}
                     className={cn(
                       'flex items-start gap-3 p-3 rounded-lg border',
-                      !alert.acknowledged && 'bg-warning-50 border-warning-200',
-                      alert.acknowledged && 'bg-slate-50 border-slate-200'
+                      !alert.acknowledged && 'bg-warning/10 border-warning/30',
+                      alert.acknowledged && 'bg-surface-raised border-border-subtle'
                     )}
                   >
-                    {alert.severity === 'critical' && <XCircle className="w-5 h-5 text-danger-500 mt-0.5" />}
-                    {alert.severity === 'warning' && <AlertTriangle className="w-5 h-5 text-warning-500 mt-0.5" />}
-                    {alert.severity === 'info' && <Bell className="w-5 h-5 text-primary-500 mt-0.5" />}
+                    {alert.severity === 'critical' && <XCircle className="w-5 h-5 text-error mt-0.5" />}
+                    {alert.severity === 'warning' && <AlertTriangle className="w-5 h-5 text-warning mt-0.5" />}
+                    {alert.severity === 'info' && <Bell className="w-5 h-5 text-accent mt-0.5" />}
                     <div className="flex-1 min-w-0">
-                      <p className="font-medium text-slate-900">{alert.title}</p>
-                      <p className="text-sm text-slate-600 truncate">{alert.message}</p>
-                      <p className="text-xs text-slate-400 mt-1">
+                      <p className="font-medium text-text-primary">{alert.title}</p>
+                      <p className="text-sm text-text-secondary truncate">{alert.message}</p>
+                      <p className="text-xs text-text-disabled mt-1">
                         {formatRelativeTime(alert.timestamp)}
                         {alert.acknowledged && ` · Acknowledged by ${alert.acknowledgedBy}`}
                       </p>
@@ -228,11 +228,11 @@ export function Observability() {
             {/* Chart Placeholder */}
             <Card padding="lg" className="lg:col-span-2">
               <CardHeader title="Request Rate & Error Rate" />
-              <div className="mt-4 h-64 flex items-center justify-center bg-slate-50 rounded-lg border-2 border-dashed border-slate-200">
+              <div className="mt-4 h-64 flex items-center justify-center bg-surface-raised rounded-lg border-2 border-dashed border-border-subtle">
                 <div className="text-center">
-                  <LineChart className="w-12 h-12 text-slate-300 mx-auto mb-2" />
-                  <p className="text-slate-500">Chart visualization</p>
-                  <p className="text-sm text-slate-400">Time-series data would render here</p>
+                  <LineChart className="w-12 h-12 text-text-disabled mx-auto mb-2" />
+                  <p className="text-text-tertiary">Chart visualization</p>
+                  <p className="text-sm text-text-disabled">Time-series data would render here</p>
                 </div>
               </div>
             </Card>
@@ -258,29 +258,29 @@ export function Observability() {
                     key={rule.id}
                     className={cn(
                       'flex items-center gap-4 p-4 rounded-lg border',
-                      rule.enabled ? 'border-slate-200' : 'border-slate-100 bg-slate-50 opacity-60'
+                      rule.enabled ? 'border-border-subtle' : 'border-border-subtle bg-surface-raised opacity-60'
                     )}
                   >
                     <div className={cn(
                       'w-10 h-10 rounded-lg flex items-center justify-center',
-                      rule.severity === 'critical' && 'bg-danger-100',
-                      rule.severity === 'warning' && 'bg-warning-100'
+                      rule.severity === 'critical' && 'bg-error/20',
+                      rule.severity === 'warning' && 'bg-warning/20'
                     )}>
                       <AlertTriangle className={cn(
                         'w-5 h-5',
-                        rule.severity === 'critical' && 'text-danger-600',
-                        rule.severity === 'warning' && 'text-warning-600'
+                        rule.severity === 'critical' && 'text-error',
+                        rule.severity === 'warning' && 'text-warning'
                       )} />
                     </div>
                     <div className="flex-1">
-                      <p className="font-medium text-slate-900">{rule.name}</p>
-                      <code className="text-sm text-slate-500">{rule.condition}</code>
+                      <p className="font-medium text-text-primary">{rule.name}</p>
+                      <code className="text-sm text-text-tertiary">{rule.condition}</code>
                     </div>
                     <Badge variant={rule.severity === 'critical' ? 'danger' : 'warning'} size="sm">
                       {rule.severity}
                     </Badge>
                     {rule.lastTriggered && (
-                      <span className="text-sm text-slate-500">
+                      <span className="text-sm text-text-tertiary">
                         Last: {formatRelativeTime(rule.lastTriggered)}
                       </span>
                     )}
@@ -303,28 +303,28 @@ export function Observability() {
               <Card key={app.id} padding="lg">
                 <CardHeader title={app.displayName} />
                 <div className="mt-4 grid grid-cols-2 gap-4">
-                  <div className="p-3 rounded-lg bg-slate-50">
-                    <p className="text-sm text-slate-500">Requests/sec</p>
-                    <p className="text-xl font-bold text-slate-900">
+                  <div className="p-3 rounded-lg bg-surface-raised">
+                    <p className="text-sm text-text-tertiary">Requests/sec</p>
+                    <p className="text-xl font-bold text-text-primary">
                       {app.metrics.requestsPerSecond.toLocaleString()}
                     </p>
                   </div>
-                  <div className="p-3 rounded-lg bg-slate-50">
-                    <p className="text-sm text-slate-500">P99 Latency</p>
-                    <p className="text-xl font-bold text-slate-900">{app.metrics.latencyP99}ms</p>
+                  <div className="p-3 rounded-lg bg-surface-raised">
+                    <p className="text-sm text-text-tertiary">P99 Latency</p>
+                    <p className="text-xl font-bold text-text-primary">{app.metrics.latencyP99}ms</p>
                   </div>
-                  <div className="p-3 rounded-lg bg-slate-50">
-                    <p className="text-sm text-slate-500">Error Rate</p>
+                  <div className="p-3 rounded-lg bg-surface-raised">
+                    <p className="text-sm text-text-tertiary">Error Rate</p>
                     <p className={cn(
                       'text-xl font-bold',
-                      app.metrics.errorRate > 1 ? 'text-danger-600' : 'text-slate-900'
+                      app.metrics.errorRate > 1 ? 'text-error' : 'text-text-primary'
                     )}>
                       {app.metrics.errorRate}%
                     </p>
                   </div>
-                  <div className="p-3 rounded-lg bg-slate-50">
-                    <p className="text-sm text-slate-500">Uptime</p>
-                    <p className="text-xl font-bold text-success-600">{app.metrics.uptime}%</p>
+                  <div className="p-3 rounded-lg bg-surface-raised">
+                    <p className="text-sm text-text-tertiary">Uptime</p>
+                    <p className="text-xl font-bold text-success">{app.metrics.uptime}%</p>
                   </div>
                 </div>
               </Card>
@@ -382,23 +382,23 @@ export function Observability() {
                 { id: 'trace-3', name: 'POST /api/v1/notifications', duration: '1.2s', spans: 6, status: 'error' },
                 { id: 'trace-4', name: 'GET /api/v1/products', duration: '89ms', spans: 5, status: 'success' },
               ].map((trace) => (
-                <div key={trace.id} className="flex items-center gap-4 p-4 rounded-lg border border-slate-200 hover:bg-slate-50 transition-colors cursor-pointer">
+                <div key={trace.id} className="flex items-center gap-4 p-4 rounded-lg border border-border-subtle hover:bg-surface-raised transition-colors cursor-pointer">
                   <div className={cn(
                     'w-2 h-2 rounded-full',
-                    trace.status === 'success' && 'bg-success-500',
-                    trace.status === 'error' && 'bg-danger-500'
+                    trace.status === 'success' && 'bg-success',
+                    trace.status === 'error' && 'bg-error'
                   )} />
                   <div className="flex-1">
-                    <p className="font-mono text-sm text-slate-900">{trace.name}</p>
-                    <p className="text-xs text-slate-500">{trace.spans} spans</p>
+                    <p className="font-mono text-sm text-text-primary">{trace.name}</p>
+                    <p className="text-xs text-text-tertiary">{trace.spans} spans</p>
                   </div>
                   <span className={cn(
-                    'font-mono text-sm',
-                    trace.status === 'error' && 'text-danger-600'
+                    'font-mono text-sm text-text-secondary',
+                    trace.status === 'error' && 'text-error'
                   )}>
                     {trace.duration}
                   </span>
-                  <ChevronRight className="w-4 h-4 text-slate-400" />
+                  <ChevronRight className="w-4 h-4 text-text-disabled" />
                 </div>
               ))}
             </div>

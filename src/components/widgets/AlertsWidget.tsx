@@ -6,10 +6,10 @@ import { AlertTriangle, AlertCircle, Info, Bell, Check } from 'lucide-react';
 import { Button } from '@/components/ui';
 
 const severityConfig = {
-  critical: { icon: <AlertTriangle className="w-4 h-4" />, color: 'text-danger-500', bg: 'bg-danger-50' },
-  error: { icon: <AlertTriangle className="w-4 h-4" />, color: 'text-danger-500', bg: 'bg-danger-50' },
-  warning: { icon: <AlertCircle className="w-4 h-4" />, color: 'text-warning-500', bg: 'bg-warning-50' },
-  info: { icon: <Info className="w-4 h-4" />, color: 'text-primary-500', bg: 'bg-primary-50' },
+  critical: { icon: <AlertTriangle className="w-4 h-4" />, color: 'text-error', bg: 'bg-error/20' },
+  error: { icon: <AlertTriangle className="w-4 h-4" />, color: 'text-error', bg: 'bg-error/20' },
+  warning: { icon: <AlertCircle className="w-4 h-4" />, color: 'text-warning', bg: 'bg-warning/20' },
+  info: { icon: <Info className="w-4 h-4" />, color: 'text-accent', bg: 'bg-accent/20' },
 };
 
 export function AlertsWidget() {
@@ -36,11 +36,11 @@ export function AlertsWidget() {
   if (alerts.length === 0) {
     return (
       <div className="text-center py-4">
-        <div className="w-12 h-12 rounded-full bg-success-100 flex items-center justify-center mx-auto mb-3">
-          <Bell className="w-6 h-6 text-success-500" />
+        <div className="w-12 h-12 rounded-full bg-success/20 flex items-center justify-center mx-auto mb-3">
+          <Bell className="w-6 h-6 text-success" />
         </div>
-        <p className="font-medium text-slate-900">No Active Alerts</p>
-        <p className="text-sm text-slate-500 mt-1">All systems operating normally</p>
+        <p className="font-medium text-text-primary">No Active Alerts</p>
+        <p className="text-sm text-text-tertiary mt-1">All systems operating normally</p>
       </div>
     );
   }
@@ -48,7 +48,7 @@ export function AlertsWidget() {
   return (
     <div className="space-y-3">
       {activeCount > 0 && (
-        <div className="text-xs font-medium text-slate-500 uppercase tracking-wide">
+        <div className="text-xs font-medium text-text-tertiary uppercase tracking-wide">
           {activeCount} Active Alert{activeCount !== 1 ? 's' : ''}
         </div>
       )}
@@ -62,8 +62,8 @@ export function AlertsWidget() {
             className={cn(
               'p-3 rounded-lg border transition-all',
               isAcked
-                ? 'border-slate-200 bg-slate-50 opacity-60'
-                : 'border-slate-200'
+                ? 'border-border-subtle bg-surface-raised opacity-60'
+                : 'border-border-subtle'
             )}
           >
             <div className="flex items-start gap-3">
@@ -75,11 +75,11 @@ export function AlertsWidget() {
                   <div>
                     <p className={cn(
                       'font-medium text-sm',
-                      isAcked ? 'text-slate-500' : 'text-slate-900'
+                      isAcked ? 'text-text-tertiary' : 'text-text-primary'
                     )}>
                       {alert.title}
                     </p>
-                    <p className="text-xs text-slate-500 mt-0.5 line-clamp-1">
+                    <p className="text-xs text-text-tertiary mt-0.5 line-clamp-1">
                       {alert.message}
                     </p>
                   </div>
@@ -88,24 +88,24 @@ export function AlertsWidget() {
                       variant="ghost"
                       size="sm"
                       onClick={() => handleAcknowledge(alert.id, alert.title)}
-                      className="text-slate-500 hover:text-slate-700 flex-shrink-0"
+                      className="text-text-tertiary hover:text-text-secondary flex-shrink-0"
                     >
                       <Check className="w-4 h-4" />
                     </Button>
                   )}
                 </div>
                 <div className="flex items-center gap-2 mt-1.5">
-                  <span className="text-xs text-slate-400">
+                  <span className="text-xs text-text-disabled">
                     {alert.source}
                   </span>
-                  <span className="text-xs text-slate-300">•</span>
-                  <span className="text-xs text-slate-400">
+                  <span className="text-xs text-text-disabled">•</span>
+                  <span className="text-xs text-text-disabled">
                     {formatRelativeTime(alert.timestamp)}
                   </span>
                   {isAcked && (
                     <>
-                      <span className="text-xs text-slate-300">•</span>
-                      <span className="text-xs text-success-600">Acknowledged</span>
+                      <span className="text-xs text-text-disabled">•</span>
+                      <span className="text-xs text-success">Acknowledged</span>
                     </>
                   )}
                 </div>

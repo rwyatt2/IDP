@@ -5,11 +5,11 @@ import { ChevronRight, Rocket, CheckCircle, XCircle, Clock, Loader2 } from 'luci
 import { StatusBadge, Skeleton } from '@/components/ui';
 
 const statusIcons = {
-  succeeded: <CheckCircle className="w-4 h-4 text-success-500" />,
-  failed: <XCircle className="w-4 h-4 text-danger-500" />,
-  'in-progress': <Loader2 className="w-4 h-4 text-primary-500 animate-spin" />,
-  pending: <Clock className="w-4 h-4 text-slate-400" />,
-  'awaiting-approval': <Clock className="w-4 h-4 text-warning-500" />,
+  succeeded: <CheckCircle className="w-4 h-4 text-success" />,
+  failed: <XCircle className="w-4 h-4 text-error" />,
+  'in-progress': <Loader2 className="w-4 h-4 text-accent animate-spin" />,
+  pending: <Clock className="w-4 h-4 text-text-tertiary" />,
+  'awaiting-approval': <Clock className="w-4 h-4 text-warning" />,
 };
 
 export function RecentDeploymentsWidget() {
@@ -34,7 +34,7 @@ export function RecentDeploymentsWidget() {
   if (!deployments?.length) {
     return (
       <div className="text-center py-4">
-        <p className="text-slate-500">No recent deployments</p>
+        <p className="text-text-tertiary">No recent deployments</p>
       </div>
     );
   }
@@ -45,21 +45,21 @@ export function RecentDeploymentsWidget() {
         <Link
           key={deployment.id}
           to={`/deploy/deployments/${deployment.id}`}
-          className="flex items-center gap-3 p-2 -mx-2 rounded-lg hover:bg-slate-50 transition-colors"
+          className="flex items-center gap-3 p-2 -mx-2 rounded-lg hover:bg-surface-raised transition-colors"
         >
-          <div className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center">
+          <div className="w-8 h-8 rounded-full bg-surface-raised flex items-center justify-center">
             {statusIcons[deployment.status as keyof typeof statusIcons] || (
-              <Rocket className="w-4 h-4 text-slate-400" />
+              <Rocket className="w-4 h-4 text-text-tertiary" />
             )}
           </div>
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2">
-              <span className="font-medium text-slate-900 truncate">
+              <span className="font-medium text-text-primary truncate">
                 {deployment.applicationName}
               </span>
-              <span className="text-sm text-slate-500">{deployment.version}</span>
+              <span className="text-sm text-text-tertiary">{deployment.version}</span>
             </div>
-            <div className="flex items-center gap-2 text-sm text-slate-500">
+            <div className="flex items-center gap-2 text-sm text-text-tertiary">
               <span>{deployment.environment}</span>
               <span>·</span>
               <span>{formatRelativeTime(deployment.triggeredAt)}</span>
@@ -70,7 +70,7 @@ export function RecentDeploymentsWidget() {
       ))}
       <Link
         to="/deploy/deployments"
-        className="flex items-center justify-center gap-1 text-sm text-primary-600 hover:text-primary-700 pt-2"
+        className="flex items-center justify-center gap-1 text-sm text-accent hover:text-accent-hover pt-2"
       >
         View all deployments
         <ChevronRight className="w-4 h-4" />

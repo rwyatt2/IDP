@@ -1,106 +1,197 @@
 # Internal Developer Platform (IDP)
 
-A high-fidelity React application serving as a unified entry point for all developer tools and services.
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.3-blue.svg)](https://www.typescriptlang.org/)
+[![React](https://img.shields.io/badge/React-18.2-61dafb.svg)](https://reactjs.org/)
+[![Vite](https://img.shields.io/badge/Vite-5.0-646cff.svg)](https://vitejs.dev/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-## Features
+A comprehensive, accessible, and award-winning Internal Developer Platform that serves as a unified entry point for all developer tools and services. Built with modern React, TypeScript, and a robust design system.
 
-### Federated Shell System
-- Consistent navigation, authentication, and user context
-- Extension system where tools plug into the shell
-- Widget marketplace for personalized dashboards
-- Shared design system across all extensions
+## Table of Contents
 
-### Four-Phase Workflow Organization
+- [Overview](#overview)
+- [Quick Start](#quick-start)
+- [Architecture](#architecture)
+- [Features](#features)
+- [Documentation](#documentation)
+- [Contributing](#contributing)
+- [License](#license)
 
-1. **Discover** - Browse applications, search resources, view dependencies
-2. **Build** - Create applications, configure services, set up pipelines
-3. **Deploy** - Release management, deployment history, environment management
-4. **Manage** - Monitor health, track costs, incident management
+## Overview
 
-### Key Features
+The IDP is designed around the **Jobs-to-be-Done (JTBD)** framework, organizing capabilities by developer workflows rather than tool categories. It provides a federated shell system where various tools and extensions can plug in while maintaining a consistent user experience.
 
-- **Personalized Dashboard** - Drag-and-drop widget system with real-time data
-- **Global Search** - Search across all extensions with smart filtering
-- **Extension Marketplace** - Self-service extension registration and discovery
-- **System Catalog** - Unified view of applications, services, and infrastructure
-- **Application Onboarding** - Multi-step wizard with cost estimation
+### Design Philosophy
 
-## Tech Stack
+- **Jobs-to-be-Done** over tool-centric thinking
+- **Progressive Disclosure** of complexity
+- **Accessibility First** (WCAG 2.1 AA compliant)
+- **Persona-Aware** experiences (Developer, Tech Lead, Manager, Executive)
+- **Performance Optimized** (&lt; 2s page loads)
 
-- **React 18** + **TypeScript** - Modern React with full type safety
-- **Vite** - Fast build tooling with HMR
-- **Tailwind CSS** - Utility-first styling
-- **Lucide React** - Beautiful icons
-- **React Router** - Client-side routing
-- **Zustand** - Lightweight state management
-- **React Query** - Server state management
-- **@dnd-kit** - Drag and drop functionality
-
-## Getting Started
+## Quick Start
 
 ### Prerequisites
 
-- Node.js 18+ 
-- npm or yarn
+- Node.js 18.x or higher
+- npm 9.x or higher (or yarn 1.22+)
 
 ### Installation
 
 ```bash
+# Clone the repository
+git clone https://github.com/your-org/internal-developer-platform.git
+cd internal-developer-platform
+
 # Install dependencies
 npm install
 
 # Start development server
 npm run dev
 
-# Build for production
-npm run build
+# The app will be available at http://localhost:3000
+```
 
-# Preview production build
-npm run preview
+### Available Scripts
+
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Start development server with HMR |
+| `npm run build` | Build for production (TypeScript + Vite) |
+| `npm run preview` | Preview production build locally |
+| `npm run lint` | Run ESLint for code quality |
+
+## Architecture
+
+### High-Level Architecture
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                        IDP Shell                                 │
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────────────────────┐ │
+│  │   TopNav    │  │  Sidebar    │  │     Main Content        │ │
+│  │  (Search,   │  │ (Navigation │  │  (Page Routes +         │ │
+│  │   Actions)  │  │  Phases)    │  │   Dashboard Widgets)    │ │
+│  └─────────────┘  └─────────────┘  └─────────────────────────┘ │
+└─────────────────────────────────────────────────────────────────┘
+                              │
+        ┌─────────────────────┼─────────────────────┐
+        │                     │                     │
+   ┌────▼────┐          ┌────▼────┐          ┌────▼────┐
+   │ Discover │          │  Build  │          │ Deploy  │
+   │  Phase   │          │  Phase  │          │  Phase  │
+   └─────────┘          └─────────┘          └─────────┘
+        │                     │                     │
+        └─────────────────────┼─────────────────────┘
+                              │
+                        ┌────▼────┐
+                        │ Manage  │
+                        │  Phase  │
+                        └─────────┘
 ```
 
 ### Project Structure
 
 ```
 src/
-├── components/
-│   ├── dashboard/      # Dashboard-specific components
-│   ├── shell/          # Navigation, layout, search
-│   ├── ui/             # Reusable UI components
-│   └── widgets/        # Dashboard widgets
-├── data/
-│   └── mock-data.ts    # Sample data for development
-├── hooks/
-│   ├── use-api.ts      # React Query hooks
-│   └── use-keyboard-shortcuts.ts
-├── lib/
-│   └── utils.ts        # Utility functions
-├── pages/              # Page components
-├── stores/             # Zustand stores
-├── types/              # TypeScript type definitions
-├── App.tsx             # Main application component
-└── main.tsx           # Application entry point
+├── components/           # React components
+│   ├── dashboard/       # Dashboard-specific components
+│   ├── dev-panel/       # Developer tools panel
+│   ├── help/            # Help system components
+│   ├── shell/           # Navigation, layout, search
+│   ├── ui/              # Reusable UI component library
+│   └── widgets/         # Dashboard widgets
+├── data/                # Mock data and documentation data
+├── hooks/               # Custom React hooks
+├── lib/                 # Utility functions
+├── pages/               # Page components (routes)
+├── stores/              # Zustand state management
+├── styles/              # Design tokens and global styles
+└── types/               # TypeScript type definitions
 ```
 
-## Design Principles
+### Technology Stack
 
-- **Jobs-to-be-done** over tool-centric thinking
-- **Progressive disclosure** of complexity
-- **Consistent visual language** across extensions
-- **Mobile-responsive** for on-call scenarios
-- **Accessibility** (WCAG 2.1 AA compliance)
-- **Performance** (< 2s page loads)
+| Category | Technology | Purpose |
+|----------|------------|---------|
+| **Framework** | React 18 | UI library with concurrent features |
+| **Language** | TypeScript 5.3 | Type safety and developer experience |
+| **Build Tool** | Vite 5 | Fast development and optimized builds |
+| **Styling** | Tailwind CSS 3.4 | Utility-first CSS framework |
+| **State** | Zustand 4.4 | Lightweight state management |
+| **Server State** | TanStack Query 5 | Async state management |
+| **Routing** | React Router 6 | Client-side routing |
+| **DnD** | @dnd-kit | Drag and drop functionality |
+| **Icons** | Lucide React | Consistent iconography |
+| **Charts** | Recharts | Data visualization |
 
-## Keyboard Shortcuts
+## Features
+
+### Four-Phase Workflow Organization
+
+1. **Discover** - Browse applications, search resources, view dependencies, API documentation
+2. **Build** - Create applications, configure services, set up CI/CD pipelines
+3. **Deploy** - Release management, deployment tracking, environment management
+4. **Manage** - Monitor health, track costs, incident management, analytics
+
+### Core Capabilities
+
+- **Personalized Dashboard** - Drag-and-drop widget system with persona-aware defaults
+- **Global Search** - Unified search across all platform resources (⌘K)
+- **Command Palette** - Quick actions and navigation (⌘/)
+- **Extension Marketplace** - Self-service extension discovery and installation
+- **System Catalog** - Unified view of applications, services, and infrastructure
+- **Knowledge Management** - Contextual help and documentation system
+- **Guided Tours** - Persona-specific onboarding experiences
+
+### Keyboard Shortcuts
 
 | Shortcut | Action |
 |----------|--------|
-| `⌘K` | Open command palette |
-| `/` | Focus search |
+| `⌘K` | Open global search |
+| `⌘/` | Open help center |
 | `⌘B` | Toggle sidebar |
-| `⌘1-4` | Navigate phases |
 | `⌘⇧N` | Create new application |
+| `⌘⇧P` | Open command palette |
+| `Escape` | Close modals/drawers |
+
+## Documentation
+
+Comprehensive documentation is available in the `/docs` directory:
+
+| Document | Description |
+|----------|-------------|
+| [Architecture](docs/ARCHITECTURE.md) | System architecture and design decisions |
+| [Development](docs/DEVELOPMENT.md) | Development setup and workflow guide |
+| [Components](docs/COMPONENTS.md) | UI component library documentation |
+| [Design System](docs/DESIGN-SYSTEM.md) | Design tokens, colors, typography |
+| [Testing](docs/TESTING.md) | Testing strategy and guidelines |
+| [Deployment](docs/DEPLOYMENT.md) | Build and deployment procedures |
+| [Security](docs/SECURITY.md) | Security guidelines and best practices |
+| [Contributing](CONTRIBUTING.md) | Contribution guidelines |
+
+### Architecture Decision Records (ADRs)
+
+Key architectural decisions are documented in `docs/adr/`:
+
+- [ADR-001: React + TypeScript Stack](docs/adr/001-react-typescript-stack.md)
+- [ADR-002: Zustand for State Management](docs/adr/002-zustand-state-management.md)
+- [ADR-003: Design Token System](docs/adr/003-design-token-system.md)
+- [ADR-004: Persona-Based Architecture](docs/adr/004-persona-based-architecture.md)
+
+## Contributing
+
+We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details on:
+
+- Code of Conduct
+- Development workflow
+- Pull request process
+- Coding standards
 
 ## License
 
-MIT
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+**Built with care by the Platform Engineering Team**

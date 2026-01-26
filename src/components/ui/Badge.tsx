@@ -1,7 +1,7 @@
 import { cn } from '@/lib/utils';
 
 export interface BadgeProps {
-  variant?: 'success' | 'warning' | 'danger' | 'info' | 'neutral' | 'accent';
+  variant?: 'default' | 'success' | 'warning' | 'error' | 'danger' | 'info' | 'accent' | 'neutral';
   size?: 'sm' | 'md';
   dot?: boolean;
   children: React.ReactNode;
@@ -9,28 +9,31 @@ export interface BadgeProps {
 }
 
 export function Badge({
-  variant = 'neutral',
+  variant = 'default',
   size = 'md',
   dot,
   children,
   className,
 }: BadgeProps) {
+  // Map 'danger' to 'error' and 'neutral' to 'default' for backwards compat
+  const normalizedVariant = variant === 'danger' ? 'error' : variant === 'neutral' ? 'default' : variant;
+
   const variants = {
-    success: 'badge-success',
-    warning: 'badge-warning',
-    danger: 'badge-danger',
-    info: 'badge-info',
-    neutral: 'badge-neutral',
-    accent: 'badge-accent',
+    default: 'badge',
+    success: 'badge badge-success',
+    warning: 'badge badge-warning',
+    error: 'badge badge-error',
+    info: 'badge badge-info',
+    accent: 'badge badge-accent',
   };
 
   const dotColors = {
-    success: 'bg-emerald-400 shadow-[0_0_6px_rgba(52,211,153,0.6)]',
-    warning: 'bg-amber-400 shadow-[0_0_6px_rgba(251,191,36,0.6)]',
-    danger: 'bg-red-400 shadow-[0_0_6px_rgba(248,113,113,0.6)]',
-    info: 'bg-blue-400 shadow-[0_0_6px_rgba(96,165,250,0.6)]',
-    neutral: 'bg-zinc-500',
-    accent: 'bg-violet-400 shadow-[0_0_6px_rgba(167,139,250,0.6)]',
+    default: 'status-dot-neutral',
+    success: 'status-dot-success',
+    warning: 'status-dot-warning',
+    error: 'status-dot-error',
+    info: 'status-dot-info',
+    accent: 'bg-accent',
   };
 
   const sizes = {
@@ -39,9 +42,15 @@ export function Badge({
   };
 
   return (
-    <span className={cn(variants[variant], sizes[size], className)}>
+    <span 
+      className={cn(variants[normalizedVariant], sizes[size], className)}
+      role="status"
+    >
       {dot && (
-        <span className={cn('w-1.5 h-1.5 rounded-full', dotColors[variant])} />
+        <span 
+          className={cn('status-dot', dotColors[normalizedVariant])} 
+          aria-hidden="true"
+        />
       )}
       {children}
     </span>
@@ -73,14 +82,14 @@ export function StatusBadge({ status, className }: StatusBadgeProps) {
       case 'rejected':
       case 'open':
       case 'error':
-        return 'danger';
+        return 'error';
       case 'in-progress':
       case 'pending':
       case 'awaiting-approval':
       case 'deploying':
         return 'info';
       default:
-        return 'neutral';
+        return 'default';
     }
   };
 
@@ -91,9 +100,15 @@ export function StatusBadge({ status, className }: StatusBadgeProps) {
       .join(' ');
   };
 
+  const formattedStatus = formatStatus(status);
+
   return (
-    <Badge variant={getVariant()} dot className={className}>
-      {formatStatus(status)}
+    <Badge 
+      variant={getVariant()} 
+      dot 
+      className={className}
+    >
+      {formattedStatus}
     </Badge>
   );
 }

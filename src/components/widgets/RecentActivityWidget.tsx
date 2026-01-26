@@ -20,12 +20,12 @@ const activityIcons = {
 };
 
 const activityColors = {
-  deployment: 'bg-purple-100 text-purple-600',
-  incident: 'bg-danger-100 text-danger-600',
-  approval: 'bg-success-100 text-success-600',
-  'config-change': 'bg-blue-100 text-blue-600',
-  comment: 'bg-slate-100 text-slate-600',
-  alert: 'bg-warning-100 text-warning-600',
+  deployment: 'bg-accent/20 text-accent',
+  incident: 'bg-error/20 text-error',
+  approval: 'bg-success/20 text-success',
+  'config-change': 'bg-info/20 text-info',
+  comment: 'bg-surface-raised text-text-secondary',
+  alert: 'bg-warning/20 text-warning',
 };
 
 export function RecentActivityWidget() {
@@ -50,7 +50,7 @@ export function RecentActivityWidget() {
   if (!activities?.length) {
     return (
       <div className="text-center py-4">
-        <p className="text-slate-500">No recent activity</p>
+        <p className="text-text-tertiary">No recent activity</p>
       </div>
     );
   }
@@ -60,13 +60,13 @@ export function RecentActivityWidget() {
       {activities.map((activity) => (
         <div
           key={activity.id}
-          className="flex items-start gap-3 p-2 -mx-2 rounded-lg hover:bg-slate-50 transition-colors"
+          className="flex items-start gap-3 p-2 -mx-2 rounded-lg hover:bg-surface-raised transition-colors"
         >
           <div
             className={cn(
               'w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0',
               activityColors[activity.type as keyof typeof activityColors] ||
-                'bg-slate-100 text-slate-600'
+                'bg-surface-raised text-text-secondary'
             )}
           >
             {activityIcons[activity.type as keyof typeof activityIcons] || (
@@ -74,9 +74,9 @@ export function RecentActivityWidget() {
             )}
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-sm font-medium text-slate-900">{activity.title}</p>
-            <p className="text-sm text-slate-500 truncate">{activity.description}</p>
-            <div className="flex items-center gap-2 mt-1 text-xs text-slate-400">
+            <p className="text-sm font-medium text-text-primary">{activity.title}</p>
+            <p className="text-sm text-text-tertiary truncate">{activity.description}</p>
+            <div className="flex items-center gap-2 mt-1 text-xs text-text-disabled">
               {activity.user && <span>{activity.user}</span>}
               {activity.user && <span>·</span>}
               <span>{formatRelativeTime(activity.timestamp)}</span>

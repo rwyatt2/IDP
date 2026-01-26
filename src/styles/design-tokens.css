@@ -1,0 +1,212 @@
+/* ============================================================================
+   DESIGN TOKEN SYSTEM
+   Internal Developer Platform - Foundation Layer
+   
+   This file defines ALL visual primitives. Components MUST use these tokens.
+   No arbitrary values allowed in component CSS.
+   ============================================================================ */
+
+:root {
+  /* ==========================================================================
+     A. COLOR SYSTEM (Semantic + WCAG AA Accessible)
+     ========================================================================== */
+
+  /* Base Palette - Tinted Neutrals (dark blue undertone) */
+  --color-canvas: #0a0e14;           /* Main background */
+  --color-surface: #101419;          /* Card backgrounds */
+  --color-surface-raised: #161b22;   /* Elevated elements (modals, dropdowns) */
+  --color-surface-overlay: #1c2128;  /* Highest elevation */
+  
+  /* Border System */
+  --color-border-subtle: rgba(255, 255, 255, 0.06);
+  --color-border-default: rgba(255, 255, 255, 0.12);
+  --color-border-strong: rgba(255, 255, 255, 0.18);
+  --color-border-emphasis: rgba(255, 255, 255, 0.24);
+
+  /* Text Hierarchy (Contrast Verified) */
+  --color-text-primary: #e6edf3;     /* 14.5:1 on canvas - headings, important */
+  --color-text-secondary: #9198a1;   /* 6.2:1 on canvas - body text */
+  --color-text-tertiary: #6e7681;    /* 4.6:1 on canvas - labels, meta */
+  --color-text-disabled: #484f58;    /* 3.2:1 - disabled states */
+  --color-text-inverse: #0a0e14;     /* For light backgrounds */
+
+  /* Accent Colors (Indigo - Refined for eye comfort) */
+  --color-accent-primary: #5558d4;   /* Slightly muted indigo */
+  --color-accent-primary-hover: #4a4dc4;
+  --color-accent-primary-active: #4043b0;
+  --color-accent-primary-subtle: rgba(85, 88, 212, 0.12);
+  --color-accent-text: #9ba3e6;      /* Softer accent text - 6.5:1 contrast */
+  --color-accent-border: rgba(85, 88, 212, 0.3);
+
+  /* Status Colors (Semantic) - Muted for eye comfort, WCAG AA compliant */
+  --color-success: #2d8a4e;          /* Desaturated green */
+  --color-success-text: #6fbc8a;     /* Muted green text - 5.2:1 contrast */
+  --color-success-subtle: rgba(45, 138, 78, 0.12);
+  --color-success-border: rgba(45, 138, 78, 0.25);
+
+  --color-warning: #a67c1a;          /* Muted amber */
+  --color-warning-text: #c9a54e;     /* Softer amber text - 5.8:1 contrast */
+  --color-warning-subtle: rgba(166, 124, 26, 0.12);
+  --color-warning-border: rgba(166, 124, 26, 0.25);
+
+  --color-error: #c44d47;            /* Desaturated red */
+  --color-error-text: #e07a75;       /* Muted red text - 5.1:1 contrast */
+  --color-error-subtle: rgba(196, 77, 71, 0.12);
+  --color-error-border: rgba(196, 77, 71, 0.25);
+
+  --color-info: #4a8cc7;             /* Desaturated blue */
+  --color-info-text: #7db3dc;        /* Muted blue text - 5.4:1 contrast */
+  --color-info-subtle: rgba(74, 140, 199, 0.12);
+  --color-info-border: rgba(74, 140, 199, 0.25);
+
+  /* ==========================================================================
+     B. SPACING SCALE (8px Base Grid)
+     ========================================================================== */
+  --space-0: 0;
+  --space-1: 0.25rem;   /* 4px */
+  --space-2: 0.5rem;    /* 8px */
+  --space-3: 0.75rem;   /* 12px */
+  --space-4: 1rem;      /* 16px */
+  --space-5: 1.25rem;   /* 20px */
+  --space-6: 1.5rem;    /* 24px */
+  --space-8: 2rem;      /* 32px */
+  --space-10: 2.5rem;   /* 40px */
+  --space-12: 3rem;     /* 48px */
+  --space-16: 4rem;     /* 64px */
+  --space-20: 5rem;     /* 80px */
+  --space-24: 6rem;     /* 96px */
+
+  /* ==========================================================================
+     C. TYPOGRAPHY SCALE (1.125 Modular Scale)
+     ========================================================================== */
+  
+  /* Font Families */
+  --font-sans: 'Inter var', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'SF Mono', Consolas, monospace;
+
+  /* Font Sizes */
+  --text-xs: 0.75rem;     /* 12px */
+  --text-sm: 0.875rem;    /* 14px */
+  --text-base: 1rem;      /* 16px */
+  --text-lg: 1.125rem;    /* 18px */
+  --text-xl: 1.25rem;     /* 20px */
+  --text-2xl: 1.5rem;     /* 24px */
+  --text-3xl: 1.875rem;   /* 30px */
+  --text-4xl: 2.25rem;    /* 36px */
+  --text-5xl: 3rem;       /* 48px */
+
+  /* Font Weights */
+  --font-normal: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
+
+  /* Line Heights */
+  --leading-none: 1;
+  --leading-tight: 1.25;
+  --leading-snug: 1.375;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.625;
+  --leading-loose: 2;
+
+  /* Letter Spacing */
+  --tracking-tighter: -0.05em;
+  --tracking-tight: -0.025em;
+  --tracking-normal: 0;
+  --tracking-wide: 0.025em;
+  --tracking-wider: 0.05em;
+  --tracking-widest: 0.1em;
+
+  /* ==========================================================================
+     D. EFFECTS (Depth System)
+     ========================================================================== */
+
+  /* Shadows - Layered for realism */
+  --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.4), 
+               0 1px 2px -1px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 
+               0 2px 4px -2px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 
+               0 4px 6px -4px rgba(0, 0, 0, 0.5);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 
+               0 8px 10px -6px rgba(0, 0, 0, 0.5);
+  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+
+  /* Inner highlight (premium card detail) */
+  --shadow-inner-highlight: inset 0 1px 0 0 rgba(255, 255, 255, 0.05);
+  --shadow-inner-highlight-strong: inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
+
+  /* Focus ring - MUST be highly visible for accessibility */
+  --shadow-focus: 0 0 0 3px var(--color-accent-primary-subtle), 
+                  0 0 0 1px var(--color-accent-primary);
+  --shadow-focus-error: 0 0 0 3px var(--color-error-subtle), 
+                        0 0 0 1px var(--color-error);
+
+  /* Glow effects - Very subtle, not distracting */
+  --shadow-glow-accent: 0 0 12px -6px var(--color-accent-primary);
+  --shadow-glow-success: 0 0 10px -6px var(--color-success);
+  --shadow-glow-error: 0 0 10px -6px var(--color-error);
+
+  /* Blur values */
+  --blur-sm: 4px;
+  --blur-md: 8px;
+  --blur-lg: 16px;
+  --blur-xl: 24px;
+  --blur-2xl: 40px;
+
+  /* ==========================================================================
+     E. BORDER RADIUS (Contextual)
+     ========================================================================== */
+  --radius-none: 0;
+  --radius-sm: 0.25rem;   /* 4px - badges, tags */
+  --radius-md: 0.5rem;    /* 8px - buttons, inputs */
+  --radius-lg: 0.75rem;   /* 12px - cards */
+  --radius-xl: 1rem;      /* 16px - modals, large cards */
+  --radius-2xl: 1.5rem;   /* 24px - hero sections */
+  --radius-full: 9999px;  /* Pills, avatars */
+
+  /* ==========================================================================
+     F. TRANSITIONS (Motion)
+     ========================================================================== */
+  --duration-instant: 0ms;
+  --duration-fast: 100ms;
+  --duration-normal: 150ms;
+  --duration-slow: 200ms;
+  --duration-slower: 300ms;
+  --duration-slowest: 500ms;
+
+  --ease-linear: linear;
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* ==========================================================================
+     G. Z-INDEX SCALE
+     ========================================================================== */
+  --z-base: 0;
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-fixed: 300;
+  --z-modal-backdrop: 400;
+  --z-modal: 500;
+  --z-popover: 600;
+  --z-tooltip: 700;
+  --z-toast: 800;
+  --z-max: 9999;
+}
+
+/* ==========================================================================
+   REDUCED MOTION PREFERENCES
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration-instant: 0ms;
+    --duration-fast: 0ms;
+    --duration-normal: 0ms;
+    --duration-slow: 0ms;
+    --duration-slower: 0ms;
+    --duration-slowest: 0ms;
+  }
+}

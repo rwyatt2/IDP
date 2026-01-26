@@ -69,16 +69,16 @@ export function WidgetWrapper({
           <button
             {...attributes}
             {...listeners}
-            className="p-1 rounded text-slate-400 hover:text-slate-600 hover:bg-slate-100 cursor-grab active:cursor-grabbing transition-colors"
+            className="p-1 rounded text-text-tertiary hover:text-text-secondary hover:bg-surface-raised cursor-grab active:cursor-grabbing transition-colors"
           >
             <GripVertical className="w-4 h-4" />
           </button>
-          <h3 className="font-semibold text-slate-900">{title}</h3>
+          <h3 className="font-semibold text-text-primary">{title}</h3>
         </div>
         <div className="flex items-center gap-1">
           <button
             onClick={toggleSize}
-            className="p-1 rounded text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors"
+            className="p-1 rounded text-text-tertiary hover:text-text-secondary hover:bg-surface-raised transition-colors"
           >
             {size === 'large' ? (
               <Minimize2 className="w-4 h-4" />
@@ -88,7 +88,7 @@ export function WidgetWrapper({
           </button>
           <button
             onClick={() => removeWidget(instanceId)}
-            className="p-1 rounded text-slate-400 hover:text-danger-600 hover:bg-danger-50 transition-colors"
+            className="p-1 rounded text-text-tertiary hover:text-error hover:bg-error/10 transition-colors"
           >
             <X className="w-4 h-4" />
           </button>
@@ -102,9 +102,9 @@ export function WidgetWrapper({
             <div className="spinner" />
           </div>
         ) : error ? (
-          <div className="py-8 text-center text-danger-600">
+          <div className="py-8 text-center text-error">
             <p>Failed to load widget</p>
-            <p className="text-sm text-slate-500 mt-1">{error}</p>
+            <p className="text-sm text-text-tertiary mt-1">{error}</p>
           </div>
         ) : (
           children

@@ -3,13 +3,22 @@ import { persist } from 'zustand/middleware';
 import type { WidgetInstance, WidgetSize } from '@/types';
 import { currentUser } from '@/data/mock-data';
 
+interface CustomWidgetData {
+  title: string;
+  description: string;
+  size: WidgetSize;
+  config: Record<string, unknown>;
+}
+
 interface DashboardState {
   widgets: WidgetInstance[];
+  customWidgets: Record<string, CustomWidgetData>;
   isEditing: boolean;
   draggedWidget: string | null;
   
   // Actions
   addWidget: (widgetId: string, size?: WidgetSize) => void;
+  addCustomWidget: (data: CustomWidgetData) => void;
   removeWidget: (instanceId: string) => void;
   updateWidgetPosition: (instanceId: string, position: { x: number; y: number }) => void;
   updateWidgetSize: (instanceId: string, size: WidgetSize) => void;
@@ -17,6 +26,7 @@ interface DashboardState {
   setEditing: (isEditing: boolean) => void;
   setDraggedWidget: (widgetId: string | null) => void;
   resetLayout: () => void;
+  getCustomWidget: (widgetId: string) => CustomWidgetData | undefined;
 }
 
 const defaultWidgets = currentUser.preferences.dashboardLayout.widgets;
@@ -25,6 +35,7 @@ export const useDashboardStore = create<DashboardState>()(
   persist(
     (set, get) => ({
       widgets: defaultWidgets,
+      customWidgets: {},
       isEditing: false,
       draggedWidget: null,
 
@@ -37,6 +48,27 @@ export const useDashboardStore = create<DashboardState>()(
           size,
         };
         set({ widgets: [...widgets, newWidget] });
+      },
+
+      addCustomWidget: (data) => {
+        const widgets = get().widgets;
+        const customWidgets = get().customWidgets;
+        const customWidgetId = `custom-${Date.now()}`;
+        
+        const newWidget: WidgetInstance = {
+          id: `widget-${Date.now()}`,
+          widgetId: customWidgetId,
+          position: { x: widgets.length % 3, y: Math.floor(widgets.length / 3) },
+          size: data.size,
+        };
+        
+        set({
+          widgets: [...widgets, newWidget],
+          customWidgets: {
+            ...customWidgets,
+            [customWidgetId]: data,
+          },
+        });
       },
 
       removeWidget: (instanceId) =>
@@ -76,11 +108,13 @@ export const useDashboardStore = create<DashboardState>()(
       
       setDraggedWidget: (widgetId) => set({ draggedWidget: widgetId }),
       
-      resetLayout: () => set({ widgets: defaultWidgets }),
+      resetLayout: () => set({ widgets: defaultWidgets, customWidgets: {} }),
+      
+      getCustomWidget: (widgetId) => get().customWidgets[widgetId],
     }),
     {
       name: 'dashboard-storage',
-      partialize: (state) => ({ widgets: state.widgets }),
+      partialize: (state) => ({ widgets: state.widgets, customWidgets: state.customWidgets }),
     }
   )
 );

@@ -1,7 +1,7 @@
-import { useState, useRef, useMemo } from 'react';
+import { useState, useRef, useMemo, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
-import { useUserStore, useNavigationStore } from '@/stores';
+import { useUserStore, useNavigationStore, useDocumentationStore } from '@/stores';
 import { useClickOutside } from '@/hooks';
 import {
   Search,
@@ -13,25 +13,69 @@ import {
   Command,
   ChevronDown,
   Plus,
-  Store,
   Sparkles,
+  Code,
+  Users,
+  BarChart3,
+  Briefcase,
+  Check,
 } from 'lucide-react';
 import { Avatar, Button } from '@/components/ui';
+import { usePersonaStore } from '@/stores';
+import { PERSONAS, type PersonaType } from '@/types/persona';
 import { formatRelativeTime } from '@/lib/utils';
+
+const personaIcons: Record<PersonaType, React.ReactNode> = {
+  developer: <Code className="w-4 h-4" aria-hidden="true" />,
+  'tech-lead': <Users className="w-4 h-4" aria-hidden="true" />,
+  'engineering-manager': <BarChart3 className="w-4 h-4" aria-hidden="true" />,
+  executive: <Briefcase className="w-4 h-4" aria-hidden="true" />,
+};
+
+const personaColors: Record<PersonaType, string> = {
+  developer: 'text-blue-400',
+  'tech-lead': 'text-violet-400',
+  'engineering-manager': 'text-emerald-400',
+  executive: 'text-amber-400',
+};
 
 export function TopNav() {
   const navigate = useNavigate();
   const { user, notifications, markNotificationRead, markAllNotificationsRead } = useUserStore();
   const { openSearch, toggleCommandPalette } = useNavigationStore();
+  const { currentPersona, setPersona } = usePersonaStore();
+  const { openSidebar: openHelpSidebar } = useDocumentationStore();
   
   const [showNotifications, setShowNotifications] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
+  const [showPersonaMenu, setShowPersonaMenu] = useState(false);
   
   const notifRef = useRef<HTMLDivElement>(null);
   const userMenuRef = useRef<HTMLDivElement>(null);
+  const notifButtonRef = useRef<HTMLButtonElement>(null);
+  const userButtonRef = useRef<HTMLButtonElement>(null);
   
   useClickOutside(notifRef, () => setShowNotifications(false), showNotifications);
   useClickOutside(userMenuRef, () => setShowUserMenu(false), showUserMenu);
+
+  // Handle Escape key to close menus
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        if (showNotifications) {
+          setShowNotifications(false);
+          notifButtonRef.current?.focus();
+        }
+        if (showUserMenu) {
+          setShowUserMenu(false);
+          userButtonRef.current?.focus();
+        }
+      }
+    };
+    
+    document.addEventListener('keydown', handleEscape);
+    return () => document.removeEventListener('keydown', handleEscape);
+  }, [showNotifications, showUserMenu]);
 
   const unreadCount = useMemo(
     () => notifications.filter((n) => !n.read).length,
@@ -41,90 +85,105 @@ export function TopNav() {
   if (!user) return null;
 
   return (
-    <header className="h-14 flex items-center justify-between px-4 gap-4">
-      {/* Search Bar - Command Center Style */}
-      <div className="flex-1 max-w-xl">
+    <div className="h-14 flex items-center justify-between px-6 gap-6">
+      {/* Search Bar */}
+      <div className="flex-1 max-w-2xl">
         <button
           onClick={openSearch}
-          className="group w-full flex items-center gap-3 px-4 py-2 rounded-lg text-zinc-400 
-                     bg-surface-2/50 border border-white/[0.06] 
-                     hover:border-white/[0.1] hover:bg-surface-3/50
-                     transition-all duration-150"
+          className="group w-full h-9 flex items-center gap-3 px-4 rounded-lg
+                     bg-zinc-900/50 border border-white/[0.06] 
+                     hover:border-white/[0.08] hover:bg-zinc-900/70
+                     transition-all duration-150 focus-visible-ring"
+          aria-label="Open search dialog"
         >
-          <Search className="w-4 h-4 text-zinc-500" />
-          <span className="flex-1 text-left text-sm">Search applications, services, docs...</span>
-          <kbd className="hidden sm:flex items-center gap-1 px-1.5 py-0.5 rounded bg-white/[0.04] border border-white/[0.06] text-[10px] font-medium text-zinc-500">
+          <Search className="w-4 h-4 text-zinc-500" aria-hidden="true" />
+          <span className="flex-1 text-left text-sm text-zinc-500">Search applications, services, docs...</span>
+          <kbd className="hidden sm:flex items-center gap-1 px-2 py-0.5 rounded bg-white/[0.04] border border-white/[0.06] text-[10px] font-medium text-zinc-500" aria-hidden="true">
             <Command className="w-2.5 h-2.5" />K
           </kbd>
         </button>
       </div>
 
       {/* Actions */}
-      <div className="flex items-center gap-1.5">
+      <div className="flex items-center gap-2">
         {/* Create New */}
         <Button
           variant="primary"
           size="sm"
-          leftIcon={<Plus className="w-3.5 h-3.5" />}
+          leftIcon={<Plus className="w-4 h-4" />}
           onClick={() => navigate('/build/create')}
-          className="hidden sm:flex"
+          className="hidden sm:flex px-4"
+          aria-label="Create new application"
         >
           New App
         </Button>
 
-        {/* Extensions */}
-        <Link
-          to="/extensions"
-          className="p-2 rounded-lg text-zinc-500 hover:text-zinc-300 hover:bg-white/[0.04] transition-all duration-150"
-          title="Extensions"
+        {/* Help */}
+        <button
+          onClick={openHelpSidebar}
+          className="p-2.5 rounded-lg text-zinc-500 hover:text-accent hover:bg-accent/10 transition-all duration-150 focus-visible-ring"
+          aria-label="Open help center (⌘/)"
+          title="Help (⌘/)"
         >
-          <Store className="w-[18px] h-[18px]" />
-        </Link>
+          <HelpCircle className="w-5 h-5" aria-hidden="true" />
+        </button>
 
         {/* Command Palette */}
         <button
           onClick={toggleCommandPalette}
-          className="p-2 rounded-lg text-zinc-500 hover:text-accent-400 hover:bg-accent-500/10 transition-all duration-150"
-          title="Command Palette"
+          className="p-2.5 rounded-lg text-zinc-500 hover:text-violet-400 hover:bg-violet-500/10 transition-all duration-150 focus-visible-ring"
+          aria-label="Open command palette"
         >
-          <Sparkles className="w-[18px] h-[18px]" />
+          <Sparkles className="w-5 h-5" aria-hidden="true" />
         </button>
 
         {/* Notifications */}
         <div ref={notifRef} className="relative">
           <button
+            ref={notifButtonRef}
             onClick={() => setShowNotifications(!showNotifications)}
             className={cn(
-              "relative p-2 rounded-lg transition-all duration-150",
+              "relative p-2.5 rounded-lg transition-all duration-150 focus-visible-ring",
               showNotifications 
-                ? "text-zinc-200 bg-white/[0.06]" 
-                : "text-zinc-500 hover:text-zinc-300 hover:bg-white/[0.04]"
+                ? "text-zinc-300 bg-white/[0.06]" 
+                : "text-zinc-500 hover:text-zinc-400 hover:bg-white/[0.04]"
             )}
+            aria-label={`Notifications${unreadCount > 0 ? `, ${unreadCount} unread` : ''}`}
+            aria-expanded={showNotifications}
+            aria-haspopup="true"
           >
-            <Bell className="w-[18px] h-[18px]" />
+            <Bell className="w-5 h-5" aria-hidden="true" />
             {unreadCount > 0 && (
-              <span className="absolute top-1 right-1 w-4 h-4 rounded-full bg-accent-600 text-white text-[9px] font-semibold flex items-center justify-center shadow-glow-sm">
+              <span 
+                className="absolute top-1 right-1 min-w-[18px] h-[18px] rounded-full text-white text-[10px] font-bold flex items-center justify-center px-1"
+                style={{ backgroundColor: '#ef4444' }}
+                aria-hidden="true"
+              >
                 {unreadCount}
               </span>
             )}
           </button>
 
           {showNotifications && (
-            <div className="absolute right-0 mt-2 w-96 rounded-xl overflow-hidden animate-scale-in z-50 glass-panel-strong">
-              <div className="flex items-center justify-between p-3 border-b border-white/[0.06]">
-                <h3 className="font-medium text-sm text-zinc-200">Notifications</h3>
+            <div 
+              className="absolute right-0 mt-2 w-[420px] rounded-xl overflow-hidden animate-scale-in z-50 bg-surface-overlay border border-border-default shadow-2xl"
+              role="dialog"
+              aria-label="Notifications"
+            >
+              <div className="flex items-center justify-between p-3 border-b border-border-subtle bg-surface-raised">
+                <h2 className="font-medium text-sm text-text-primary">Notifications</h2>
                 {unreadCount > 0 && (
                   <button
                     onClick={markAllNotificationsRead}
-                    className="text-xs text-accent-400 hover:text-accent-300 transition-colors"
+                    className="text-xs text-accent hover:text-accent/80 transition-colors focus-visible-ring rounded px-1"
                   >
                     Mark all read
                   </button>
                 )}
               </div>
-              <div className="max-h-96 overflow-y-auto">
+              <div className="max-h-96 overflow-y-auto bg-surface" role="list">
                 {notifications.length === 0 ? (
-                  <div className="p-8 text-center text-zinc-500 text-sm">
+                  <div className="p-8 text-center text-text-tertiary text-sm">
                     No notifications
                   </div>
                 ) : (
@@ -139,25 +198,27 @@ export function TopNav() {
                         setShowNotifications(false);
                       }}
                       className={cn(
-                        'w-full p-3 text-left hover:bg-white/[0.04] transition-colors border-b border-white/[0.04] last:border-0',
-                        !notif.read && 'bg-accent-500/5'
+                        'w-full p-3 text-left hover:bg-surface-raised transition-colors border-b border-border-subtle last:border-0 focus-visible-ring',
+                        !notif.read && 'bg-accent/5'
                       )}
+                      role="listitem"
                     >
                       <div className="flex items-start gap-3">
                         <div
                           className={cn(
-                            'w-1.5 h-1.5 rounded-full mt-2 flex-shrink-0',
-                            notif.read ? 'bg-zinc-600' : 'bg-accent-500 shadow-glow-sm'
+                            'w-2 h-2 rounded-full mt-2 flex-shrink-0',
+                            notif.read ? 'bg-text-disabled' : 'bg-accent'
                           )}
+                          aria-hidden="true"
                         />
                         <div className="flex-1 min-w-0">
-                          <p className="font-medium text-sm text-zinc-200">
+                          <p className="font-medium text-sm text-text-primary">
                             {notif.title}
                           </p>
-                          <p className="text-xs text-zinc-500 line-clamp-2 mt-0.5">
+                          <p className="text-xs text-text-tertiary line-clamp-2 mt-0.5">
                             {notif.message}
                           </p>
-                          <p className="text-[10px] text-zinc-600 mt-1.5 tracking-wide">
+                          <p className="text-[10px] text-text-disabled mt-1.5 tracking-wide">
                             {formatRelativeTime(notif.timestamp)}
                           </p>
                         </div>
@@ -171,83 +232,162 @@ export function TopNav() {
         </div>
 
         {/* Separator */}
-        <div className="w-px h-5 bg-white/[0.06] mx-1" />
+        <div className="w-px h-6 bg-white/[0.08] mx-2" aria-hidden="true" />
 
         {/* User Menu */}
         <div ref={userMenuRef} className="relative">
           <button
+            ref={userButtonRef}
             onClick={() => setShowUserMenu(!showUserMenu)}
             className={cn(
-              "flex items-center gap-2 p-1 rounded-lg transition-all duration-150",
+              "flex items-center gap-2.5 p-1.5 rounded-lg transition-all duration-150 focus-visible-ring",
               showUserMenu 
                 ? "bg-white/[0.06]" 
                 : "hover:bg-white/[0.04]"
             )}
+            aria-label={`User menu for ${user.name}`}
+            aria-expanded={showUserMenu}
+            aria-haspopup="true"
           >
             <Avatar src={user.avatar} name={user.name} size="sm" />
-            <ChevronDown className={cn(
-              "w-3.5 h-3.5 text-zinc-500 transition-transform duration-150",
-              showUserMenu && "rotate-180"
-            )} />
+            <ChevronDown 
+              className={cn(
+                "w-4 h-4 text-zinc-500 transition-transform duration-150",
+                showUserMenu && "rotate-180"
+              )} 
+              aria-hidden="true"
+            />
           </button>
 
           {showUserMenu && (
-            <div className="absolute right-0 mt-2 w-64 rounded-xl overflow-hidden animate-scale-in z-50 glass-panel-strong">
-              <div className="p-3 border-b border-white/[0.06]">
+            <div 
+              className="absolute right-0 mt-2 w-72 rounded-xl overflow-hidden animate-scale-in z-50 bg-surface-overlay border border-border-default shadow-2xl"
+              role="dialog"
+              aria-label="User menu"
+            >
+              <div className="p-4 border-b border-border-subtle bg-surface-raised">
                 <div className="flex items-center gap-3">
                   <Avatar src={user.avatar} name={user.name} size="lg" />
                   <div className="min-w-0">
-                    <p className="font-medium text-sm text-zinc-100 truncate">{user.name}</p>
-                    <p className="text-xs text-zinc-500 truncate">{user.email}</p>
+                    <p className="font-medium text-sm text-text-primary truncate">{user.name}</p>
+                    <p className="text-xs text-text-tertiary truncate">{user.email}</p>
                   </div>
                 </div>
                 {user.onCallStatus?.isOnCall && (
-                  <div className="mt-2.5 px-2 py-1.5 rounded-md bg-warning-bg border border-warning-border">
-                    <div className="flex items-center gap-2 text-warning-text text-xs">
-                      <span className="w-1.5 h-1.5 rounded-full bg-warning-text animate-pulse" />
-                      <span className="font-medium">On-Call</span>
-                      <span className="text-zinc-500">
-                        · {user.onCallStatus.schedule}
-                      </span>
+                  <div className="mt-3 px-3 py-2.5 rounded-lg bg-amber-500/15 border border-amber-500/30">
+                    <div className="flex items-center gap-2 text-amber-400 text-xs">
+                      <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" aria-hidden="true" />
+                      <span className="font-semibold">On-Call</span>
                     </div>
+                    <p className="text-xs text-text-secondary mt-1 pl-4">
+                      {user.onCallStatus.schedule}
+                    </p>
                   </div>
                 )}
               </div>
-              <div className="p-1.5">
+              
+              {/* Persona Switcher Section */}
+              <div className="p-2 border-b border-border-subtle bg-surface">
+                <button
+                  onClick={() => setShowPersonaMenu(!showPersonaMenu)}
+                  className="w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-text-secondary hover:text-text-primary hover:bg-surface-raised transition-colors"
+                >
+                  <div className="flex items-center gap-3">
+                    <span className={personaColors[currentPersona]}>
+                      {personaIcons[currentPersona]}
+                    </span>
+                    <div className="text-left">
+                      <p className="text-sm font-medium text-text-primary">{PERSONAS[currentPersona].name}</p>
+                      <p className="text-xs text-text-tertiary">Switch persona</p>
+                    </div>
+                  </div>
+                  <ChevronDown 
+                    className={cn(
+                      'w-4 h-4 text-text-tertiary transition-transform duration-fast',
+                      showPersonaMenu && 'rotate-180'
+                    )} 
+                    aria-hidden="true" 
+                  />
+                </button>
+                
+                {showPersonaMenu && (
+                  <div className="mt-2 space-y-1">
+                    {(Object.keys(PERSONAS) as PersonaType[]).map((personaKey) => {
+                      const p = PERSONAS[personaKey];
+                      const isSelected = currentPersona === personaKey;
+                      
+                      return (
+                        <button
+                          key={personaKey}
+                          onClick={() => {
+                            setPersona(personaKey);
+                            setShowPersonaMenu(false);
+                          }}
+                          className={cn(
+                            'w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left transition-colors',
+                            isSelected 
+                              ? 'bg-accent/10 border border-accent/30' 
+                              : 'hover:bg-surface-raised border border-transparent'
+                          )}
+                        >
+                          <span className={personaColors[personaKey]}>
+                            {personaIcons[personaKey]}
+                          </span>
+                          <span className="flex-1 text-sm text-text-primary">{p.name}</span>
+                          {isSelected && (
+                            <Check className="w-4 h-4 text-accent" aria-hidden="true" />
+                          )}
+                        </button>
+                      );
+                    })}
+                    <p className="px-3 py-2 text-xs text-text-disabled">
+                      Switch view to experience platform as different roles
+                    </p>
+                  </div>
+                )}
+              </div>
+              
+              <nav className="p-2 bg-surface" role="menu">
                 <Link
                   to="/profile"
                   onClick={() => setShowUserMenu(false)}
-                  className="dropdown-item"
+                  className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-text-secondary hover:text-text-primary hover:bg-surface-raised transition-colors focus-visible-ring"
+                  role="menuitem"
                 >
-                  <User className="w-4 h-4" />
+                  <User className="w-4 h-4" aria-hidden="true" />
                   Profile
                 </Link>
                 <Link
                   to="/settings"
                   onClick={() => setShowUserMenu(false)}
-                  className="dropdown-item"
+                  className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-text-secondary hover:text-text-primary hover:bg-surface-raised transition-colors focus-visible-ring"
+                  role="menuitem"
                 >
-                  <Settings className="w-4 h-4" />
+                  <Settings className="w-4 h-4" aria-hidden="true" />
                   Settings
                 </Link>
                 <Link
                   to="/help"
                   onClick={() => setShowUserMenu(false)}
-                  className="dropdown-item"
+                  className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-text-secondary hover:text-text-primary hover:bg-surface-raised transition-colors focus-visible-ring"
+                  role="menuitem"
                 >
-                  <HelpCircle className="w-4 h-4" />
+                  <HelpCircle className="w-4 h-4" aria-hidden="true" />
                   Help & Docs
                 </Link>
-                <div className="my-1.5 h-px bg-white/[0.06]" />
-                <button className="dropdown-item text-danger-text hover:bg-danger-bg/50">
-                  <LogOut className="w-4 h-4" />
+                <div className="my-2 h-px bg-border-subtle" role="separator" />
+                <button 
+                  className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-error hover:bg-error/10 transition-colors focus-visible-ring w-full"
+                  role="menuitem"
+                >
+                  <LogOut className="w-4 h-4" aria-hidden="true" />
                   Sign out
                 </button>
-              </div>
+              </nav>
             </div>
           )}
         </div>
       </div>
-    </header>
+    </div>
   );
 }

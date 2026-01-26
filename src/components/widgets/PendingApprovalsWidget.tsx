@@ -27,7 +27,7 @@ export function PendingApprovalsWidget() {
     return (
       <div className="space-y-3">
         {[1, 2].map((i) => (
-          <div key={i} className="p-3 rounded-lg border border-slate-200">
+          <div key={i} className="p-3 rounded-lg border border-border-subtle">
             <Skeleton className="h-4 w-3/4 mb-2" />
             <Skeleton className="h-3 w-1/2" />
           </div>
@@ -42,11 +42,11 @@ export function PendingApprovalsWidget() {
   if (!pendingApprovals.length) {
     return (
       <div className="text-center py-4">
-        <div className="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center mx-auto mb-3">
-          <CheckCircle className="w-6 h-6 text-success-500" />
+        <div className="w-12 h-12 rounded-full bg-surface-raised flex items-center justify-center mx-auto mb-3">
+          <CheckCircle className="w-6 h-6 text-success" />
         </div>
-        <p className="font-medium text-slate-900">All Caught Up</p>
-        <p className="text-sm text-slate-500 mt-1">No pending approvals</p>
+        <p className="font-medium text-text-primary">All Caught Up</p>
+        <p className="text-sm text-text-tertiary mt-1">No pending approvals</p>
       </div>
     );
   }
@@ -56,24 +56,24 @@ export function PendingApprovalsWidget() {
       {pendingApprovals.slice(0, 3).map((deployment) => (
         <div
           key={deployment.id}
-          className="p-3 rounded-lg border border-slate-200"
+          className="p-3 rounded-lg border border-border-subtle"
         >
           <div className="flex items-start justify-between mb-2">
             <div>
-              <p className="font-medium text-slate-900">
+              <p className="font-medium text-text-primary">
                 {deployment.applicationName}
               </p>
-              <p className="text-sm text-slate-500">
+              <p className="text-sm text-text-tertiary">
                 {deployment.version} → {deployment.environment}
               </p>
             </div>
-            <div className="flex items-center gap-1 text-xs text-slate-500">
+            <div className="flex items-center gap-1 text-xs text-text-tertiary">
               <Clock className="w-3 h-3" />
               {formatRelativeTime(deployment.triggeredAt)}
             </div>
           </div>
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2 text-sm text-slate-500">
+            <div className="flex items-center gap-2 text-sm text-text-tertiary">
               <span>by {deployment.triggeredBy}</span>
             </div>
             <div className="flex gap-2">
@@ -81,7 +81,7 @@ export function PendingApprovalsWidget() {
                 variant="ghost"
                 size="sm"
                 onClick={() => handleReject(deployment.id, deployment.applicationName, deployment.version)}
-                className="text-danger-600 hover:bg-danger-50"
+                className="text-error hover:bg-error/10"
               >
                 <XCircle className="w-4 h-4" />
               </Button>
@@ -100,7 +100,7 @@ export function PendingApprovalsWidget() {
       {pendingApprovals.length > 3 && (
         <Link
           to="/deploy/deployments?filter=pending"
-          className="flex items-center justify-center gap-1 text-sm text-primary-600 hover:text-primary-700 pt-2"
+          className="flex items-center justify-center gap-1 text-sm text-accent hover:text-accent-hover pt-2"
         >
           View all {pendingApprovals.length} pending
           <ChevronRight className="w-4 h-4" />

@@ -22,8 +22,8 @@ function CostCard({ cost }: { cost: CostData }) {
     <Card variant="hover" className="p-5">
       <div className="flex items-start justify-between mb-4">
         <div>
-          <h3 className="font-semibold text-slate-900">{cost.applicationName}</h3>
-          <p className="text-sm text-slate-500">{cost.team}</p>
+          <h3 className="font-semibold text-text-primary">{cost.applicationName}</h3>
+          <p className="text-sm text-text-tertiary">{cost.team}</p>
         </div>
         {isOverBudget && (
           <Badge variant="danger" size="sm">
@@ -35,13 +35,13 @@ function CostCard({ cost }: { cost: CostData }) {
 
       <div className="mb-4">
         <div className="flex items-end gap-2">
-          <p className="text-2xl font-bold text-slate-900">
+          <p className="text-2xl font-bold text-text-primary">
             {formatCurrency(cost.currentMonth)}
           </p>
           <div
             className={cn(
               'flex items-center gap-0.5 text-sm',
-              trend > 0 ? 'text-danger-600' : 'text-success-600'
+              trend > 0 ? 'text-success' : 'text-error'
             )}
           >
             {trend > 0 ? (
@@ -52,7 +52,7 @@ function CostCard({ cost }: { cost: CostData }) {
             <span>{formatPercentage(Math.abs(trend))}</span>
           </div>
         </div>
-        <p className="text-sm text-slate-500">
+        <p className="text-sm text-text-tertiary">
           vs {formatCurrency(cost.previousMonth)} last month
         </p>
       </div>
@@ -60,10 +60,10 @@ function CostCard({ cost }: { cost: CostData }) {
       {cost.budget && (
         <div className="space-y-2">
           <div className="flex justify-between text-sm">
-            <span className="text-slate-500">Budget Utilization</span>
+            <span className="text-text-tertiary">Budget Utilization</span>
             <span className={cn(
               'font-medium',
-              cost.budgetUtilization! > 90 ? 'text-danger-600' : 'text-slate-900'
+              cost.budgetUtilization! > 90 ? 'text-error' : 'text-text-primary'
             )}>
               {formatPercentage(cost.budgetUtilization!)}
             </span>
@@ -78,14 +78,14 @@ function CostCard({ cost }: { cost: CostData }) {
                 : 'primary'
             }
           />
-          <p className="text-xs text-slate-400">
+          <p className="text-xs text-text-disabled">
             {formatCurrency(cost.budget)} budget
           </p>
         </div>
       )}
 
-      <div className="mt-4 pt-4 border-t border-slate-100">
-        <p className="text-xs text-slate-500 mb-2">Cost Breakdown</p>
+      <div className="mt-4 pt-4 border-t border-border-subtle">
+        <p className="text-xs text-text-tertiary mb-2">Cost Breakdown</p>
         <div className="grid grid-cols-5 gap-1">
           <div
             className="h-2 rounded bg-blue-500"
@@ -149,8 +149,8 @@ export function Costs() {
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-bold text-slate-900">Cost Management</h1>
-        <p className="text-slate-500 mt-1">
+        <h1 className="text-2xl font-bold text-text-primary">Cost Management</h1>
+        <p className="text-text-tertiary mt-1">
           Track and optimize cloud spending across your organization
         </p>
       </div>
@@ -159,15 +159,15 @@ export function Costs() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <Card className="p-5">
           <div className="flex items-center gap-3 mb-3">
-            <div className="w-10 h-10 rounded-lg bg-primary-100 flex items-center justify-center">
-              <DollarSign className="w-5 h-5 text-primary-600" />
+            <div className="w-10 h-10 rounded-lg bg-accent/20 flex items-center justify-center">
+              <DollarSign className="w-5 h-5 text-accent" />
             </div>
             <div>
-              <p className="text-sm text-slate-500">Current Month</p>
+              <p className="text-sm text-text-tertiary">Current Month</p>
               {loadingTotal ? (
                 <Skeleton className="h-6 w-24" />
               ) : (
-                <p className="text-xl font-bold text-slate-900">
+                <p className="text-xl font-bold text-text-primary">
                   {formatCurrency(totalCosts?.currentMonth || 0)}
                 </p>
               )}
@@ -177,15 +177,15 @@ export function Costs() {
 
         <Card className="p-5">
           <div className="flex items-center gap-3 mb-3">
-            <div className="w-10 h-10 rounded-lg bg-purple-100 flex items-center justify-center">
-              <BarChart3 className="w-5 h-5 text-purple-600" />
+            <div className="w-10 h-10 rounded-lg bg-purple-500/20 flex items-center justify-center">
+              <BarChart3 className="w-5 h-5 text-purple-400" />
             </div>
             <div>
-              <p className="text-sm text-slate-500">Forecasted</p>
+              <p className="text-sm text-text-tertiary">Forecasted</p>
               {loadingTotal ? (
                 <Skeleton className="h-6 w-24" />
               ) : (
-                <p className="text-xl font-bold text-slate-900">
+                <p className="text-xl font-bold text-text-primary">
                   {formatCurrency(totalCosts?.forecast || 0)}
                 </p>
               )}
@@ -197,22 +197,22 @@ export function Costs() {
           <div className="flex items-center gap-3 mb-3">
             <div className={cn(
               'w-10 h-10 rounded-lg flex items-center justify-center',
-              totalCosts?.trend! > 0 ? 'bg-danger-100' : 'bg-success-100'
+              totalCosts?.trend! > 0 ? 'bg-success/20' : 'bg-error/20'
             )}>
               {totalCosts?.trend! > 0 ? (
-                <TrendingUp className="w-5 h-5 text-danger-600" />
+                <TrendingUp className="w-5 h-5 text-success" />
               ) : (
-                <TrendingDown className="w-5 h-5 text-success-600" />
+                <TrendingDown className="w-5 h-5 text-error" />
               )}
             </div>
             <div>
-              <p className="text-sm text-slate-500">Trend</p>
+              <p className="text-sm text-text-tertiary">Trend</p>
               {loadingTotal ? (
                 <Skeleton className="h-6 w-24" />
               ) : (
                 <p className={cn(
                   'text-xl font-bold',
-                  totalCosts?.trend! > 0 ? 'text-danger-600' : 'text-success-600'
+                  totalCosts?.trend! > 0 ? 'text-success' : 'text-error'
                 )}>
                   {totalCosts?.trend! > 0 ? '+' : ''}
                   {formatPercentage(totalCosts?.trend || 0)}
@@ -224,15 +224,15 @@ export function Costs() {
 
         <Card className="p-5">
           <div className="flex items-center gap-3 mb-3">
-            <div className="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center">
-              <PieChart className="w-5 h-5 text-slate-600" />
+            <div className="w-10 h-10 rounded-lg bg-surface-raised flex items-center justify-center">
+              <PieChart className="w-5 h-5 text-text-secondary" />
             </div>
             <div>
-              <p className="text-sm text-slate-500">Total Budget</p>
+              <p className="text-sm text-text-tertiary">Total Budget</p>
               {isLoading ? (
                 <Skeleton className="h-6 w-24" />
               ) : (
-                <p className="text-xl font-bold text-slate-900">
+                <p className="text-xl font-bold text-text-primary">
                   {formatCurrency(totalBudget)}
                 </p>
               )}
@@ -243,7 +243,7 @@ export function Costs() {
 
       {/* Cost by Application */}
       <div>
-        <h2 className="text-lg font-semibold text-slate-900 mb-4">Cost by Application</h2>
+        <h2 className="text-lg font-semibold text-text-primary mb-4">Cost by Application</h2>
         {isLoading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {[1, 2, 3].map((i) => (
@@ -264,8 +264,8 @@ export function Costs() {
           </div>
         ) : (
           <Card className="text-center py-12">
-            <DollarSign className="w-12 h-12 text-slate-300 mx-auto mb-4" />
-            <p className="text-slate-500">No cost data available</p>
+            <DollarSign className="w-12 h-12 text-text-disabled mx-auto mb-4" />
+            <p className="text-text-tertiary">No cost data available</p>
           </Card>
         )}
       </div>

@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useMemo } from 'react';
+import { useState, useRef, useEffect, useMemo, useId } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createPortal } from 'react-dom';
 import { cn } from '@/lib/utils';
@@ -20,12 +20,12 @@ import {
 import type { SearchResult } from '@/types';
 
 const typeIcons: Record<string, React.ReactNode> = {
-  application: <Database className="w-4 h-4" />,
-  service: <Boxes className="w-4 h-4" />,
-  team: <Users className="w-4 h-4" />,
-  documentation: <FileText className="w-4 h-4" />,
-  deployment: <Rocket className="w-4 h-4" />,
-  extension: <Boxes className="w-4 h-4" />,
+  application: <Database className="w-4 h-4" aria-hidden="true" />,
+  service: <Boxes className="w-4 h-4" aria-hidden="true" />,
+  team: <Users className="w-4 h-4" aria-hidden="true" />,
+  documentation: <FileText className="w-4 h-4" aria-hidden="true" />,
+  deployment: <Rocket className="w-4 h-4" aria-hidden="true" />,
+  extension: <Boxes className="w-4 h-4" aria-hidden="true" />,
 };
 
 const typeColors: Record<string, string> = {
@@ -53,7 +53,11 @@ export function GlobalSearch() {
   const navigate = useNavigate();
   const { searchOpen, closeSearch, searchQuery, setSearchQuery } = useNavigationStore();
   const inputRef = useRef<HTMLInputElement>(null);
+  const listRef = useRef<HTMLDivElement>(null);
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const baseId = useId();
+  const listboxId = `${baseId}-listbox`;
+  const statusId = `${baseId}-status`;
 
   const results = useMemo(() => {
     if (!searchQuery || searchQuery.length < 2) return [];
@@ -79,6 +83,12 @@ export function GlobalSearch() {
     } else if (e.key === 'ArrowUp') {
       e.preventDefault();
       setSelectedIndex((i) => Math.max(i - 1, 0));
+    } else if (e.key === 'Home') {
+      e.preventDefault();
+      setSelectedIndex(0);
+    } else if (e.key === 'End') {
+      e.preventDefault();
+      setSelectedIndex(results.length - 1);
     } else if (e.key === 'Enter' && results[selectedIndex]) {
       e.preventDefault();
       handleSelect(results[selectedIndex]);
@@ -90,14 +100,42 @@ export function GlobalSearch() {
     closeSearch();
   };
 
+  // Trap focus within modal
+  useEffect(() => {
+    if (!searchOpen) return;
+    
+    const handleTab = (e: KeyboardEvent) => {
+      if (e.key !== 'Tab') return;
+      
+      // Simple focus trap - keep focus in the search input
+      e.preventDefault();
+      inputRef.current?.focus();
+    };
+    
+    document.addEventListener('keydown', handleTab);
+    return () => document.removeEventListener('keydown', handleTab);
+  }, [searchOpen]);
+
   if (!searchOpen) return null;
 
+  const statusMessage = results.length > 0 
+    ? `${results.length} results found` 
+    : searchQuery.length >= 2 
+      ? 'No results found' 
+      : '';
+
   return createPortal(
-    <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-start justify-center pt-[12vh] px-4 animate-fade-in">
-      <div className="w-full max-w-2xl rounded-xl overflow-hidden animate-slide-down glass-panel-strong border border-white/[0.08]">
+    <div 
+      className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-start justify-center pt-[12vh] px-4 animate-fade-in"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Search"
+      onClick={(e) => e.target === e.currentTarget && closeSearch()}
+    >
+      <div className="w-full max-w-2xl rounded-xl overflow-hidden animate-slide-down bg-surface-overlay border border-border-default shadow-2xl">
         {/* Search Input */}
-        <div className="flex items-center gap-3 px-4 py-3 border-b border-white/[0.06]">
-          <Search className="w-5 h-5 text-zinc-500" />
+        <div className="flex items-center gap-3 px-4 py-3 border-b border-border-subtle bg-surface-raised">
+          <Search className="w-5 h-5 text-text-tertiary" aria-hidden="true" />
           <input
             ref={inputRef}
             type="text"
@@ -105,74 +143,95 @@ export function GlobalSearch() {
             onChange={(e) => setSearchQuery(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder="Search applications, services, docs..."
-            className="flex-1 text-base text-zinc-100 placeholder:text-zinc-500 outline-none bg-transparent"
+            className="flex-1 text-base text-text-primary placeholder:text-text-disabled outline-none bg-transparent"
+            role="combobox"
+            aria-expanded={results.length > 0}
+            aria-controls={listboxId}
+            aria-activedescendant={results.length > 0 ? `${baseId}-option-${selectedIndex}` : undefined}
+            aria-autocomplete="list"
+            aria-label="Search"
           />
           {searchQuery && (
             <button
               onClick={() => setSearchQuery('')}
-              className="p-1 rounded text-zinc-500 hover:text-zinc-300 hover:bg-white/[0.06] transition-colors"
+              className="p-1 rounded text-text-tertiary hover:text-text-secondary hover:bg-surface-raised transition-colors focus-visible-ring"
+              aria-label="Clear search"
             >
-              <X className="w-4 h-4" />
+              <X className="w-4 h-4" aria-hidden="true" />
             </button>
           )}
-          <kbd className="px-1.5 py-0.5 rounded bg-white/[0.04] border border-white/[0.06] text-[10px] font-medium text-zinc-500">
+          <kbd className="px-1.5 py-0.5 rounded bg-surface border border-border-subtle text-[10px] font-medium text-text-tertiary" aria-hidden="true">
             ESC
           </kbd>
         </div>
 
+        {/* Live region for screen reader announcements */}
+        <div id={statusId} className="sr-only" role="status" aria-live="polite">
+          {statusMessage}
+        </div>
+
         {/* Results or Suggestions */}
-        <div className="max-h-[55vh] overflow-y-auto">
+        <div ref={listRef} className="max-h-[55vh] overflow-y-auto bg-surface">
           {results.length > 0 ? (
-            <div className="py-1.5">
+            <div 
+              id={listboxId}
+              className="py-1.5"
+              role="listbox"
+              aria-label="Search results"
+            >
               {results.map((result, index) => (
                 <button
                   key={result.id}
+                  id={`${baseId}-option-${index}`}
                   onClick={() => handleSelect(result)}
                   onMouseEnter={() => setSelectedIndex(index)}
                   className={cn(
                     'w-full flex items-center gap-3 px-4 py-2.5 text-left transition-all duration-100',
                     selectedIndex === index
-                      ? 'bg-accent-500/10'
-                      : 'hover:bg-white/[0.04]'
+                      ? 'bg-accent/10'
+                      : 'hover:bg-surface-raised'
                   )}
+                  role="option"
+                  aria-selected={selectedIndex === index}
                 >
                   <div
                     className={cn(
                       'w-9 h-9 rounded-lg flex items-center justify-center',
                       selectedIndex === index
-                        ? 'bg-accent-500/20'
-                        : 'bg-white/[0.04]',
-                      typeColors[result.type] || 'text-zinc-400'
+                        ? 'bg-accent/20'
+                        : 'bg-surface-raised',
+                      typeColors[result.type] || 'text-text-tertiary'
                     )}
                   >
-                    {typeIcons[result.type] || <Database className="w-4 h-4" />}
+                    {typeIcons[result.type] || <Database className="w-4 h-4" aria-hidden="true" />}
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className={cn(
                       'font-medium text-sm truncate',
-                      selectedIndex === index ? 'text-zinc-100' : 'text-zinc-300'
+                      selectedIndex === index ? 'text-text-primary' : 'text-text-secondary'
                     )}>
                       {result.title}
                     </p>
-                    <p className="text-xs text-zinc-500 truncate">
-                      {result.subtitle} · <span className="text-zinc-600">{result.type}</span>
+                    <p className="text-xs text-text-tertiary truncate">
+                      {result.subtitle} · <span className="text-text-disabled">{result.type}</span>
                     </p>
                   </div>
                   <ArrowRight
                     className={cn(
                       'w-4 h-4 transition-all duration-100',
                       selectedIndex === index
-                        ? 'opacity-100 text-accent-400 translate-x-0'
+                        ? 'opacity-100 text-accent translate-x-0'
                         : 'opacity-0 -translate-x-1'
                     )}
+                    aria-hidden="true"
                   />
                 </button>
               ))}
             </div>
           ) : searchQuery.length >= 2 ? (
             <div className="p-8 text-center">
-              <p className="text-zinc-400 text-sm">No results found for "{searchQuery}"</p>
-              <p className="text-xs text-zinc-600 mt-1">
+              <p className="text-text-secondary text-sm">No results found for "{searchQuery}"</p>
+              <p className="text-xs text-text-disabled mt-1">
                 Try different keywords or browse the catalog
               </p>
             </div>
@@ -181,15 +240,15 @@ export function GlobalSearch() {
               {/* Recent Searches */}
               <div>
                 <div className="flex items-center gap-2 px-2 mb-2">
-                  <Clock className="w-3.5 h-3.5 text-zinc-600" />
-                  <span className="text-[10px] font-medium text-zinc-600 uppercase tracking-wider">Recent</span>
+                  <Clock className="w-3.5 h-3.5 text-text-disabled" aria-hidden="true" />
+                  <span className="text-[10px] font-medium text-text-disabled uppercase tracking-wider">Recent</span>
                 </div>
-                <div className="space-y-0.5">
+                <div className="space-y-0.5" role="list" aria-label="Recent searches">
                   {recentSearches.map((search) => (
                     <button
                       key={search}
                       onClick={() => setSearchQuery(search)}
-                      className="w-full px-3 py-2 text-left text-sm text-zinc-400 hover:text-zinc-200 hover:bg-white/[0.04] rounded-lg transition-colors"
+                      className="w-full px-3 py-2 text-left text-sm text-text-tertiary hover:text-text-primary hover:bg-surface-raised rounded-lg transition-colors focus-visible-ring"
                     >
                       {search}
                     </button>
@@ -200,15 +259,15 @@ export function GlobalSearch() {
               {/* Popular Searches */}
               <div>
                 <div className="flex items-center gap-2 px-2 mb-2">
-                  <TrendingUp className="w-3.5 h-3.5 text-zinc-600" />
-                  <span className="text-[10px] font-medium text-zinc-600 uppercase tracking-wider">Popular</span>
+                  <TrendingUp className="w-3.5 h-3.5 text-text-disabled" aria-hidden="true" />
+                  <span className="text-[10px] font-medium text-text-disabled uppercase tracking-wider">Popular</span>
                 </div>
-                <div className="space-y-0.5">
+                <div className="space-y-0.5" role="list" aria-label="Popular searches">
                   {popularSearches.map((search) => (
                     <button
                       key={search}
                       onClick={() => setSearchQuery(search)}
-                      className="w-full px-3 py-2 text-left text-sm text-zinc-400 hover:text-zinc-200 hover:bg-white/[0.04] rounded-lg transition-colors"
+                      className="w-full px-3 py-2 text-left text-sm text-text-tertiary hover:text-text-primary hover:bg-surface-raised rounded-lg transition-colors focus-visible-ring"
                     >
                       {search}
                     </button>
@@ -220,22 +279,22 @@ export function GlobalSearch() {
         </div>
 
         {/* Footer */}
-        <div className="px-4 py-2.5 border-t border-white/[0.06] bg-white/[0.02]">
-          <div className="flex items-center gap-4 text-[10px] text-zinc-600">
+        <div className="px-4 py-2.5 border-t border-border-subtle bg-surface-raised">
+          <div className="flex items-center gap-4 text-[10px] text-text-disabled" aria-hidden="true">
             <span className="flex items-center gap-1.5">
-              <kbd className="px-1.5 py-0.5 rounded bg-white/[0.04] border border-white/[0.06] font-medium text-zinc-500">
+              <kbd className="px-1.5 py-0.5 rounded bg-surface border border-border-subtle font-medium text-text-tertiary">
                 ↑↓
               </kbd>
               Navigate
             </span>
             <span className="flex items-center gap-1.5">
-              <kbd className="px-1.5 py-0.5 rounded bg-white/[0.04] border border-white/[0.06] font-medium text-zinc-500">
+              <kbd className="px-1.5 py-0.5 rounded bg-surface border border-border-subtle font-medium text-text-tertiary">
                 ↵
               </kbd>
               Select
             </span>
             <span className="flex items-center gap-1.5">
-              <kbd className="px-1.5 py-0.5 rounded bg-white/[0.04] border border-white/[0.06] font-medium text-zinc-500">
+              <kbd className="px-1.5 py-0.5 rounded bg-surface border border-border-subtle font-medium text-text-tertiary">
                 ESC
               </kbd>
               Close
