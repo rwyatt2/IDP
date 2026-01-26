@@ -46,14 +46,14 @@ export function Profile() {
               size="xl"
               className="w-24 h-24"
             />
-            <button className="absolute bottom-0 right-0 w-8 h-8 rounded-full bg-primary-500 text-white flex items-center justify-center hover:bg-primary-600 transition-colors">
+            <button className="absolute bottom-0 right-0 w-8 h-8 rounded-full bg-accent text-text-on-emphasis flex items-center justify-center hover:bg-accent-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-canvas transition-colors">
               <Camera className="w-4 h-4" />
             </button>
           </div>
           <div>
-            <h1 className="text-2xl font-bold text-slate-900">{currentUser.name}</h1>
-            <p className="text-slate-500">{currentUser.role}</p>
-            <div className="flex items-center gap-4 mt-3 text-sm text-slate-500">
+            <h1 className="text-2xl font-bold text-text-primary">{currentUser.name}</h1>
+            <p className="text-text-secondary">{currentUser.role}</p>
+            <div className="flex items-center gap-4 mt-3 text-sm text-text-secondary">
               <div className="flex items-center gap-1">
                 <Mail className="w-4 h-4" />
                 <span>{currentUser.email}</span>
@@ -82,47 +82,47 @@ export function Profile() {
 
       {/* Stats */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <Card className="p-4">
+        <Card className="p-4 bg-surface border-border-subtle">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-primary-100 flex items-center justify-center">
-              <GitCommit className="w-5 h-5 text-primary-600" />
+            <div className="w-10 h-10 rounded-lg bg-accent-subtle flex items-center justify-center">
+              <GitCommit className="w-5 h-5 text-accent-text" />
             </div>
             <div>
-              <p className="text-2xl font-bold text-slate-900">{userDeployments.length}</p>
-              <p className="text-sm text-slate-500">Deployments</p>
+              <p className="text-2xl font-bold text-text-primary">{userDeployments.length}</p>
+              <p className="text-sm text-text-secondary">Deployments</p>
             </div>
           </div>
         </Card>
-        <Card className="p-4">
+        <Card className="p-4 bg-surface border-border-subtle">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-purple-100 flex items-center justify-center">
-              <Server className="w-5 h-5 text-purple-600" />
+            <div className="w-10 h-10 rounded-lg bg-info-subtle flex items-center justify-center">
+              <Server className="w-5 h-5 text-info-text" />
             </div>
             <div>
-              <p className="text-2xl font-bold text-slate-900">{userApps.length}</p>
-              <p className="text-sm text-slate-500">Services Owned</p>
+              <p className="text-2xl font-bold text-text-primary">{userApps.length}</p>
+              <p className="text-sm text-text-secondary">Services Owned</p>
             </div>
           </div>
         </Card>
-        <Card className="p-4">
+        <Card className="p-4 bg-surface border-border-subtle">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-warning-100 flex items-center justify-center">
-              <AlertTriangle className="w-5 h-5 text-warning-600" />
+            <div className="w-10 h-10 rounded-lg bg-warning-subtle flex items-center justify-center">
+              <AlertTriangle className="w-5 h-5 text-warning-text" />
             </div>
             <div>
-              <p className="text-2xl font-bold text-slate-900">{userIncidents.length}</p>
-              <p className="text-sm text-slate-500">Incidents Handled</p>
+              <p className="text-2xl font-bold text-text-primary">{userIncidents.length}</p>
+              <p className="text-sm text-text-secondary">Incidents Handled</p>
             </div>
           </div>
         </Card>
-        <Card className="p-4">
+        <Card className="p-4 bg-surface border-border-subtle">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-success-100 flex items-center justify-center">
-              <Clock className="w-5 h-5 text-success-600" />
+            <div className="w-10 h-10 rounded-lg bg-success-subtle flex items-center justify-center">
+              <Clock className="w-5 h-5 text-success-text" />
             </div>
             <div>
-              <p className="text-2xl font-bold text-slate-900">2.5h</p>
-              <p className="text-sm text-slate-500">On-Call Today</p>
+              <p className="text-2xl font-bold text-text-primary">2.5h</p>
+              <p className="text-sm text-text-secondary">On-Call Today</p>
             </div>
           </div>
         </Card>
@@ -136,67 +136,67 @@ export function Profile() {
         {activeTab === 'overview' && (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Personal Info */}
-            <Card padding="lg">
+            <Card padding="lg" className="bg-surface border-border-subtle">
               <CardHeader title="Personal Information" />
               <div className="mt-4 space-y-4">
-                <div className="flex items-center justify-between py-2 border-b border-slate-100">
-                  <span className="text-sm text-slate-500">Full Name</span>
-                  <span className="text-sm font-medium text-slate-900">{currentUser.name}</span>
+                <div className="flex items-center justify-between py-2 border-b border-border-subtle">
+                  <span className="text-sm text-text-secondary">Full Name</span>
+                  <span className="text-sm font-medium text-text-primary">{currentUser.name}</span>
                 </div>
-                <div className="flex items-center justify-between py-2 border-b border-slate-100">
-                  <span className="text-sm text-slate-500">Email</span>
-                  <span className="text-sm font-medium text-slate-900">{currentUser.email}</span>
+                <div className="flex items-center justify-between py-2 border-b border-border-subtle">
+                  <span className="text-sm text-text-secondary">Email</span>
+                  <span className="text-sm font-medium text-text-primary">{currentUser.email}</span>
                 </div>
-                <div className="flex items-center justify-between py-2 border-b border-slate-100">
-                  <span className="text-sm text-slate-500">Role</span>
-                  <span className="text-sm font-medium text-slate-900">{currentUser.role}</span>
+                <div className="flex items-center justify-between py-2 border-b border-border-subtle">
+                  <span className="text-sm text-text-secondary">Role</span>
+                  <span className="text-sm font-medium text-text-primary">{currentUser.role}</span>
                 </div>
-                <div className="flex items-center justify-between py-2 border-b border-slate-100">
-                  <span className="text-sm text-slate-500">Team</span>
-                  <span className="text-sm font-medium text-slate-900">Platform Engineering</span>
+                <div className="flex items-center justify-between py-2 border-b border-border-subtle">
+                  <span className="text-sm text-text-secondary">Team</span>
+                  <span className="text-sm font-medium text-text-primary">Platform Engineering</span>
                 </div>
-                <div className="flex items-center justify-between py-2 border-b border-slate-100">
-                  <span className="text-sm text-slate-500">Location</span>
-                  <span className="text-sm font-medium text-slate-900">San Francisco, CA</span>
+                <div className="flex items-center justify-between py-2 border-b border-border-subtle">
+                  <span className="text-sm text-text-secondary">Location</span>
+                  <span className="text-sm font-medium text-text-primary">San Francisco, CA</span>
                 </div>
                 <div className="flex items-center justify-between py-2">
-                  <span className="text-sm text-slate-500">Timezone</span>
-                  <span className="text-sm font-medium text-slate-900">America/Los_Angeles (PST)</span>
+                  <span className="text-sm text-text-secondary">Timezone</span>
+                  <span className="text-sm font-medium text-text-primary">America/Los_Angeles (PST)</span>
                 </div>
               </div>
             </Card>
 
             {/* Connected Accounts */}
-            <Card padding="lg">
+            <Card padding="lg" className="bg-surface border-border-subtle">
               <CardHeader title="Connected Accounts" />
               <div className="mt-4 space-y-3">
-                <div className="flex items-center gap-4 p-4 rounded-lg border border-slate-200">
-                  <div className="w-10 h-10 rounded-lg bg-slate-900 flex items-center justify-center">
-                    <Github className="w-5 h-5 text-white" />
+                <div className="flex items-center gap-4 p-4 rounded-lg border border-border-subtle bg-surface-raised">
+                  <div className="w-10 h-10 rounded-lg bg-surface-overlay flex items-center justify-center">
+                    <Github className="w-5 h-5 text-text-primary" />
                   </div>
                   <div className="flex-1">
-                    <p className="font-medium text-slate-900">GitHub</p>
-                    <p className="text-sm text-slate-500">@sarah-chen</p>
+                    <p className="font-medium text-text-primary">GitHub</p>
+                    <p className="text-sm text-text-secondary">@sarah-chen</p>
                   </div>
                   <Badge variant="success">Connected</Badge>
                 </div>
-                <div className="flex items-center gap-4 p-4 rounded-lg border border-slate-200">
-                  <div className="w-10 h-10 rounded-lg bg-purple-600 flex items-center justify-center">
-                    <Slack className="w-5 h-5 text-white" />
+                <div className="flex items-center gap-4 p-4 rounded-lg border border-border-subtle bg-surface-raised">
+                  <div className="w-10 h-10 rounded-lg bg-info-subtle flex items-center justify-center">
+                    <Slack className="w-5 h-5 text-info-text" />
                   </div>
                   <div className="flex-1">
-                    <p className="font-medium text-slate-900">Slack</p>
-                    <p className="text-sm text-slate-500">@sarah.chen</p>
+                    <p className="font-medium text-text-primary">Slack</p>
+                    <p className="text-sm text-text-secondary">@sarah.chen</p>
                   </div>
                   <Badge variant="success">Connected</Badge>
                 </div>
-                <div className="flex items-center gap-4 p-4 rounded-lg border border-slate-200">
-                  <div className="w-10 h-10 rounded-lg bg-blue-600 flex items-center justify-center">
-                    <Globe className="w-5 h-5 text-white" />
+                <div className="flex items-center gap-4 p-4 rounded-lg border border-border-subtle bg-surface-raised">
+                  <div className="w-10 h-10 rounded-lg bg-accent-subtle flex items-center justify-center">
+                    <Globe className="w-5 h-5 text-accent-text" />
                   </div>
                   <div className="flex-1">
-                    <p className="font-medium text-slate-900">Google</p>
-                    <p className="text-sm text-slate-500">sarah.chen@company.com</p>
+                    <p className="font-medium text-text-primary">Google</p>
+                    <p className="text-sm text-text-secondary">sarah.chen@company.com</p>
                   </div>
                   <Badge variant="success">Connected</Badge>
                 </div>
@@ -204,17 +204,17 @@ export function Profile() {
             </Card>
 
             {/* Recent Activity */}
-            <Card padding="lg" className="lg:col-span-2">
+            <Card padding="lg" className="lg:col-span-2 bg-surface border-border-subtle">
               <CardHeader title="Recent Activity" />
               <div className="mt-4 space-y-3">
                 {userDeployments.slice(0, 5).map((deployment) => (
-                  <div key={deployment.id} className="flex items-center gap-4 p-3 rounded-lg bg-slate-50">
-                    <GitCommit className="w-5 h-5 text-slate-400" />
+                  <div key={deployment.id} className="flex items-center gap-4 p-3 rounded-lg bg-surface-raised">
+                    <GitCommit className="w-5 h-5 text-text-tertiary" />
                     <div className="flex-1">
-                      <p className="text-sm text-slate-900">
+                      <p className="text-sm text-text-primary">
                         Deployed <span className="font-medium">{deployment.applicationName}</span> {deployment.version}
                       </p>
-                      <p className="text-xs text-slate-500">to {deployment.environment}</p>
+                      <p className="text-xs text-text-secondary">to {deployment.environment}</p>
                     </div>
                     <Badge variant={deployment.status === 'succeeded' ? 'success' : 'danger'} size="sm">
                       {deployment.status}
@@ -227,7 +227,7 @@ export function Profile() {
         )}
 
         {activeTab === 'activity' && (
-          <Card padding="lg">
+          <Card padding="lg" className="bg-surface border-border-subtle">
             <CardHeader title="Activity Timeline" />
             <div className="mt-4 space-y-4">
               {[
@@ -240,19 +240,19 @@ export function Profile() {
                 <div key={i} className="flex items-start gap-4">
                   <div className={cn(
                     'w-8 h-8 rounded-full flex items-center justify-center',
-                    item.type === 'deployment' && 'bg-primary-100 text-primary-600',
-                    item.type === 'approval' && 'bg-success-100 text-success-600',
-                    item.type === 'incident' && 'bg-warning-100 text-warning-600',
-                    item.type === 'pipeline' && 'bg-purple-100 text-purple-600',
-                    item.type === 'config' && 'bg-slate-100 text-slate-600'
+                    item.type === 'deployment' && 'bg-accent-subtle text-accent-text',
+                    item.type === 'approval' && 'bg-success-subtle text-success-text',
+                    item.type === 'incident' && 'bg-warning-subtle text-warning-text',
+                    item.type === 'pipeline' && 'bg-info-subtle text-info-text',
+                    item.type === 'config' && 'bg-surface-raised text-text-tertiary'
                   )}>
                     <Activity className="w-4 h-4" />
                   </div>
-                  <div className="flex-1 pb-4 border-b border-slate-100 last:border-0">
-                    <p className="text-slate-900">
+                  <div className="flex-1 pb-4 border-b border-border-subtle last:border-0">
+                    <p className="text-text-primary">
                       {item.action} <span className="font-medium">{item.target}</span>
                     </p>
-                    <p className="text-sm text-slate-500">{item.time}</p>
+                    <p className="text-sm text-text-secondary">{item.time}</p>
                   </div>
                 </div>
               ))}
@@ -262,39 +262,39 @@ export function Profile() {
 
         {activeTab === 'teams' && (
           <div className="space-y-6">
-            <Card padding="lg">
+            <Card padding="lg" className="bg-surface border-border-subtle">
               <CardHeader title="Teams" />
               <div className="mt-4 space-y-3">
-                <div className="flex items-center gap-4 p-4 rounded-lg bg-primary-50 border border-primary-200">
-                  <div className="w-10 h-10 rounded-lg bg-primary-100 flex items-center justify-center">
-                    <Building className="w-5 h-5 text-primary-600" />
+                <div className="flex items-center gap-4 p-4 rounded-lg bg-accent-subtle border border-accent-border">
+                  <div className="w-10 h-10 rounded-lg bg-accent-muted flex items-center justify-center">
+                    <Building className="w-5 h-5 text-accent-text" />
                   </div>
                   <div className="flex-1">
-                    <p className="font-medium text-slate-900">Platform Engineering</p>
-                    <p className="text-sm text-slate-500">Primary team</p>
+                    <p className="font-medium text-text-primary">Platform Engineering</p>
+                    <p className="text-sm text-text-secondary">Primary team</p>
                   </div>
                   <Badge variant="info">Tech Lead</Badge>
                 </div>
-                <div className="flex items-center gap-4 p-4 rounded-lg border border-slate-200">
-                  <div className="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center">
-                    <Building className="w-5 h-5 text-slate-600" />
+                <div className="flex items-center gap-4 p-4 rounded-lg border border-border-subtle bg-surface-raised">
+                  <div className="w-10 h-10 rounded-lg bg-surface-overlay flex items-center justify-center">
+                    <Building className="w-5 h-5 text-text-tertiary" />
                   </div>
                   <div className="flex-1">
-                    <p className="font-medium text-slate-900">Security Guild</p>
-                    <p className="text-sm text-slate-500">Cross-functional team</p>
+                    <p className="font-medium text-text-primary">Security Guild</p>
+                    <p className="text-sm text-text-secondary">Cross-functional team</p>
                   </div>
                   <Badge variant="neutral">Member</Badge>
                 </div>
               </div>
             </Card>
 
-            <Card padding="lg">
+            <Card padding="lg" className="bg-surface border-border-subtle">
               <CardHeader title="Permissions" />
               <div className="mt-4 space-y-3">
                 {currentUser.permissions.map((permission) => (
-                  <div key={permission} className="flex items-center gap-3 p-3 rounded-lg border border-slate-200">
-                    <Shield className="w-5 h-5 text-success-500" />
-                    <span className="font-medium text-slate-900 capitalize">{permission}</span>
+                  <div key={permission} className="flex items-center gap-3 p-3 rounded-lg border border-border-subtle bg-surface-raised">
+                    <Shield className="w-5 h-5 text-success-text" />
+                    <span className="font-medium text-text-primary capitalize">{permission}</span>
                   </div>
                 ))}
               </div>
@@ -304,25 +304,25 @@ export function Profile() {
 
         {activeTab === 'security' && (
           <div className="space-y-6">
-            <Card padding="lg">
+            <Card padding="lg" className="bg-surface border-border-subtle">
               <CardHeader title="Authentication" />
               <div className="mt-4 space-y-4">
-                <div className="flex items-center justify-between p-4 rounded-lg border border-slate-200">
+                <div className="flex items-center justify-between p-4 rounded-lg border border-border-subtle bg-surface-raised">
                   <div className="flex items-center gap-3">
-                    <Key className="w-5 h-5 text-slate-400" />
+                    <Key className="w-5 h-5 text-text-tertiary" />
                     <div>
-                      <p className="font-medium text-slate-900">Password</p>
-                      <p className="text-sm text-slate-500">Last changed 30 days ago</p>
+                      <p className="font-medium text-text-primary">Password</p>
+                      <p className="text-sm text-text-secondary">Last changed 30 days ago</p>
                     </div>
                   </div>
                   <Button variant="secondary" size="sm">Change</Button>
                 </div>
-                <div className="flex items-center justify-between p-4 rounded-lg border border-slate-200">
+                <div className="flex items-center justify-between p-4 rounded-lg border border-border-subtle bg-surface-raised">
                   <div className="flex items-center gap-3">
-                    <Shield className="w-5 h-5 text-success-500" />
+                    <Shield className="w-5 h-5 text-success-text" />
                     <div>
-                      <p className="font-medium text-slate-900">Two-Factor Authentication</p>
-                      <p className="text-sm text-slate-500">Enabled via authenticator app</p>
+                      <p className="font-medium text-text-primary">Two-Factor Authentication</p>
+                      <p className="text-sm text-text-secondary">Enabled via authenticator app</p>
                     </div>
                   </div>
                   <Badge variant="success">Enabled</Badge>
@@ -330,28 +330,28 @@ export function Profile() {
               </div>
             </Card>
 
-            <Card padding="lg">
+            <Card padding="lg" className="bg-surface border-border-subtle">
               <CardHeader title="Active Sessions" />
               <div className="mt-4 space-y-3">
                 {[
                   { device: 'MacBook Pro', location: 'San Francisco, CA', current: true, lastActive: 'Now' },
                   { device: 'iPhone 15 Pro', location: 'San Francisco, CA', current: false, lastActive: '2 hours ago' },
                 ].map((session, i) => (
-                  <div key={i} className="flex items-center justify-between p-4 rounded-lg border border-slate-200">
+                  <div key={i} className="flex items-center justify-between p-4 rounded-lg border border-border-subtle bg-surface-raised">
                     <div className="flex items-center gap-3">
-                      <Globe className="w-5 h-5 text-slate-400" />
+                      <Globe className="w-5 h-5 text-text-tertiary" />
                       <div>
-                        <p className="font-medium text-slate-900">
+                        <p className="font-medium text-text-primary">
                           {session.device}
                           {session.current && <Badge variant="success" size="sm" className="ml-2">Current</Badge>}
                         </p>
-                        <p className="text-sm text-slate-500">
+                        <p className="text-sm text-text-secondary">
                           {session.location} · {session.lastActive}
                         </p>
                       </div>
                     </div>
                     {!session.current && (
-                      <Button variant="ghost" size="sm" className="text-danger-600">
+                      <Button variant="ghost" size="sm" className="text-error-text hover:bg-error-subtle">
                         Revoke
                       </Button>
                     )}

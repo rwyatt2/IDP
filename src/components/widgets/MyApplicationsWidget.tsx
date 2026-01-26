@@ -30,7 +30,7 @@ export function MyApplicationsWidget() {
         <p className="text-text-tertiary">No applications owned</p>
         <Link
           to="/build/create"
-          className="text-accent hover:text-accent-hover text-sm mt-1 inline-block"
+          className="text-accent hover:text-accent-hover text-sm mt-1 inline-block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 rounded"
         >
           Create your first application
         </Link>
@@ -44,7 +44,7 @@ export function MyApplicationsWidget() {
         <Link
           key={app.id}
           to={`/discover/catalog/${app.id}`}
-          className="flex items-center justify-between p-2 -mx-2 rounded-lg hover:bg-surface-raised transition-colors group"
+          className="flex items-center justify-between p-2 -mx-2 rounded-lg hover:bg-surface-raised transition-colors group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
         >
           <div>
             <div className="flex items-center gap-2">
@@ -59,7 +59,7 @@ export function MyApplicationsWidget() {
       {applications.length > 5 && (
         <Link
           to="/discover/catalog?filter=owned"
-          className="flex items-center justify-center gap-1 text-sm text-accent hover:text-accent-hover pt-2"
+          className="flex items-center justify-center gap-1 text-sm text-accent hover:text-accent-hover pt-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 rounded"
         >
           View all {applications.length} applications
           <ChevronRight className="w-4 h-4" />

@@ -19,11 +19,11 @@ import {
 import type { Deployment, DeploymentStatus } from '@/types';
 
 const statusIcons: Record<DeploymentStatus, React.ReactNode> = {
-  succeeded: <CheckCircle className="w-5 h-5 text-success" />,
-  failed: <XCircle className="w-5 h-5 text-error" />,
-  'in-progress': <Loader2 className="w-5 h-5 text-accent animate-spin" />,
+  succeeded: <CheckCircle className="w-5 h-5 text-success-text" />,
+  failed: <XCircle className="w-5 h-5 text-error-text" />,
+  'in-progress': <Loader2 className="w-5 h-5 text-accent-text animate-spin" />,
   pending: <Clock className="w-5 h-5 text-text-disabled" />,
-  'awaiting-approval': <AlertCircle className="w-5 h-5 text-warning" />,
+  'awaiting-approval': <AlertCircle className="w-5 h-5 text-warning-text" />,
   'rolled-back': <RotateCcw className="w-5 h-5 text-text-tertiary" />,
   cancelled: <XCircle className="w-5 h-5 text-text-disabled" />,
 };
@@ -32,7 +32,7 @@ function DeploymentRow({ deployment }: { deployment: Deployment }) {
   return (
     <Link
       to={`/deploy/deployments/${deployment.id}`}
-      className="flex items-center gap-4 p-4 bg-surface rounded-lg border border-border-subtle hover:border-border-default hover:bg-surface-raised transition-all group"
+      className="flex items-center gap-4 p-4 bg-surface rounded-lg border border-border-subtle hover:border-border-default hover:bg-surface-raised transition-all group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-canvas"
     >
       <div className="flex-shrink-0">
         {statusIcons[deployment.status]}

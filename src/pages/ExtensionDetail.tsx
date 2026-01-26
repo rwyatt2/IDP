@@ -48,9 +48,9 @@ function getIconComponent(iconName: string): LucideIcon {
 function MockWindowHeader() {
   return (
     <div className="h-7 bg-surface-raised border-b border-border-subtle flex items-center px-3 gap-2 flex-shrink-0">
-      <div className="w-2.5 h-2.5 rounded-full bg-[#ff5f57]" />
-      <div className="w-2.5 h-2.5 rounded-full bg-[#febc2e]" />
-      <div className="w-2.5 h-2.5 rounded-full bg-[#28c840]" />
+      <div className="w-2.5 h-2.5 rounded-full bg-error" />
+      <div className="w-2.5 h-2.5 rounded-full bg-warning" />
+      <div className="w-2.5 h-2.5 rounded-full bg-success" />
       <div className="flex-1 mx-6 h-4 bg-surface rounded-md" />
     </div>
   );
@@ -431,7 +431,7 @@ function MockScreenshots({ category, name }: { category: string; name: string })
                   className="absolute w-20 h-20 rounded-full border-8 border-transparent border-t-success border-r-warning border-b-transparent"
                   style={{ transform: 'rotate(-45deg)' }}
                 />
-                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0.5 h-8 bg-text-primary origin-bottom" 
+                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0.5 h-8 bg-text-secondary origin-bottom" 
                   style={{ transform: 'rotate(50deg)' }} 
                 />
               </div>
@@ -763,7 +763,7 @@ export function ExtensionDetail() {
             <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-text-tertiary">
               <span>By {extension.author}</span>
               <div className="flex items-center gap-1">
-                <Star className="w-4 h-4 text-amber-400 fill-amber-400" />
+                <Star className="w-4 h-4 text-warning fill-warning" />
                 <span>{extension.rating.toFixed(1)}</span>
               </div>
               <div className="flex items-center gap-1">
@@ -968,7 +968,7 @@ export function ExtensionDetail() {
                       className={cn(
                         'w-4 h-4',
                         star <= Math.round(extension.rating)
-                          ? 'text-amber-400 fill-amber-400'
+                          ? 'text-warning fill-warning'
                           : 'text-text-disabled'
                       )}
                     />
@@ -1016,7 +1016,7 @@ export function ExtensionDetail() {
                       <div className="flex-1 min-w-0">
                         <p className="font-medium text-text-primary truncate">{ext.name}</p>
                         <p className="text-sm text-text-tertiary">
-                          <Star className="w-3 h-3 inline text-amber-400 fill-amber-400" /> {ext.rating}
+                          <Star className="w-3 h-3 inline text-warning fill-warning" /> {ext.rating}
                         </p>
                       </div>
                     </Link>

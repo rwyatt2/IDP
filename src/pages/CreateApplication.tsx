@@ -64,10 +64,10 @@ const typeOptions = [
 ];
 
 const tierOptions = [
-  { value: 'tier-1', label: 'Tier 1 - Critical', description: 'Revenue impacting, requires 99.99% uptime', color: 'bg-danger-100 text-danger-700' },
-  { value: 'tier-2', label: 'Tier 2 - Important', description: 'Business critical, requires 99.9% uptime', color: 'bg-warning-100 text-warning-700' },
-  { value: 'tier-3', label: 'Tier 3 - Standard', description: 'Internal tools, 99% uptime', color: 'bg-blue-100 text-blue-700' },
-  { value: 'tier-4', label: 'Tier 4 - Development', description: 'Non-production, best effort', color: 'bg-slate-100 text-slate-700' },
+  { value: 'tier-1', label: 'Tier 1 - Critical', description: 'Revenue impacting, requires 99.99% uptime', color: 'bg-error-subtle text-error' },
+  { value: 'tier-2', label: 'Tier 2 - Important', description: 'Business critical, requires 99.9% uptime', color: 'bg-warning-subtle text-warning' },
+  { value: 'tier-3', label: 'Tier 3 - Standard', description: 'Internal tools, 99% uptime', color: 'bg-info-subtle text-info' },
+  { value: 'tier-4', label: 'Tier 4 - Development', description: 'Non-production, best effort', color: 'bg-surface-raised text-text-secondary' },
 ];
 
 const languageOptions = [
@@ -165,7 +165,7 @@ export function CreateApplication() {
       {/* Back Link */}
       <button
         onClick={() => navigate(-1)}
-        className="inline-flex items-center gap-2 text-slate-500 hover:text-slate-700 transition-colors"
+        className="inline-flex items-center gap-2 text-text-secondary hover:text-text-primary transition-colors"
       >
         <ArrowLeft className="w-4 h-4" />
         Back
@@ -173,8 +173,8 @@ export function CreateApplication() {
 
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-bold text-slate-900">Create New Application</h1>
-        <p className="text-slate-500 mt-1">
+        <h1 className="text-2xl font-bold text-text-primary">Create New Application</h1>
+        <p className="text-text-secondary mt-1">
           Set up a new application with all the infrastructure you need
         </p>
       </div>
@@ -191,7 +191,7 @@ export function CreateApplication() {
                     ? 'bg-success-500 text-white'
                     : currentStep === step.id
                     ? 'bg-primary-600 text-white'
-                    : 'bg-slate-100 text-slate-500'
+                    : 'bg-surface-raised text-text-secondary'
                 )}
               >
                 {currentStep > step.id ? <Check className="w-5 h-5" /> : step.id}
@@ -199,17 +199,17 @@ export function CreateApplication() {
               <div className="hidden sm:block">
                 <p className={cn(
                   'font-medium',
-                  currentStep >= step.id ? 'text-slate-900' : 'text-slate-400'
+                  currentStep >= step.id ? 'text-text-primary' : 'text-text-tertiary'
                 )}>
                   {step.title}
                 </p>
-                <p className="text-sm text-slate-500">{step.description}</p>
+                <p className="text-sm text-text-secondary">{step.description}</p>
               </div>
             </div>
             {index < steps.length - 1 && (
               <div className={cn(
                 'w-12 lg:w-24 h-0.5 mx-4',
-                currentStep > step.id ? 'bg-success-500' : 'bg-slate-200'
+                currentStep > step.id ? 'bg-success-500' : 'bg-border-subtle'
               )} />
             )}
           </div>
@@ -256,19 +256,19 @@ export function CreateApplication() {
                           'p-4 rounded-lg border-2 text-left transition-colors',
                           formData.type === option.value
                             ? 'border-primary-500 bg-primary-50'
-                            : 'border-slate-200 hover:border-slate-300'
+                            : 'border-border-subtle hover:border-border-default'
                         )}
                       >
                         <div className={cn(
                           'w-10 h-10 rounded-lg flex items-center justify-center mb-2',
                           formData.type === option.value
-                            ? 'bg-primary-100 text-primary-600'
-                            : 'bg-slate-100 text-slate-600'
+                            ? 'bg-primary-100 text-accent-text'
+                            : 'bg-surface-raised text-text-tertiary'
                         )}>
                           {option.icon}
                         </div>
-                        <p className="font-medium text-slate-900">{option.label}</p>
-                        <p className="text-xs text-slate-500">{option.description}</p>
+                        <p className="font-medium text-text-primary">{option.label}</p>
+                        <p className="text-xs text-text-secondary">{option.description}</p>
                       </button>
                     ))}
                   </div>
@@ -299,13 +299,13 @@ export function CreateApplication() {
                           'w-full p-4 rounded-lg border-2 text-left transition-colors flex items-center gap-4',
                           formData.tier === option.value
                             ? 'border-primary-500 bg-primary-50'
-                            : 'border-slate-200 hover:border-slate-300'
+                            : 'border-border-subtle hover:border-border-default'
                         )}
                       >
                         <Badge className={option.color}>{option.value.replace('tier-', 'T')}</Badge>
                         <div>
-                          <p className="font-medium text-slate-900">{option.label}</p>
-                          <p className="text-sm text-slate-500">{option.description}</p>
+                          <p className="font-medium text-text-primary">{option.label}</p>
+                          <p className="text-sm text-text-secondary">{option.description}</p>
                         </div>
                       </button>
                     ))}
@@ -356,7 +356,7 @@ export function CreateApplication() {
                           'px-4 py-2 rounded-lg border-2 font-medium capitalize transition-colors',
                           formData.environments.includes(env)
                             ? 'border-primary-500 bg-primary-50 text-primary-700'
-                            : 'border-slate-200 text-slate-600 hover:border-slate-300'
+                            : 'border-border-subtle text-text-tertiary hover:border-border-default'
                         )}
                       >
                         {env}
@@ -367,10 +367,10 @@ export function CreateApplication() {
 
                 <div>
                   <label className="label">Compute</label>
-                  <Card className="p-4 bg-slate-50 border-slate-200">
+                  <Card className="p-4 bg-surface-raised border-border-subtle">
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                       <div>
-                        <label className="text-xs text-slate-500">Type</label>
+                        <label className="text-xs text-text-secondary">Type</label>
                         <Select
                           value={formData.compute.type}
                           onChange={(v) => updateFormData({ compute: { ...formData.compute, type: v as 'kubernetes' | 'serverless' | 'vm' } })}
@@ -382,7 +382,7 @@ export function CreateApplication() {
                         />
                       </div>
                       <div>
-                        <label className="text-xs text-slate-500">Replicas</label>
+                        <label className="text-xs text-text-secondary">Replicas</label>
                         <Select
                           value={String(formData.compute.replicas)}
                           onChange={(v) => updateFormData({ compute: { ...formData.compute, replicas: Number(v) } })}
@@ -395,7 +395,7 @@ export function CreateApplication() {
                         />
                       </div>
                       <div>
-                        <label className="text-xs text-slate-500">CPU</label>
+                        <label className="text-xs text-text-secondary">CPU</label>
                         <Select
                           value={formData.compute.cpu}
                           onChange={(v) => updateFormData({ compute: { ...formData.compute, cpu: v } })}
@@ -408,7 +408,7 @@ export function CreateApplication() {
                         />
                       </div>
                       <div>
-                        <label className="text-xs text-slate-500">Memory</label>
+                        <label className="text-xs text-text-secondary">Memory</label>
                         <Select
                           value={formData.compute.memory}
                           onChange={(v) => updateFormData({ compute: { ...formData.compute, memory: v } })}
@@ -459,18 +459,18 @@ export function CreateApplication() {
                       type="checkbox"
                       checked={formData.monitoring}
                       onChange={(e) => updateFormData({ monitoring: e.target.checked })}
-                      className="w-4 h-4 rounded border-slate-300 text-primary-600 focus:ring-primary-500"
+                      className="w-4 h-4 rounded border-border-default text-primary-600 focus:ring-primary-500"
                     />
-                    <span className="text-sm text-slate-700">Enable Monitoring</span>
+                    <span className="text-sm text-text-primary">Enable Monitoring</span>
                   </label>
                   <label className="flex items-center gap-2 cursor-pointer">
                     <input
                       type="checkbox"
                       checked={formData.cdn}
                       onChange={(e) => updateFormData({ cdn: e.target.checked })}
-                      className="w-4 h-4 rounded border-slate-300 text-primary-600 focus:ring-primary-500"
+                      className="w-4 h-4 rounded border-border-default text-primary-600 focus:ring-primary-500"
                     />
-                    <span className="text-sm text-slate-700">Enable CDN</span>
+                    <span className="text-sm text-text-primary">Enable CDN</span>
                   </label>
                 </div>
               </div>
@@ -481,32 +481,32 @@ export function CreateApplication() {
               <div className="space-y-6">
                 <div className="grid grid-cols-2 gap-6">
                   <div>
-                    <p className="text-sm text-slate-500">Application Name</p>
-                    <p className="font-medium text-slate-900">{formData.displayName}</p>
-                    <p className="text-sm text-slate-500">{formData.name}</p>
+                    <p className="text-sm text-text-secondary">Application Name</p>
+                    <p className="font-medium text-text-primary">{formData.displayName}</p>
+                    <p className="text-sm text-text-secondary">{formData.name}</p>
                   </div>
                   <div>
-                    <p className="text-sm text-slate-500">Type</p>
-                    <p className="font-medium text-slate-900 capitalize">{formData.type}</p>
+                    <p className="text-sm text-text-secondary">Type</p>
+                    <p className="font-medium text-text-primary capitalize">{formData.type}</p>
                   </div>
                   <div>
-                    <p className="text-sm text-slate-500">Team</p>
-                    <p className="font-medium text-slate-900">
+                    <p className="text-sm text-text-secondary">Team</p>
+                    <p className="font-medium text-text-primary">
                       {teams.find((t) => t.id === formData.team)?.name}
                     </p>
                   </div>
                   <div>
-                    <p className="text-sm text-slate-500">Tier</p>
+                    <p className="text-sm text-text-secondary">Tier</p>
                     <Badge className={tierOptions.find((t) => t.value === formData.tier)?.color}>
                       {formData.tier.replace('tier-', 'Tier ')}
                     </Badge>
                   </div>
                   <div>
-                    <p className="text-sm text-slate-500">Language</p>
-                    <p className="font-medium text-slate-900 capitalize">{formData.language}</p>
+                    <p className="text-sm text-text-secondary">Language</p>
+                    <p className="font-medium text-text-primary capitalize">{formData.language}</p>
                   </div>
                   <div>
-                    <p className="text-sm text-slate-500">Environments</p>
+                    <p className="text-sm text-text-secondary">Environments</p>
                     <div className="flex flex-wrap gap-1">
                       {formData.environments.map((env) => (
                         <Badge key={env} variant="neutral" size="sm" className="capitalize">
@@ -516,8 +516,8 @@ export function CreateApplication() {
                     </div>
                   </div>
                 </div>
-                <div className="pt-4 border-t border-slate-200">
-                  <p className="text-sm text-slate-500 mb-2">Infrastructure</p>
+                <div className="pt-4 border-t border-border-subtle">
+                  <p className="text-sm text-text-secondary mb-2">Infrastructure</p>
                   <div className="flex flex-wrap gap-2">
                     <Badge variant="info">{formData.compute.type}</Badge>
                     <Badge variant="info">{formData.compute.replicas} replicas</Badge>
@@ -537,7 +537,7 @@ export function CreateApplication() {
             )}
 
             {/* Navigation */}
-            <div className="flex items-center justify-between mt-8 pt-6 border-t border-slate-200">
+            <div className="flex items-center justify-between mt-8 pt-6 border-t border-border-subtle">
               <Button
                 variant="ghost"
                 onClick={() => setCurrentStep((s) => s - 1)}
@@ -574,44 +574,44 @@ export function CreateApplication() {
           <Card padding="lg" className="sticky top-6">
             <div className="flex items-center gap-3 mb-4">
               <div className="w-10 h-10 rounded-lg bg-primary-100 flex items-center justify-center">
-                <DollarSign className="w-5 h-5 text-primary-600" />
+                <DollarSign className="w-5 h-5 text-accent-text" />
               </div>
               <div>
-                <p className="font-semibold text-slate-900">Cost Estimate</p>
-                <p className="text-sm text-slate-500">Monthly projection</p>
+                <p className="font-semibold text-text-primary">Cost Estimate</p>
+                <p className="text-sm text-text-secondary">Monthly projection</p>
               </div>
             </div>
             <div className="text-center py-4">
-              <p className="text-4xl font-bold text-slate-900">
+              <p className="text-4xl font-bold text-text-primary">
                 {formatCurrency(estimatedCost())}
               </p>
-              <p className="text-sm text-slate-500">per month</p>
+              <p className="text-sm text-text-secondary">per month</p>
             </div>
-            <div className="space-y-2 pt-4 border-t border-slate-200">
+            <div className="space-y-2 pt-4 border-t border-border-subtle">
               <div className="flex items-center justify-between text-sm">
-                <span className="text-slate-500">Compute</span>
-                <span className="text-slate-900">{formatCurrency(formData.compute.replicas * 50)}</span>
+                <span className="text-text-secondary">Compute</span>
+                <span className="text-text-primary">{formatCurrency(formData.compute.replicas * 50)}</span>
               </div>
               {formData.database.type !== 'none' && (
                 <div className="flex items-center justify-between text-sm">
-                  <span className="text-slate-500">Database</span>
-                  <span className="text-slate-900">{formatCurrency(50)}</span>
+                  <span className="text-text-secondary">Database</span>
+                  <span className="text-text-primary">{formatCurrency(50)}</span>
                 </div>
               )}
               {formData.cache.type !== 'none' && (
                 <div className="flex items-center justify-between text-sm">
-                  <span className="text-slate-500">Cache</span>
-                  <span className="text-slate-900">{formatCurrency(25)}</span>
+                  <span className="text-text-secondary">Cache</span>
+                  <span className="text-text-primary">{formatCurrency(25)}</span>
                 </div>
               )}
               {formData.monitoring && (
                 <div className="flex items-center justify-between text-sm">
-                  <span className="text-slate-500">Monitoring</span>
-                  <span className="text-slate-900">{formatCurrency(20)}</span>
+                  <span className="text-text-secondary">Monitoring</span>
+                  <span className="text-text-primary">{formatCurrency(20)}</span>
                 </div>
               )}
             </div>
-            <p className="text-xs text-slate-400 mt-4">
+            <p className="text-xs text-text-tertiary mt-4">
               * Estimates are approximate. Actual costs may vary based on usage.
             </p>
           </Card>

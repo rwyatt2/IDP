@@ -19,18 +19,18 @@ import {
 import { useState } from 'react';
 
 const severityConfig = {
-  critical: { color: 'bg-danger-100 text-danger-700 border-danger-200', icon: <AlertTriangle className="w-5 h-5" /> },
-  high: { color: 'bg-danger-50 text-danger-600 border-danger-100', icon: <AlertCircle className="w-5 h-5" /> },
-  medium: { color: 'bg-warning-100 text-warning-700 border-warning-200', icon: <AlertCircle className="w-5 h-5" /> },
-  low: { color: 'bg-blue-100 text-blue-700 border-blue-200', icon: <AlertCircle className="w-5 h-5" /> },
+  critical: { color: 'bg-error-subtle text-error border-error/20', icon: <AlertTriangle className="w-5 h-5" /> },
+  high: { color: 'bg-error/10 text-error border-error/10', icon: <AlertCircle className="w-5 h-5" /> },
+  medium: { color: 'bg-warning-subtle text-warning border-warning/20', icon: <AlertCircle className="w-5 h-5" /> },
+  low: { color: 'bg-info-subtle text-info border-info/20', icon: <AlertCircle className="w-5 h-5" /> },
 };
 
 const statusConfig = {
-  open: { color: 'bg-danger-100 text-danger-700', label: 'Open' },
-  investigating: { color: 'bg-warning-100 text-warning-700', label: 'Investigating' },
-  identified: { color: 'bg-blue-100 text-blue-700', label: 'Identified' },
-  monitoring: { color: 'bg-primary-100 text-primary-700', label: 'Monitoring' },
-  resolved: { color: 'bg-success-100 text-success-700', label: 'Resolved' },
+  open: { color: 'bg-error-subtle text-error', label: 'Open' },
+  investigating: { color: 'bg-warning-subtle text-warning', label: 'Investigating' },
+  identified: { color: 'bg-info-subtle text-info', label: 'Identified' },
+  monitoring: { color: 'bg-accent-subtle text-accent', label: 'Monitoring' },
+  resolved: { color: 'bg-success-subtle text-success', label: 'Resolved' },
 };
 
 export function IncidentDetail() {
@@ -42,8 +42,8 @@ export function IncidentDetail() {
   if (!incident) {
     return (
       <div className="text-center py-12">
-        <p className="text-slate-500">Incident not found</p>
-        <Link to="/manage/incidents" className="text-primary-600 hover:text-primary-700 mt-2 inline-block">
+        <p className="text-text-secondary">Incident not found</p>
+        <Link to="/manage/incidents" className="text-accent-text hover:text-accent-text mt-2 inline-block">
           Back to Incidents
         </Link>
       </div>
@@ -65,7 +65,7 @@ export function IncidentDetail() {
       {/* Back Link */}
       <Link
         to="/manage/incidents"
-        className="inline-flex items-center gap-2 text-slate-500 hover:text-slate-700 transition-colors"
+        className="inline-flex items-center gap-2 text-text-secondary hover:text-text-primary transition-colors"
       >
         <ArrowLeft className="w-4 h-4" />
         Back to Incidents
@@ -79,7 +79,7 @@ export function IncidentDetail() {
           </div>
           <div>
             <div className="flex items-center gap-3">
-              <h1 className="text-2xl font-bold text-slate-900">{incident.title}</h1>
+              <h1 className="text-2xl font-bold text-text-primary">{incident.title}</h1>
             </div>
             <div className="flex items-center gap-3 mt-2">
               <Badge className={severity.color}>{incident.severity}</Badge>
@@ -87,13 +87,13 @@ export function IncidentDetail() {
               {incident.applicationName && (
                 <Link
                   to={`/discover/catalog/${incident.applicationId}`}
-                  className="text-sm text-primary-600 hover:text-primary-700"
+                  className="text-sm text-accent-text hover:text-accent-text"
                 >
                   {incident.applicationName}
                 </Link>
               )}
             </div>
-            <p className="text-sm text-slate-500 mt-2">
+            <p className="text-sm text-text-secondary mt-2">
               Opened {formatRelativeTime(incident.createdAt)} · Team: {incident.team}
             </p>
           </div>
@@ -114,8 +114,8 @@ export function IncidentDetail() {
 
       {/* Description */}
       <Card padding="lg">
-        <h3 className="font-semibold text-slate-900 mb-2">Description</h3>
-        <p className="text-slate-600">{incident.description}</p>
+        <h3 className="font-semibold text-text-primary mb-2">Description</h3>
+        <p className="text-text-secondary">{incident.description}</p>
       </Card>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -157,34 +157,34 @@ export function IncidentDetail() {
 
                 {/* Timeline Events */}
                 <div className="space-y-4 relative">
-                  <div className="absolute left-5 top-0 bottom-0 w-0.5 bg-slate-200" />
+                  <div className="absolute left-5 top-0 bottom-0 w-0.5 bg-border-subtle" />
                   {incident.timeline.map((event) => (
                     <div key={event.id} className="flex gap-4 relative">
                       <div className={cn(
                         'w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 z-10',
                         event.type === 'created' && 'bg-danger-100',
                         event.type === 'status-change' && 'bg-primary-100',
-                        event.type === 'comment' && 'bg-slate-100',
+                        event.type === 'comment' && 'bg-surface-raised',
                         event.type === 'resolved' && 'bg-success-100'
                       )}>
                         {event.type === 'created' && <AlertTriangle className="w-5 h-5 text-danger-600" />}
-                        {event.type === 'status-change' && <Activity className="w-5 h-5 text-primary-600" />}
-                        {event.type === 'comment' && <MessageSquare className="w-5 h-5 text-slate-600" />}
+                        {event.type === 'status-change' && <Activity className="w-5 h-5 text-accent-text" />}
+                        {event.type === 'comment' && <MessageSquare className="w-5 h-5 text-text-tertiary" />}
                         {event.type === 'resolved' && <CheckCircle className="w-5 h-5 text-success-600" />}
                       </div>
                       <Card className="flex-1 p-4">
                         <div className="flex items-start justify-between mb-2">
                           <div className="flex items-center gap-2">
-                            <span className="font-medium text-slate-900">{event.user}</span>
+                            <span className="font-medium text-text-primary">{event.user}</span>
                             {event.type === 'status-change' && (
                               <Badge variant="neutral" size="sm">Status Update</Badge>
                             )}
                           </div>
-                          <span className="text-sm text-slate-500">
+                          <span className="text-sm text-text-secondary">
                             {formatDateTime(event.timestamp)}
                           </span>
                         </div>
-                        <p className="text-slate-600">{event.content}</p>
+                        <p className="text-text-secondary">{event.content}</p>
                       </Card>
                     </div>
                   ))}
@@ -196,23 +196,23 @@ export function IncidentDetail() {
               <Card padding="lg">
                 <CardHeader title="Related Items" />
                 <div className="mt-4 space-y-3">
-                  <div className="p-3 rounded-lg border border-slate-200 flex items-center gap-3">
+                  <div className="p-3 rounded-lg border border-border-subtle flex items-center gap-3">
                     <AlertTriangle className="w-5 h-5 text-warning-500" />
                     <div className="flex-1">
-                      <p className="font-medium text-slate-900">Alert: High error rate</p>
-                      <p className="text-sm text-slate-500">Triggered {formatRelativeTime(incident.createdAt)}</p>
+                      <p className="font-medium text-text-primary">Alert: High error rate</p>
+                      <p className="text-sm text-text-secondary">Triggered {formatRelativeTime(incident.createdAt)}</p>
                     </div>
                     <Badge variant="warning" size="sm">Alert</Badge>
                   </div>
                   {incident.applicationName && (
                     <Link
                       to={`/discover/catalog/${incident.applicationId}`}
-                      className="p-3 rounded-lg border border-slate-200 flex items-center gap-3 hover:bg-slate-50 transition-colors"
+                      className="p-3 rounded-lg border border-border-subtle flex items-center gap-3 hover:bg-surface-raised transition-colors"
                     >
-                      <Activity className="w-5 h-5 text-slate-500" />
+                      <Activity className="w-5 h-5 text-text-secondary" />
                       <div className="flex-1">
-                        <p className="font-medium text-slate-900">{incident.applicationName}</p>
-                        <p className="text-sm text-slate-500">Affected service</p>
+                        <p className="font-medium text-text-primary">{incident.applicationName}</p>
+                        <p className="text-sm text-text-secondary">Affected service</p>
                       </div>
                       <Badge variant="info" size="sm">Service</Badge>
                     </Link>
@@ -240,25 +240,25 @@ export function IncidentDetail() {
                       key={item.step}
                       className={cn(
                         'flex items-start gap-4 p-4 rounded-lg border',
-                        item.done ? 'bg-success-50 border-success-200' : 'border-slate-200'
+                        item.done ? 'bg-success-50 border-success-200' : 'border-border-subtle'
                       )}
                     >
                       <div className={cn(
                         'w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0',
-                        item.done ? 'bg-success-500 text-white' : 'bg-slate-200 text-slate-600'
+                        item.done ? 'bg-success-500 text-white' : 'bg-surface-raised text-text-tertiary'
                       )}>
                         {item.done ? <CheckCircle className="w-4 h-4" /> : item.step}
                       </div>
                       <div>
                         <p className={cn(
                           'font-medium',
-                          item.done ? 'text-success-800' : 'text-slate-900'
+                          item.done ? 'text-success-800' : 'text-text-primary'
                         )}>
                           {item.title}
                         </p>
                         <p className={cn(
                           'text-sm',
-                          item.done ? 'text-success-700' : 'text-slate-500'
+                          item.done ? 'text-success-700' : 'text-text-secondary'
                         )}>
                           {item.description}
                         </p>
@@ -278,23 +278,23 @@ export function IncidentDetail() {
                 {incident.status === 'resolved' ? (
                   <div className="mt-4 space-y-4">
                     <div>
-                      <h4 className="font-medium text-slate-900 mb-2">Summary</h4>
+                      <h4 className="font-medium text-text-primary mb-2">Summary</h4>
                       <textarea className="input min-h-[80px]" placeholder="Brief summary of the incident..." />
                     </div>
                     <div>
-                      <h4 className="font-medium text-slate-900 mb-2">Root Cause</h4>
+                      <h4 className="font-medium text-text-primary mb-2">Root Cause</h4>
                       <textarea className="input min-h-[80px]" placeholder="What caused the incident..." />
                     </div>
                     <div>
-                      <h4 className="font-medium text-slate-900 mb-2">Action Items</h4>
+                      <h4 className="font-medium text-text-primary mb-2">Action Items</h4>
                       <textarea className="input min-h-[80px]" placeholder="Follow-up tasks to prevent recurrence..." />
                     </div>
                     <Button variant="primary">Save Post-Mortem</Button>
                   </div>
                 ) : (
                   <div className="mt-4 text-center py-8">
-                    <FileText className="w-12 h-12 text-slate-300 mx-auto mb-4" />
-                    <p className="text-slate-500">Resolve the incident to create a post-mortem</p>
+                    <FileText className="w-12 h-12 text-text-tertiary mx-auto mb-4" />
+                    <p className="text-text-secondary">Resolve the incident to create a post-mortem</p>
                   </div>
                 )}
               </Card>
@@ -309,29 +309,29 @@ export function IncidentDetail() {
             <CardHeader title="Details" />
             <div className="mt-4 space-y-4">
               <div className="flex items-center justify-between">
-                <span className="text-sm text-slate-500">Status</span>
+                <span className="text-sm text-text-secondary">Status</span>
                 <Badge className={status.color}>{status.label}</Badge>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-sm text-slate-500">Severity</span>
+                <span className="text-sm text-text-secondary">Severity</span>
                 <Badge className={severity.color}>{incident.severity}</Badge>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-sm text-slate-500">Team</span>
-                <span className="text-sm font-medium text-slate-900">{incident.team}</span>
+                <span className="text-sm text-text-secondary">Team</span>
+                <span className="text-sm font-medium text-text-primary">{incident.team}</span>
               </div>
               {incident.assignee && (
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-slate-500">Assignee</span>
+                  <span className="text-sm text-text-secondary">Assignee</span>
                   <div className="flex items-center gap-2">
                     <Avatar name={incident.assignee} size="sm" />
-                    <span className="text-sm font-medium text-slate-900">{incident.assignee}</span>
+                    <span className="text-sm font-medium text-text-primary">{incident.assignee}</span>
                   </div>
                 </div>
               )}
               <div className="flex items-center justify-between">
-                <span className="text-sm text-slate-500">Duration</span>
-                <span className="text-sm font-medium text-slate-900">
+                <span className="text-sm text-text-secondary">Duration</span>
+                <span className="text-sm font-medium text-text-primary">
                   {incident.resolvedAt
                     ? formatRelativeTime(incident.resolvedAt)
                     : formatRelativeTime(incident.createdAt) + ' (ongoing)'}

@@ -35,17 +35,17 @@ const deploymentTrendData = [
 ];
 
 const serviceDistributionData = [
-  { name: 'Backend', value: 45, color: '#8b5cf6' },
-  { name: 'Frontend', value: 25, color: '#22c55e' },
-  { name: 'Data', value: 15, color: '#eab308' },
-  { name: 'Infra', value: 10, color: '#3b82f6' },
-  { name: 'Libs', value: 5, color: '#ec4899' },
+  { name: 'Backend', value: 45, color: 'var(--color-accent)' },
+  { name: 'Frontend', value: 25, color: 'var(--color-success)' },
+  { name: 'Data', value: 15, color: 'var(--color-warning)' },
+  { name: 'Infra', value: 10, color: 'var(--color-info)' },
+  { name: 'Libs', value: 5, color: 'var(--color-error)' },
 ];
 
 const environmentData = [
-  { name: 'Production', deploys: platformMetrics.deployments.byEnvironment.production, color: '#8b5cf6' },
-  { name: 'Staging', deploys: platformMetrics.deployments.byEnvironment.staging, color: '#22c55e' },
-  { name: 'Development', deploys: platformMetrics.deployments.byEnvironment.development, color: '#3b82f6' },
+  { name: 'Production', deploys: platformMetrics.deployments.byEnvironment.production, color: 'var(--color-accent)' },
+  { name: 'Staging', deploys: platformMetrics.deployments.byEnvironment.staging, color: 'var(--color-success)' },
+  { name: 'Development', deploys: platformMetrics.deployments.byEnvironment.development, color: 'var(--color-info)' },
 ];
 
 const teamVelocityData = mockTeamMetrics.map(t => ({
@@ -58,12 +58,12 @@ const teamVelocityData = mockTeamMetrics.map(t => ({
 }));
 
 const leadTimeData = [
-  { bucket: '<1h', value: 15, color: '#22c55e' },
-  { bucket: '1-2h', value: 35, color: '#22c55e' },
-  { bucket: '2-4h', value: 28, color: '#eab308' },
-  { bucket: '4-8h', value: 12, color: '#f97316' },
-  { bucket: '8-24h', value: 7, color: '#f97316' },
-  { bucket: '>24h', value: 3, color: '#ef4444' },
+  { bucket: '<1h', value: 15, color: 'var(--color-success)' },
+  { bucket: '1-2h', value: 35, color: 'var(--color-success)' },
+  { bucket: '2-4h', value: 28, color: 'var(--color-warning)' },
+  { bucket: '4-8h', value: 12, color: 'var(--color-warning-emphasis)' },
+  { bucket: '8-24h', value: 7, color: 'var(--color-warning-emphasis)' },
+  { bucket: '>24h', value: 3, color: 'var(--color-error)' },
 ];
 
 // ============================================================================
@@ -98,8 +98,8 @@ function AreaChart({ data }: { data: typeof deploymentTrendData }) {
       <svg viewBox={`0 0 ${width} ${height}`} className="w-full h-full" preserveAspectRatio="xMidYMid meet">
         <defs>
           <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#8b5cf6" stopOpacity="0.5" />
-            <stop offset="100%" stopColor="#8b5cf6" stopOpacity="0" />
+            <stop offset="0%" stopColor="var(--color-accent)" stopOpacity="0.5" />
+            <stop offset="100%" stopColor="var(--color-accent)" stopOpacity="0" />
           </linearGradient>
         </defs>
         
@@ -109,8 +109,8 @@ function AreaChart({ data }: { data: typeof deploymentTrendData }) {
           const value = Math.round(minValue + range * ratio);
           return (
             <g key={i}>
-              <line x1={padding.left} y1={y} x2={padding.left + chartWidth} y2={y} stroke="rgba(255,255,255,0.08)" strokeDasharray="4 4" />
-              <text x={padding.left - 8} y={y + 4} fill="rgba(255,255,255,0.5)" fontSize="10" textAnchor="end">{value}</text>
+              <line x1={padding.left} y1={y} x2={padding.left + chartWidth} y2={y} stroke="var(--color-border-subtle)" strokeDasharray="4 4" />
+              <text x={padding.left - 8} y={y + 4} fill="var(--color-text-tertiary)" fontSize="10" textAnchor="end">{value}</text>
             </g>
           );
         })}
@@ -119,7 +119,7 @@ function AreaChart({ data }: { data: typeof deploymentTrendData }) {
         {data.filter((_, i) => i % 2 === 0).map((d, idx) => {
           const i = idx * 2;
           return (
-            <text key={i} x={points[i].x} y={height - 8} fill="rgba(255,255,255,0.5)" fontSize="10" textAnchor="middle">{d.week}</text>
+            <text key={i} x={points[i].x} y={height - 8} fill="var(--color-text-tertiary)" fontSize="10" textAnchor="middle">{d.week}</text>
           );
         })}
         
@@ -127,7 +127,7 @@ function AreaChart({ data }: { data: typeof deploymentTrendData }) {
         <path d={areaPath} fill="url(#areaGrad)" />
         
         {/* Line */}
-        <path d={linePath} fill="none" stroke="#8b5cf6" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+        <path d={linePath} fill="none" stroke="var(--color-accent)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
         
         {/* Dots */}
         {points.map((p, i) => (
@@ -137,10 +137,10 @@ function AreaChart({ data }: { data: typeof deploymentTrendData }) {
               cx={p.x} 
               cy={p.y} 
               r={hoveredIndex === i ? 6 : 4} 
-              fill={hoveredIndex === i ? '#8b5cf6' : '#1a1a2e'} 
-              stroke="#8b5cf6" 
+              fill={hoveredIndex === i ? 'var(--color-accent)' : 'var(--color-surface)'} 
+              stroke="var(--color-accent)" 
               strokeWidth="2"
-              style={{ transition: 'all 0.2s', filter: hoveredIndex === i ? 'drop-shadow(0 0 8px #8b5cf6)' : 'none' }}
+              style={{ transition: 'all 0.2s', filter: hoveredIndex === i ? 'drop-shadow(0 0 8px var(--color-accent))' : 'none' }}
             />
           </g>
         ))}
@@ -217,10 +217,10 @@ function DonutChart({ data }: { data: typeof serviceDistributionData }) {
               onMouseLeave={() => setActiveIndex(null)}
             />
           ))}
-          <text x={center} y={center - 4} textAnchor="middle" fill="rgba(255,255,255,0.95)" fontSize="20" fontWeight="bold">
+          <text x={center} y={center - 4} textAnchor="middle" fill="var(--color-text-primary)" fontSize="20" fontWeight="bold">
             {activeIndex !== null ? `${data[activeIndex].value}%` : '100%'}
           </text>
-          <text x={center} y={center + 14} textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="11">
+          <text x={center} y={center + 14} textAnchor="middle" fill="var(--color-text-tertiary)" fontSize="11">
             {activeIndex !== null ? data[activeIndex].name : 'Total'}
           </text>
         </svg>
@@ -276,9 +276,9 @@ function BarChart({ data, valueKey = 'deploys', nameKey = 'name' }: { data: Arra
                 className="h-full rounded-lg transition-all duration-300"
                 style={{ 
                   width: `${percentage}%`,
-                  backgroundColor: item.color as string || '#8b5cf6',
+                  backgroundColor: item.color as string || 'var(--color-accent)',
                   filter: hoveredIndex === i ? 'brightness(1.2)' : 'none',
-                  boxShadow: hoveredIndex === i ? `0 0 20px ${item.color || '#8b5cf6'}40` : 'none'
+                  boxShadow: hoveredIndex === i ? `0 0 20px color-mix(in srgb, ${item.color || 'var(--color-accent)'} 40%, transparent)` : 'none'
                 }}
               />
               {hoveredIndex === i && (
@@ -324,7 +324,7 @@ function StackedBarChart({ data }: { data: typeof teamVelocityData }) {
                 className="h-full transition-all duration-300"
                 style={{ 
                   width: `${successPercentage}%`,
-                  backgroundColor: '#22c55e',
+                  backgroundColor: 'var(--color-success)',
                   filter: hoveredIndex === i ? 'brightness(1.2)' : 'none'
                 }}
               />
@@ -332,7 +332,7 @@ function StackedBarChart({ data }: { data: typeof teamVelocityData }) {
                 className="h-full rounded-r-lg transition-all duration-300"
                 style={{ 
                   width: `${failedPercentage}%`,
-                  backgroundColor: '#ef4444',
+                  backgroundColor: 'var(--color-error)',
                   filter: hoveredIndex === i ? 'brightness(1.2)' : 'none'
                 }}
               />
@@ -431,7 +431,7 @@ export function Analytics() {
       {/* Key Metrics */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {metrics.map((metric) => (
-          <Card key={metric.label} className="p-4 hover:border-accent/30 transition-all duration-300 cursor-default group">
+          <Card key={metric.label} className="p-4 hover:border-accent/30 transition-all duration-300 cursor-default group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-canvas" tabIndex={0}>
             <div className="flex items-center justify-between mb-3">
               <div className={cn('w-10 h-10 rounded-lg flex items-center justify-center transition-transform duration-300 group-hover:scale-110', metric.color)}>
                 {metric.icon}
@@ -500,7 +500,7 @@ export function Analytics() {
                       </div>
                       <div className="ml-10 h-2 bg-surface-raised rounded-full overflow-hidden">
                         <div 
-                          className="h-full bg-gradient-to-r from-accent to-purple-400 rounded-full transition-all duration-500 group-hover:brightness-125"
+                          className="h-full bg-accent rounded-full transition-all duration-500 group-hover:brightness-125"
                           style={{ width: `${(deployCount / 40) * 100}%` }}
                         />
                       </div>
@@ -531,10 +531,10 @@ export function Analytics() {
                     const count = incidents.filter((inc) => inc.severity === severity).length;
                     const total = incidents.length || 1;
                     const colors: Record<string, string> = {
-                      critical: 'from-red-600 to-red-400',
-                      high: 'from-orange-600 to-orange-400',
-                      medium: 'from-yellow-600 to-yellow-400',
-                      low: 'from-blue-600 to-blue-400'
+                      critical: 'bg-error',
+                      high: 'bg-warning-emphasis',
+                      medium: 'bg-warning',
+                      low: 'bg-info'
                     };
                     return (
                       <div key={severity} className="group cursor-default">
@@ -544,7 +544,7 @@ export function Analytics() {
                         </div>
                         <div className="h-2.5 rounded-full bg-surface-raised overflow-hidden">
                           <div
-                            className={cn('h-full rounded-full transition-all duration-500 bg-gradient-to-r group-hover:brightness-125', colors[severity])}
+                            className={cn('h-full rounded-full transition-all duration-500 group-hover:brightness-125', colors[severity])}
                             style={{ width: `${(count / total) * 100}%` }}
                           />
                         </div>
@@ -565,7 +565,7 @@ export function Analytics() {
                 { value: platformMetrics.deployments.successful, label: 'Successful', color: 'text-success' },
                 { value: platformMetrics.deployments.failed, label: 'Failed', color: 'text-error' },
               ].map((stat) => (
-                <Card key={stat.label} className="p-5 text-center hover:border-accent/30 transition-all duration-300 cursor-default group">
+                <Card key={stat.label} className="p-5 text-center hover:border-accent/30 transition-all duration-300 cursor-default group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-canvas" tabIndex={0}>
                   <p className={cn('text-4xl font-bold group-hover:scale-105 transition-transform inline-block', stat.color)}>
                     {stat.value}
                   </p>
@@ -624,7 +624,7 @@ export function Analytics() {
                 { label: 'MTBF', value: `${platformMetrics.reliability.mtbf}d`, color: 'text-text-primary' },
                 { label: 'Error Budget', value: `${platformMetrics.reliability.errorBudget}%`, color: 'text-warning' },
               ].map((stat) => (
-                <Card key={stat.label} className="p-4 hover:border-accent/30 transition-all duration-300 cursor-default group">
+                <Card key={stat.label} className="p-4 hover:border-accent/30 transition-all duration-300 cursor-default group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-canvas" tabIndex={0}>
                   <p className="text-sm text-text-tertiary">{stat.label}</p>
                   <p className={cn('text-3xl font-bold group-hover:scale-105 transition-transform inline-block', stat.color)}>
                     {stat.value}
@@ -674,7 +674,7 @@ export function Analytics() {
                 </thead>
                 <tbody>
                   {teamMetricsData.map((team) => (
-                    <tr key={team.team} className="border-b border-border-subtle last:border-0 hover:bg-surface-raised/50 transition-colors cursor-pointer">
+                    <tr key={team.team} className="border-b border-border-subtle last:border-0 hover:bg-surface-raised/50 transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent" tabIndex={0}>
                       <td className="p-4">
                         <div className="flex items-center gap-3">
                           <div className="w-8 h-8 rounded-lg bg-accent/20 flex items-center justify-center">

@@ -38,14 +38,14 @@ export function PlaceholderPage() {
   return (
     <div className="max-w-2xl mx-auto">
       <Card className="text-center py-16">
-        <div className="w-16 h-16 rounded-2xl bg-slate-100 flex items-center justify-center mx-auto mb-6">
-          <Construction className="w-8 h-8 text-slate-400" />
+        <div className="w-16 h-16 rounded-2xl bg-surface-raised flex items-center justify-center mx-auto mb-6">
+          <Construction className="w-8 h-8 text-text-tertiary" />
         </div>
-        <h1 className="text-2xl font-bold text-slate-900 mb-2">{title}</h1>
-        <p className="text-slate-500 mb-4">
+        <h1 className="text-2xl font-bold text-text-primary mb-2">{title}</h1>
+        <p className="text-text-secondary mb-4">
           This page is under construction. Check back soon for updates.
         </p>
-        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-slate-100 text-sm text-slate-600">
+        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-surface-raised text-sm text-text-tertiary">
           <span className="font-mono">{location.pathname}</span>
         </div>
       </Card>

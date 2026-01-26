@@ -86,25 +86,25 @@ const mockEnvironments: Environment[] = [
 ];
 
 const typeColors: Record<string, string> = {
-  production: 'bg-danger-100 text-danger-700',
-  staging: 'bg-warning-100 text-warning-700',
-  development: 'bg-blue-100 text-blue-700',
-  sandbox: 'bg-slate-100 text-slate-700',
+  production: 'bg-error-subtle text-error-text',
+  staging: 'bg-warning-subtle text-warning-text',
+  development: 'bg-info-subtle text-info-text',
+  sandbox: 'bg-surface-overlay text-text-secondary',
 };
 
 const statusIcons = {
-  healthy: <CheckCircle className="w-5 h-5 text-success-500" />,
-  degraded: <AlertTriangle className="w-5 h-5 text-warning-500" />,
-  down: <XCircle className="w-5 h-5 text-danger-500" />,
+  healthy: <CheckCircle className="w-5 h-5 text-success-text" />,
+  degraded: <AlertTriangle className="w-5 h-5 text-warning-text" />,
+  down: <XCircle className="w-5 h-5 text-error-text" />,
 };
 
 function EnvironmentCard({ env }: { env: Environment }) {
   return (
     <Card variant="hover" padding="none" className="overflow-hidden">
       <div className={cn('h-1', 
-        env.status === 'healthy' && 'bg-success-500',
-        env.status === 'degraded' && 'bg-warning-500',
-        env.status === 'down' && 'bg-danger-500'
+        env.status === 'healthy' && 'bg-success',
+        env.status === 'degraded' && 'bg-warning',
+        env.status === 'down' && 'bg-error'
       )} />
       <div className="p-5">
         <div className="flex items-start justify-between mb-4">
@@ -117,29 +117,29 @@ function EnvironmentCard({ env }: { env: Environment }) {
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h3 className="font-semibold text-slate-900">{env.displayName}</h3>
-                {env.locked && <Lock className="w-4 h-4 text-slate-400" />}
+                <h3 className="font-semibold text-text-primary">{env.displayName}</h3>
+                {env.locked && <Lock className="w-4 h-4 text-text-tertiary" />}
               </div>
-              <p className="text-sm text-slate-500">{env.region}</p>
+              <p className="text-sm text-text-secondary">{env.region}</p>
             </div>
           </div>
           {statusIcons[env.status]}
         </div>
 
         <div className="grid grid-cols-2 gap-4 mb-4">
-          <div className="p-3 rounded-lg bg-slate-50">
-            <p className="text-2xl font-bold text-slate-900">
+          <div className="p-3 rounded-lg bg-surface-raised">
+            <p className="text-2xl font-bold text-text-primary">
               {env.healthyServices}/{env.services}
             </p>
-            <p className="text-sm text-slate-500">Services Healthy</p>
+            <p className="text-sm text-text-secondary">Services Healthy</p>
           </div>
-          <div className="p-3 rounded-lg bg-slate-50">
-            <p className="text-sm font-medium text-slate-900 truncate">{env.url}</p>
-            <p className="text-sm text-slate-500">Environment URL</p>
+          <div className="p-3 rounded-lg bg-surface-raised">
+            <p className="text-sm font-medium text-text-primary truncate">{env.url}</p>
+            <p className="text-sm text-text-secondary">Environment URL</p>
           </div>
         </div>
 
-        <div className="flex items-center justify-between pt-4 border-t border-slate-100">
+        <div className="flex items-center justify-between pt-4 border-t border-border-subtle">
           <Badge className={typeColors[env.type]} size="sm">
             {env.type}
           </Badge>
@@ -176,8 +176,8 @@ export function Environments() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">Environments</h1>
-          <p className="text-slate-500 mt-1">
+          <h1 className="text-2xl font-bold text-text-primary">Environments</h1>
+          <p className="text-text-secondary mt-1">
             Manage deployment environments and configurations
           </p>
         </div>
@@ -195,45 +195,45 @@ export function Environments() {
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <Card className="p-4">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center">
-              <Globe className="w-5 h-5 text-slate-600" />
+            <div className="w-10 h-10 rounded-lg bg-surface-overlay flex items-center justify-center">
+              <Globe className="w-5 h-5 text-text-secondary" />
             </div>
             <div>
-              <p className="text-2xl font-bold text-slate-900">{mockEnvironments.length}</p>
-              <p className="text-sm text-slate-500">Environments</p>
+              <p className="text-2xl font-bold text-text-primary">{mockEnvironments.length}</p>
+              <p className="text-sm text-text-secondary">Environments</p>
             </div>
           </div>
         </Card>
         <Card className="p-4">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-success-100 flex items-center justify-center">
-              <CheckCircle className="w-5 h-5 text-success-600" />
+            <div className="w-10 h-10 rounded-lg bg-success-subtle flex items-center justify-center">
+              <CheckCircle className="w-5 h-5 text-success-text" />
             </div>
             <div>
-              <p className="text-2xl font-bold text-slate-900">{healthyEnvs}</p>
-              <p className="text-sm text-slate-500">Healthy</p>
+              <p className="text-2xl font-bold text-text-primary">{healthyEnvs}</p>
+              <p className="text-sm text-text-secondary">Healthy</p>
             </div>
           </div>
         </Card>
         <Card className="p-4">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-purple-100 flex items-center justify-center">
-              <Server className="w-5 h-5 text-purple-600" />
+            <div className="w-10 h-10 rounded-lg bg-accent-subtle flex items-center justify-center">
+              <Server className="w-5 h-5 text-accent-text" />
             </div>
             <div>
-              <p className="text-2xl font-bold text-slate-900">{healthyServices}/{totalServices}</p>
-              <p className="text-sm text-slate-500">Services</p>
+              <p className="text-2xl font-bold text-text-primary">{healthyServices}/{totalServices}</p>
+              <p className="text-sm text-text-secondary">Services</p>
             </div>
           </div>
         </Card>
         <Card className="p-4">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center">
-              <Cloud className="w-5 h-5 text-blue-600" />
+            <div className="w-10 h-10 rounded-lg bg-info-subtle flex items-center justify-center">
+              <Cloud className="w-5 h-5 text-info-text" />
             </div>
             <div>
-              <p className="text-2xl font-bold text-slate-900">2</p>
-              <p className="text-sm text-slate-500">Regions</p>
+              <p className="text-2xl font-bold text-text-primary">2</p>
+              <p className="text-sm text-text-secondary">Regions</p>
             </div>
           </div>
         </Card>
@@ -256,41 +256,41 @@ export function Environments() {
           <Card padding="none">
             <table className="w-full">
               <thead>
-                <tr className="border-b border-slate-200 bg-slate-50">
-                  <th className="text-left p-4 font-medium text-slate-600">Service</th>
-                  <th className="text-left p-4 font-medium text-slate-600">Production</th>
-                  <th className="text-left p-4 font-medium text-slate-600">Staging</th>
-                  <th className="text-left p-4 font-medium text-slate-600">Development</th>
+                <tr className="border-b border-border-default bg-surface-raised">
+                  <th className="text-left p-4 font-medium text-text-secondary">Service</th>
+                  <th className="text-left p-4 font-medium text-text-secondary">Production</th>
+                  <th className="text-left p-4 font-medium text-text-secondary">Staging</th>
+                  <th className="text-left p-4 font-medium text-text-secondary">Development</th>
                 </tr>
               </thead>
               <tbody>
                 {applications.map((app) => (
-                  <tr key={app.id} className="border-b border-slate-100 last:border-0">
+                  <tr key={app.id} className="border-b border-border-subtle last:border-0">
                     <td className="p-4">
                       <div className="flex items-center gap-3">
-                        <Server className="w-5 h-5 text-slate-400" />
-                        <span className="font-medium text-slate-900">{app.displayName}</span>
+                        <Server className="w-5 h-5 text-text-tertiary" />
+                        <span className="font-medium text-text-primary">{app.displayName}</span>
                       </div>
                     </td>
                     <td className="p-4">
                       {app.environment.includes('production') ? (
                         <StatusBadge status={app.status} />
                       ) : (
-                        <span className="text-slate-400">—</span>
+                        <span className="text-text-tertiary">—</span>
                       )}
                     </td>
                     <td className="p-4">
                       {app.environment.includes('staging') ? (
                         <StatusBadge status="healthy" />
                       ) : (
-                        <span className="text-slate-400">—</span>
+                        <span className="text-text-tertiary">—</span>
                       )}
                     </td>
                     <td className="p-4">
                       {app.environment.includes('development') ? (
                         <StatusBadge status="healthy" />
                       ) : (
-                        <span className="text-slate-400">—</span>
+                        <span className="text-text-tertiary">—</span>
                       )}
                     </td>
                   </tr>
@@ -314,22 +314,22 @@ export function Environments() {
                 { key: 'API_TIMEOUT', production: '30000', staging: '30000', development: '60000' },
                 { key: 'CACHE_TTL', production: '3600', staging: '300', development: '60' },
               ].map((variable) => (
-                <div key={variable.key} className="flex items-center gap-4 p-3 rounded-lg border border-slate-200">
-                  <code className="font-mono text-sm font-medium text-slate-900 w-32">
+                <div key={variable.key} className="flex items-center gap-4 p-3 rounded-lg border border-border-default">
+                  <code className="font-mono text-sm font-medium text-text-primary w-32">
                     {variable.key}
                   </code>
                   <div className="flex-1 grid grid-cols-3 gap-4 text-sm">
                     <div>
-                      <span className="text-slate-400">prod:</span>{' '}
-                      <code className="text-slate-600">{variable.production}</code>
+                      <span className="text-text-tertiary">prod:</span>{' '}
+                      <code className="text-text-secondary">{variable.production}</code>
                     </div>
                     <div>
-                      <span className="text-slate-400">staging:</span>{' '}
-                      <code className="text-slate-600">{variable.staging}</code>
+                      <span className="text-text-tertiary">staging:</span>{' '}
+                      <code className="text-text-secondary">{variable.staging}</code>
                     </div>
                     <div>
-                      <span className="text-slate-400">dev:</span>{' '}
-                      <code className="text-slate-600">{variable.development}</code>
+                      <span className="text-text-tertiary">dev:</span>{' '}
+                      <code className="text-text-secondary">{variable.development}</code>
                     </div>
                   </div>
                   <Button variant="ghost" size="sm">Edit</Button>
@@ -353,9 +353,9 @@ export function Environments() {
                 { key: 'JWT_SECRET', environments: ['production', 'staging', 'development'] },
                 { key: 'STRIPE_SECRET', environments: ['production'] },
               ].map((secret) => (
-                <div key={secret.key} className="flex items-center gap-4 p-3 rounded-lg border border-slate-200">
-                  <Lock className="w-4 h-4 text-slate-400" />
-                  <code className="font-mono text-sm font-medium text-slate-900 flex-1">
+                <div key={secret.key} className="flex items-center gap-4 p-3 rounded-lg border border-border-default">
+                  <Lock className="w-4 h-4 text-text-tertiary" />
+                  <code className="font-mono text-sm font-medium text-text-primary flex-1">
                     {secret.key}
                   </code>
                   <div className="flex items-center gap-2">

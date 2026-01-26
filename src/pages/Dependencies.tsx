@@ -15,11 +15,11 @@ import {
 import type { Application, Dependency } from '@/types';
 
 const typeColors: Record<string, string> = {
-  service: 'bg-purple-100 text-purple-600 border-purple-200',
-  database: 'bg-blue-100 text-blue-600 border-blue-200',
-  cache: 'bg-green-100 text-green-600 border-green-200',
-  queue: 'bg-orange-100 text-orange-600 border-orange-200',
-  external: 'bg-slate-100 text-slate-600 border-slate-200',
+  service: 'bg-accent/10 text-accent border-accent/20',
+  database: 'bg-info/10 text-info border-info/20',
+  cache: 'bg-success/10 text-success border-success/20',
+  queue: 'bg-warning/10 text-warning border-warning/20',
+  external: 'bg-surface-raised text-text-secondary border-border-default',
 };
 
 interface DependencyNode {
@@ -89,8 +89,8 @@ export function Dependencies() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">Dependencies</h1>
-          <p className="text-slate-500 mt-1">
+          <h1 className="text-2xl font-bold text-text-primary">Dependencies</h1>
+          <p className="text-text-tertiary mt-1">
             Visualize and understand service dependencies
           </p>
         </div>
@@ -105,47 +105,47 @@ export function Dependencies() {
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <Card className="p-4">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center">
-              <Network className="w-5 h-5 text-slate-600" />
+            <div className="w-10 h-10 rounded-lg bg-surface-raised flex items-center justify-center">
+              <Network className="w-5 h-5 text-text-secondary" />
             </div>
             <div>
-              <p className="text-2xl font-bold text-slate-900">{allDependencies.length}</p>
-              <p className="text-sm text-slate-500">Total Dependencies</p>
+              <p className="text-2xl font-bold text-text-primary">{allDependencies.length}</p>
+              <p className="text-sm text-text-tertiary">Total Dependencies</p>
             </div>
           </div>
         </Card>
         <Card className="p-4">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-danger-100 flex items-center justify-center">
-              <AlertTriangle className="w-5 h-5 text-danger-600" />
+            <div className="w-10 h-10 rounded-lg bg-error-subtle flex items-center justify-center">
+              <AlertTriangle className="w-5 h-5 text-error" />
             </div>
             <div>
-              <p className="text-2xl font-bold text-slate-900">{criticalDependencies.length}</p>
-              <p className="text-sm text-slate-500">Critical</p>
+              <p className="text-2xl font-bold text-text-primary">{criticalDependencies.length}</p>
+              <p className="text-sm text-text-tertiary">Critical</p>
             </div>
           </div>
         </Card>
         <Card className="p-4">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-warning-100 flex items-center justify-center">
-              <AlertTriangle className="w-5 h-5 text-warning-600" />
+            <div className="w-10 h-10 rounded-lg bg-warning-subtle flex items-center justify-center">
+              <AlertTriangle className="w-5 h-5 text-warning" />
             </div>
             <div>
-              <p className="text-2xl font-bold text-slate-900">{unhealthyDependencies.length}</p>
-              <p className="text-sm text-slate-500">Unhealthy</p>
+              <p className="text-2xl font-bold text-text-primary">{unhealthyDependencies.length}</p>
+              <p className="text-sm text-text-tertiary">Unhealthy</p>
             </div>
           </div>
         </Card>
         <Card className="p-4">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-success-100 flex items-center justify-center">
-              <CheckCircle className="w-5 h-5 text-success-600" />
+            <div className="w-10 h-10 rounded-lg bg-success-subtle flex items-center justify-center">
+              <CheckCircle className="w-5 h-5 text-success" />
             </div>
             <div>
-              <p className="text-2xl font-bold text-slate-900">
+              <p className="text-2xl font-bold text-text-primary">
                 {allDependencies.length - unhealthyDependencies.length}
               </p>
-              <p className="text-sm text-slate-500">Healthy</p>
+              <p className="text-sm text-text-tertiary">Healthy</p>
             </div>
           </div>
         </Card>
@@ -180,9 +180,9 @@ export function Dependencies() {
         {/* Application List */}
         <div className="lg:col-span-1">
           <Card padding="none" className="overflow-hidden">
-            <div className="p-4 border-b border-slate-200 bg-slate-50">
-              <h3 className="font-semibold text-slate-900">Applications</h3>
-              <p className="text-sm text-slate-500">{filteredApps.length} services</p>
+            <div className="p-4 border-b border-border-default bg-surface-raised">
+              <h3 className="font-semibold text-text-primary">Applications</h3>
+              <p className="text-sm text-text-tertiary">{filteredApps.length} services</p>
             </div>
             <div className="max-h-[600px] overflow-y-auto">
               {filteredApps.map((app) => (
@@ -190,18 +190,18 @@ export function Dependencies() {
                   key={app.id}
                   onClick={() => setSelectedApp(app.id === selectedApp ? '' : app.id)}
                   className={cn(
-                    'w-full flex items-center gap-3 p-4 text-left border-b border-slate-100 last:border-0 transition-colors',
+                    'w-full flex items-center gap-3 p-4 text-left border-b border-border-subtle last:border-0 transition-colors',
                     selectedApp === app.id
-                      ? 'bg-primary-50'
-                      : 'hover:bg-slate-50'
+                      ? 'bg-accent-subtle'
+                      : 'hover:bg-surface-raised'
                   )}
                 >
-                  <div className="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center text-slate-600">
+                  <div className="w-8 h-8 rounded-lg bg-surface-raised flex items-center justify-center text-text-secondary">
                     <Server className="w-4 h-4" />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="font-medium text-slate-900 truncate">{app.displayName}</p>
-                    <p className="text-sm text-slate-500">
+                    <p className="font-medium text-text-primary truncate">{app.displayName}</p>
+                    <p className="text-sm text-text-tertiary">
                       {app.dependencies.length} dependencies
                     </p>
                   </div>
@@ -220,33 +220,33 @@ export function Dependencies() {
               <Card padding="lg">
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-xl bg-slate-100 flex items-center justify-center text-slate-600">
+                    <div className="w-12 h-12 rounded-xl bg-surface-raised flex items-center justify-center text-text-secondary">
                       <Server className="w-6 h-6" />
                     </div>
                     <div>
-                      <h2 className="text-xl font-semibold text-slate-900">
+                      <h2 className="text-xl font-semibold text-text-primary">
                         {selectedNode.app.displayName}
                       </h2>
-                      <p className="text-slate-500">{selectedNode.app.team.name}</p>
+                      <p className="text-text-tertiary">{selectedNode.app.team.name}</p>
                     </div>
                   </div>
                   <Link
                     to={`/discover/catalog/${selectedNode.app.id}`}
-                    className="text-primary-600 hover:text-primary-700 text-sm font-medium"
+                    className="text-accent-text hover:text-accent text-sm font-medium"
                   >
                     View Details
                   </Link>
                 </div>
-                <p className="text-slate-600">{selectedNode.app.description}</p>
+                <p className="text-text-secondary">{selectedNode.app.description}</p>
               </Card>
 
               {/* Dependencies */}
               <Card padding="lg">
-                <h3 className="font-semibold text-slate-900 mb-4">
+                <h3 className="font-semibold text-text-primary mb-4">
                   Dependencies ({selectedNode.dependencies.length})
                 </h3>
                 {selectedNode.dependencies.length === 0 ? (
-                  <p className="text-slate-500 text-center py-4">No dependencies</p>
+                  <p className="text-text-tertiary text-center py-4">No dependencies</p>
                 ) : (
                   <div className="space-y-3">
                     {selectedNode.dependencies.map((dep) => (
@@ -278,23 +278,23 @@ export function Dependencies() {
 
               {/* Dependents */}
               <Card padding="lg">
-                <h3 className="font-semibold text-slate-900 mb-4">
+                <h3 className="font-semibold text-text-primary mb-4">
                   Dependent Services ({selectedNode.dependents.length})
                 </h3>
                 {selectedNode.dependents.length === 0 ? (
-                  <p className="text-slate-500 text-center py-4">No services depend on this</p>
+                  <p className="text-text-tertiary text-center py-4">No services depend on this</p>
                 ) : (
                   <div className="space-y-2">
                     {selectedNode.dependents.map((dep) => (
                       <Link
                         key={dep.id}
                         to={`/discover/catalog/${dep.id}`}
-                        className="flex items-center gap-3 p-3 rounded-lg bg-slate-50 hover:bg-slate-100 transition-colors"
+                        className="flex items-center gap-3 p-3 rounded-lg bg-surface-raised hover:bg-surface-overlay transition-colors"
                       >
-                        <ArrowRight className="w-4 h-4 text-slate-400" />
+                        <ArrowRight className="w-4 h-4 text-text-tertiary" />
                         <div className="flex-1">
-                          <p className="font-medium text-slate-900">{dep.displayName}</p>
-                          <p className="text-sm text-slate-500">{dep.team.name}</p>
+                          <p className="font-medium text-text-primary">{dep.displayName}</p>
+                          <p className="text-sm text-text-tertiary">{dep.team.name}</p>
                         </div>
                         <StatusBadge status={dep.status} />
                       </Link>
@@ -306,9 +306,9 @@ export function Dependencies() {
           ) : (
             <Card className="h-full flex items-center justify-center text-center p-12">
               <div>
-                <Network className="w-16 h-16 text-slate-300 mx-auto mb-4" />
-                <h3 className="text-lg font-medium text-slate-900">Select an Application</h3>
-                <p className="text-slate-500 mt-1">
+                <Network className="w-16 h-16 text-text-disabled mx-auto mb-4" />
+                <h3 className="text-lg font-medium text-text-primary">Select an Application</h3>
+                <p className="text-text-tertiary mt-1">
                   Choose an application from the list to view its dependencies
                 </p>
               </div>

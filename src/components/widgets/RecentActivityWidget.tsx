@@ -20,12 +20,12 @@ const activityIcons = {
 };
 
 const activityColors = {
-  deployment: 'bg-accent/20 text-accent',
-  incident: 'bg-error/20 text-error',
-  approval: 'bg-success/20 text-success',
-  'config-change': 'bg-info/20 text-info',
+  deployment: 'bg-accent-subtle text-accent-text',
+  incident: 'bg-error-subtle text-error-text',
+  approval: 'bg-success-subtle text-success-text',
+  'config-change': 'bg-info-subtle text-info-text',
   comment: 'bg-surface-raised text-text-secondary',
-  alert: 'bg-warning/20 text-warning',
+  alert: 'bg-warning-subtle text-warning-text',
 };
 
 export function RecentActivityWidget() {
@@ -60,7 +60,7 @@ export function RecentActivityWidget() {
       {activities.map((activity) => (
         <div
           key={activity.id}
-          className="flex items-start gap-3 p-2 -mx-2 rounded-lg hover:bg-surface-raised transition-colors"
+          className="flex items-start gap-3 p-2 -mx-2 rounded-lg hover:bg-surface-raised transition-colors focus-within:outline-none focus-within:ring-2 focus-within:ring-accent focus-within:ring-offset-2"
         >
           <div
             className={cn(

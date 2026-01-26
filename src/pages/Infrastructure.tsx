@@ -58,27 +58,27 @@ const typeIcons: Record<string, React.ReactNode> = {
 };
 
 const typeColors: Record<string, string> = {
-  compute: 'bg-purple-100 text-purple-600',
-  database: 'bg-blue-100 text-blue-600',
-  storage: 'bg-green-100 text-green-600',
-  cache: 'bg-orange-100 text-orange-600',
-  cdn: 'bg-pink-100 text-pink-600',
-  queue: 'bg-cyan-100 text-cyan-600',
-  'load-balancer': 'bg-slate-100 text-slate-600',
+  compute: 'bg-accent/10 text-accent',
+  database: 'bg-info/10 text-info',
+  storage: 'bg-success/10 text-success',
+  cache: 'bg-warning/10 text-warning',
+  cdn: 'bg-error/10 text-error',
+  queue: 'bg-info/20 text-info',
+  'load-balancer': 'bg-surface-raised text-text-secondary',
 };
 
 const providerColors: Record<string, string> = {
-  aws: 'bg-orange-100 text-orange-700',
-  gcp: 'bg-blue-100 text-blue-700',
-  azure: 'bg-sky-100 text-sky-700',
-  kubernetes: 'bg-indigo-100 text-indigo-700',
+  aws: 'bg-warning/10 text-warning',
+  gcp: 'bg-info/10 text-info',
+  azure: 'bg-info/20 text-info',
+  kubernetes: 'bg-accent/10 text-accent',
 };
 
 const statusIcons = {
-  running: <CheckCircle className="w-4 h-4 text-success-500" />,
-  stopped: <XCircle className="w-4 h-4 text-slate-400" />,
-  error: <AlertTriangle className="w-4 h-4 text-danger-500" />,
-  provisioning: <RefreshCw className="w-4 h-4 text-primary-500 animate-spin" />,
+  running: <CheckCircle className="w-4 h-4 text-success-text" />,
+  stopped: <XCircle className="w-4 h-4 text-text-tertiary" />,
+  error: <AlertTriangle className="w-4 h-4 text-error-text" />,
+  provisioning: <RefreshCw className="w-4 h-4 text-accent-text animate-spin" />,
 };
 
 export function Infrastructure() {
@@ -128,8 +128,8 @@ export function Infrastructure() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">Infrastructure</h1>
-          <p className="text-slate-500 mt-1">
+          <h1 className="text-2xl font-bold text-text-primary">Infrastructure</h1>
+          <p className="text-text-secondary mt-1">
             Manage cloud resources and infrastructure
           </p>
         </div>
@@ -147,45 +147,45 @@ export function Infrastructure() {
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <Card className="p-4">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center">
-              <Box className="w-5 h-5 text-slate-600" />
+            <div className="w-10 h-10 rounded-lg bg-surface-raised flex items-center justify-center">
+              <Box className="w-5 h-5 text-text-secondary" />
             </div>
             <div>
-              <p className="text-2xl font-bold text-slate-900">{mockResources.length}</p>
-              <p className="text-sm text-slate-500">Total Resources</p>
+              <p className="text-2xl font-bold text-text-primary">{mockResources.length}</p>
+              <p className="text-sm text-text-secondary">Total Resources</p>
             </div>
           </div>
         </Card>
         <Card className="p-4">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-success-100 flex items-center justify-center">
-              <CheckCircle className="w-5 h-5 text-success-600" />
+            <div className="w-10 h-10 rounded-lg bg-success-subtle flex items-center justify-center">
+              <CheckCircle className="w-5 h-5 text-success-text" />
             </div>
             <div>
-              <p className="text-2xl font-bold text-slate-900">{runningCount}</p>
-              <p className="text-sm text-slate-500">Running</p>
+              <p className="text-2xl font-bold text-text-primary">{runningCount}</p>
+              <p className="text-sm text-text-secondary">Running</p>
             </div>
           </div>
         </Card>
         <Card className="p-4">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-primary-100 flex items-center justify-center">
-              <Cpu className="w-5 h-5 text-primary-600" />
+            <div className="w-10 h-10 rounded-lg bg-accent-subtle flex items-center justify-center">
+              <Cpu className="w-5 h-5 text-accent-text" />
             </div>
             <div>
-              <p className="text-2xl font-bold text-slate-900">{avgUtilization}%</p>
-              <p className="text-sm text-slate-500">Avg Utilization</p>
+              <p className="text-2xl font-bold text-text-primary">{avgUtilization}%</p>
+              <p className="text-sm text-text-secondary">Avg Utilization</p>
             </div>
           </div>
         </Card>
         <Card className="p-4">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-green-100 flex items-center justify-center">
-              <Cloud className="w-5 h-5 text-green-600" />
+            <div className="w-10 h-10 rounded-lg bg-success-subtle flex items-center justify-center">
+              <Cloud className="w-5 h-5 text-success-text" />
             </div>
             <div>
-              <p className="text-2xl font-bold text-slate-900">{formatCurrency(totalCost)}</p>
-              <p className="text-sm text-slate-500">Monthly Cost</p>
+              <p className="text-2xl font-bold text-text-primary">{formatCurrency(totalCost)}</p>
+              <p className="text-sm text-text-secondary">Monthly Cost</p>
             </div>
           </div>
         </Card>
@@ -239,9 +239,9 @@ export function Infrastructure() {
           <div className="space-y-3">
             {filteredResources.length === 0 ? (
               <Card className="text-center py-12">
-                <Server className="w-12 h-12 text-slate-300 mx-auto mb-4" />
-                <p className="font-medium text-slate-900">No resources found</p>
-                <p className="text-sm text-slate-500 mt-1">
+                <Server className="w-12 h-12 text-text-disabled mx-auto mb-4" />
+                <p className="font-medium text-text-primary">No resources found</p>
+                <p className="text-sm text-text-secondary mt-1">
                   Try adjusting your filters
                 </p>
               </Card>
@@ -254,12 +254,12 @@ export function Infrastructure() {
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2">
-                        <h3 className="font-semibold text-slate-900">{resource.name}</h3>
+                        <h3 className="font-semibold text-text-primary">{resource.name}</h3>
                         {statusIcons[resource.status]}
                       </div>
-                      <p className="text-sm text-slate-500">{resource.specs}</p>
+                      <p className="text-sm text-text-secondary">{resource.specs}</p>
                       {resource.application && (
-                        <p className="text-sm text-slate-400 mt-0.5">
+                        <p className="text-sm text-text-tertiary mt-0.5">
                           Used by: {resource.application}
                         </p>
                       )}
@@ -269,26 +269,26 @@ export function Infrastructure() {
                         <Badge className={providerColors[resource.provider]} size="sm">
                           {resource.provider.toUpperCase()}
                         </Badge>
-                        <p className="text-xs text-slate-500 mt-1">{resource.region}</p>
+                        <p className="text-xs text-text-tertiary mt-1">{resource.region}</p>
                       </div>
                       {resource.utilization > 0 && (
                         <div className="w-24">
                           <div className="flex items-center justify-between text-xs mb-1">
-                            <span className="text-slate-500">Usage</span>
+                            <span className="text-text-secondary">Usage</span>
                             <span className={cn(
                               'font-medium',
-                              resource.utilization > 80 ? 'text-danger-600' :
-                              resource.utilization > 60 ? 'text-warning-600' : 'text-slate-900'
+                              resource.utilization > 80 ? 'text-error-text' :
+                              resource.utilization > 60 ? 'text-warning-text' : 'text-text-primary'
                             )}>
                               {resource.utilization}%
                             </span>
                           </div>
-                          <div className="h-1.5 rounded-full bg-slate-200">
+                          <div className="h-1.5 rounded-full bg-surface-overlay">
                             <div
                               className={cn(
                                 'h-1.5 rounded-full',
-                                resource.utilization > 80 ? 'bg-danger-500' :
-                                resource.utilization > 60 ? 'bg-warning-500' : 'bg-primary-500'
+                                resource.utilization > 80 ? 'bg-error' :
+                                resource.utilization > 60 ? 'bg-warning' : 'bg-accent'
                               )}
                               style={{ width: `${resource.utilization}%` }}
                             />
@@ -296,8 +296,8 @@ export function Infrastructure() {
                         </div>
                       )}
                       <div className="text-right">
-                        <p className="font-semibold text-slate-900">{formatCurrency(resource.cost)}</p>
-                        <p className="text-xs text-slate-500">/month</p>
+                        <p className="font-semibold text-text-primary">{formatCurrency(resource.cost)}</p>
+                        <p className="text-xs text-text-tertiary">/month</p>
                       </div>
                     </div>
                     <Button variant="ghost" size="icon">
@@ -314,59 +314,59 @@ export function Infrastructure() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <Card padding="lg">
               <div className="flex items-center gap-4 mb-4">
-                <div className="w-12 h-12 rounded-xl bg-indigo-100 flex items-center justify-center">
-                  <Layers className="w-6 h-6 text-indigo-600" />
+                <div className="w-12 h-12 rounded-xl bg-accent-subtle flex items-center justify-center">
+                  <Layers className="w-6 h-6 text-accent-text" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-slate-900">Production Cluster</h3>
-                  <p className="text-sm text-slate-500">Kubernetes v1.28</p>
+                  <h3 className="font-semibold text-text-primary">Production Cluster</h3>
+                  <p className="text-sm text-text-secondary">Kubernetes v1.28</p>
                 </div>
                 <div className="ml-auto flex items-center gap-2">
-                  <CheckCircle className="w-4 h-4 text-success-500" />
-                  <span className="text-sm text-success-600">Healthy</span>
+                  <CheckCircle className="w-4 h-4 text-success-text" />
+                  <span className="text-sm text-success-text">Healthy</span>
                 </div>
               </div>
-              <div className="grid grid-cols-3 gap-4 p-4 rounded-lg bg-slate-50">
+              <div className="grid grid-cols-3 gap-4 p-4 rounded-lg bg-surface-raised">
                 <div className="text-center">
-                  <p className="text-2xl font-bold text-slate-900">12</p>
-                  <p className="text-sm text-slate-500">Nodes</p>
+                  <p className="text-2xl font-bold text-text-primary">12</p>
+                  <p className="text-sm text-text-secondary">Nodes</p>
                 </div>
                 <div className="text-center">
-                  <p className="text-2xl font-bold text-slate-900">48</p>
-                  <p className="text-sm text-slate-500">Pods</p>
+                  <p className="text-2xl font-bold text-text-primary">48</p>
+                  <p className="text-sm text-text-secondary">Pods</p>
                 </div>
                 <div className="text-center">
-                  <p className="text-2xl font-bold text-slate-900">85%</p>
-                  <p className="text-sm text-slate-500">Capacity</p>
+                  <p className="text-2xl font-bold text-text-primary">85%</p>
+                  <p className="text-sm text-text-secondary">Capacity</p>
                 </div>
               </div>
             </Card>
             <Card padding="lg">
               <div className="flex items-center gap-4 mb-4">
-                <div className="w-12 h-12 rounded-xl bg-indigo-100 flex items-center justify-center">
-                  <Layers className="w-6 h-6 text-indigo-600" />
+                <div className="w-12 h-12 rounded-xl bg-accent-subtle flex items-center justify-center">
+                  <Layers className="w-6 h-6 text-accent-text" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-slate-900">Staging Cluster</h3>
-                  <p className="text-sm text-slate-500">Kubernetes v1.28</p>
+                  <h3 className="font-semibold text-text-primary">Staging Cluster</h3>
+                  <p className="text-sm text-text-secondary">Kubernetes v1.28</p>
                 </div>
                 <div className="ml-auto flex items-center gap-2">
-                  <CheckCircle className="w-4 h-4 text-success-500" />
-                  <span className="text-sm text-success-600">Healthy</span>
+                  <CheckCircle className="w-4 h-4 text-success-text" />
+                  <span className="text-sm text-success-text">Healthy</span>
                 </div>
               </div>
-              <div className="grid grid-cols-3 gap-4 p-4 rounded-lg bg-slate-50">
+              <div className="grid grid-cols-3 gap-4 p-4 rounded-lg bg-surface-raised">
                 <div className="text-center">
-                  <p className="text-2xl font-bold text-slate-900">4</p>
-                  <p className="text-sm text-slate-500">Nodes</p>
+                  <p className="text-2xl font-bold text-text-primary">4</p>
+                  <p className="text-sm text-text-secondary">Nodes</p>
                 </div>
                 <div className="text-center">
-                  <p className="text-2xl font-bold text-slate-900">18</p>
-                  <p className="text-sm text-slate-500">Pods</p>
+                  <p className="text-2xl font-bold text-text-primary">18</p>
+                  <p className="text-sm text-text-secondary">Pods</p>
                 </div>
                 <div className="text-center">
-                  <p className="text-2xl font-bold text-slate-900">42%</p>
-                  <p className="text-sm text-slate-500">Capacity</p>
+                  <p className="text-2xl font-bold text-text-primary">42%</p>
+                  <p className="text-sm text-text-secondary">Capacity</p>
                 </div>
               </div>
             </Card>
@@ -378,19 +378,19 @@ export function Infrastructure() {
             <Card padding="lg">
               <CardHeader title="VPCs" description="Virtual Private Clouds" />
               <div className="mt-4 space-y-3">
-                <div className="flex items-center gap-4 p-4 rounded-lg border border-slate-200">
-                  <Globe className="w-6 h-6 text-slate-600" />
+                <div className="flex items-center gap-4 p-4 rounded-lg border border-border-default">
+                  <Globe className="w-6 h-6 text-text-secondary" />
                   <div className="flex-1">
-                    <p className="font-medium text-slate-900">Production VPC</p>
-                    <p className="text-sm text-slate-500">10.0.0.0/16 · us-east-1</p>
+                    <p className="font-medium text-text-primary">Production VPC</p>
+                    <p className="text-sm text-text-secondary">10.0.0.0/16 · us-east-1</p>
                   </div>
                   <Badge variant="success">Active</Badge>
                 </div>
-                <div className="flex items-center gap-4 p-4 rounded-lg border border-slate-200">
-                  <Globe className="w-6 h-6 text-slate-600" />
+                <div className="flex items-center gap-4 p-4 rounded-lg border border-border-default">
+                  <Globe className="w-6 h-6 text-text-secondary" />
                   <div className="flex-1">
-                    <p className="font-medium text-slate-900">Staging VPC</p>
-                    <p className="text-sm text-slate-500">10.1.0.0/16 · us-east-1</p>
+                    <p className="font-medium text-text-primary">Staging VPC</p>
+                    <p className="text-sm text-text-secondary">10.1.0.0/16 · us-east-1</p>
                   </div>
                   <Badge variant="success">Active</Badge>
                 </div>
@@ -399,21 +399,21 @@ export function Infrastructure() {
             <Card padding="lg">
               <CardHeader title="Security Groups" description="Network access controls" />
               <div className="mt-4 space-y-3">
-                <div className="flex items-center gap-4 p-4 rounded-lg border border-slate-200">
-                  <Lock className="w-6 h-6 text-slate-600" />
+                <div className="flex items-center gap-4 p-4 rounded-lg border border-border-default">
+                  <Lock className="w-6 h-6 text-text-secondary" />
                   <div className="flex-1">
-                    <p className="font-medium text-slate-900">api-gateway-sg</p>
-                    <p className="text-sm text-slate-500">HTTP/HTTPS from ALB only</p>
+                    <p className="font-medium text-text-primary">api-gateway-sg</p>
+                    <p className="text-sm text-text-secondary">HTTP/HTTPS from ALB only</p>
                   </div>
-                  <span className="text-sm text-slate-500">5 rules</span>
+                  <span className="text-sm text-text-tertiary">5 rules</span>
                 </div>
-                <div className="flex items-center gap-4 p-4 rounded-lg border border-slate-200">
-                  <Lock className="w-6 h-6 text-slate-600" />
+                <div className="flex items-center gap-4 p-4 rounded-lg border border-border-default">
+                  <Lock className="w-6 h-6 text-text-secondary" />
                   <div className="flex-1">
-                    <p className="font-medium text-slate-900">database-sg</p>
-                    <p className="text-sm text-slate-500">PostgreSQL from app subnets</p>
+                    <p className="font-medium text-text-primary">database-sg</p>
+                    <p className="text-sm text-text-secondary">PostgreSQL from app subnets</p>
                   </div>
-                  <span className="text-sm text-slate-500">3 rules</span>
+                  <span className="text-sm text-text-tertiary">3 rules</span>
                 </div>
               </div>
             </Card>

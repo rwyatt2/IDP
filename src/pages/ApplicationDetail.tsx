@@ -107,8 +107,8 @@ export function ApplicationDetail() {
   if (!app) {
     return (
       <div className="text-center py-12">
-        <p className="text-slate-500">Application not found</p>
-        <Link to="/discover/catalog" className="text-primary-600 hover:text-primary-700 mt-2 inline-block">
+        <p className="text-text-tertiary">Application not found</p>
+        <Link to="/discover/catalog" className="text-accent-text hover:text-accent-text/80 mt-2 inline-block">
           Back to Catalog
         </Link>
       </div>
@@ -128,7 +128,7 @@ export function ApplicationDetail() {
       {/* Back Link */}
       <Link
         to="/discover/catalog"
-        className="inline-flex items-center gap-2 text-slate-500 hover:text-slate-700 transition-colors"
+        className="inline-flex items-center gap-2 text-text-tertiary hover:text-text-secondary transition-colors"
       >
         <ArrowLeft className="w-4 h-4" />
         Back to Catalog
@@ -137,31 +137,31 @@ export function ApplicationDetail() {
       {/* Header */}
       <div className="flex items-start justify-between">
         <div className="flex items-start gap-4">
-          <div className="w-16 h-16 rounded-xl bg-slate-100 flex items-center justify-center text-slate-600">
+          <div className="w-16 h-16 rounded-xl bg-surface-raised flex items-center justify-center text-text-secondary">
             <Server className="w-8 h-8" />
           </div>
           <div>
             <div className="flex items-center gap-3">
-              <h1 className="text-2xl font-bold text-slate-900">{app.displayName}</h1>
+              <h1 className="text-2xl font-bold text-text-primary">{app.displayName}</h1>
               <StatusBadge status={app.status} />
             </div>
-            <p className="text-slate-500 mt-1">{app.name}</p>
+            <p className="text-text-tertiary mt-1">{app.name}</p>
             <div className="flex items-center gap-4 mt-2">
               <Badge className={cn(
-                app.tier === 'tier-1' && 'bg-danger-100 text-danger-700',
-                app.tier === 'tier-2' && 'bg-warning-100 text-warning-700',
-                app.tier === 'tier-3' && 'bg-blue-100 text-blue-700',
-                app.tier === 'tier-4' && 'bg-slate-100 text-slate-700',
+                app.tier === 'tier-1' && 'bg-error/10 text-error',
+                app.tier === 'tier-2' && 'bg-warning/10 text-warning',
+                app.tier === 'tier-3' && 'bg-info/10 text-info',
+                app.tier === 'tier-4' && 'bg-surface-raised text-text-secondary',
               )}>
                 {app.tier.replace('tier-', 'Tier ')}
               </Badge>
-              <span className="text-sm text-slate-500">{app.type}</span>
-              <span className="text-sm text-slate-500">·</span>
-              <span className="text-sm text-slate-500">{app.language}</span>
+              <span className="text-sm text-text-tertiary">{app.type}</span>
+              <span className="text-sm text-text-tertiary">·</span>
+              <span className="text-sm text-text-tertiary">{app.language}</span>
               {app.framework && (
                 <>
-                  <span className="text-sm text-slate-500">·</span>
-                  <span className="text-sm text-slate-500">{app.framework}</span>
+                  <span className="text-sm text-text-tertiary">·</span>
+                  <span className="text-sm text-text-tertiary">{app.framework}</span>
                 </>
               )}
             </div>
@@ -173,8 +173,8 @@ export function ApplicationDetail() {
             className={cn(
               'p-2 rounded-lg transition-colors',
               isFavorite
-                ? 'text-amber-500 bg-amber-50 hover:bg-amber-100'
-                : 'text-slate-400 bg-slate-100 hover:text-amber-500 hover:bg-slate-200'
+                ? 'text-warning bg-warning-subtle hover:bg-warning/20'
+                : 'text-text-tertiary bg-surface-raised hover:text-warning hover:bg-surface-raised'
             )}
             title={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
           >
@@ -215,47 +215,47 @@ export function ApplicationDetail() {
             <>
               {/* Description */}
               <Card padding="lg">
-                <h3 className="font-semibold text-slate-900 mb-2">Description</h3>
-                <p className="text-slate-600">{app.description}</p>
+                <h3 className="font-semibold text-text-primary mb-2">Description</h3>
+                <p className="text-text-secondary">{app.description}</p>
               </Card>
 
               {/* Metrics */}
               <Card padding="lg">
                 <CardHeader title="Performance Metrics" />
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
-                  <div className="p-3 rounded-lg bg-slate-50">
-                    <div className="flex items-center gap-2 text-slate-500 mb-1">
+                  <div className="p-3 rounded-lg bg-surface-raised">
+                    <div className="flex items-center gap-2 text-text-tertiary mb-1">
                       <Zap className="w-4 h-4" />
                       <span className="text-xs">Requests/sec</span>
                     </div>
-                    <p className="text-xl font-bold text-slate-900">
+                    <p className="text-xl font-bold text-text-primary">
                       {app.metrics.requestsPerSecond.toLocaleString()}
                     </p>
                   </div>
-                  <div className="p-3 rounded-lg bg-slate-50">
-                    <div className="flex items-center gap-2 text-slate-500 mb-1">
+                  <div className="p-3 rounded-lg bg-surface-raised">
+                    <div className="flex items-center gap-2 text-text-tertiary mb-1">
                       <Clock className="w-4 h-4" />
                       <span className="text-xs">P99 Latency</span>
                     </div>
-                    <p className="text-xl font-bold text-slate-900">
+                    <p className="text-xl font-bold text-text-primary">
                       {app.metrics.latencyP99}ms
                     </p>
                   </div>
-                  <div className="p-3 rounded-lg bg-slate-50">
-                    <div className="flex items-center gap-2 text-slate-500 mb-1">
+                  <div className="p-3 rounded-lg bg-surface-raised">
+                    <div className="flex items-center gap-2 text-text-tertiary mb-1">
                       <AlertTriangle className="w-4 h-4" />
                       <span className="text-xs">Error Rate</span>
                     </div>
-                    <p className="text-xl font-bold text-slate-900">
+                    <p className="text-xl font-bold text-text-primary">
                       {app.metrics.errorRate}%
                     </p>
                   </div>
-                  <div className="p-3 rounded-lg bg-slate-50">
-                    <div className="flex items-center gap-2 text-slate-500 mb-1">
+                  <div className="p-3 rounded-lg bg-surface-raised">
+                    <div className="flex items-center gap-2 text-text-tertiary mb-1">
                       <Activity className="w-4 h-4" />
                       <span className="text-xs">Uptime</span>
                     </div>
-                    <p className="text-xl font-bold text-slate-900">
+                    <p className="text-xl font-bold text-text-primary">
                       {app.metrics.uptime}%
                     </p>
                   </div>
@@ -268,24 +268,24 @@ export function ApplicationDetail() {
                   <CardHeader 
                     title="Recent Deployments" 
                     action={
-                      <Link to={`/deploy/deployments?app=${app.id}`} className="text-sm text-primary-600 hover:text-primary-700">
+                      <Link to={`/deploy/deployments?app=${app.id}`} className="text-sm text-accent-text hover:text-accent-text/80">
                         View all
                       </Link>
                     }
                   />
                   <div className="mt-4 space-y-3">
                     {deployments.slice(0, 3).map((deploy) => (
-                      <div key={deploy.id} className="flex items-center justify-between p-3 rounded-lg bg-slate-50">
+                      <div key={deploy.id} className="flex items-center justify-between p-3 rounded-lg bg-surface-raised">
                         <div className="flex items-center gap-3">
                           <StatusBadge status={deploy.status} />
                           <div>
-                            <p className="font-medium text-slate-900">{deploy.version}</p>
-                            <p className="text-sm text-slate-500">{deploy.environment}</p>
+                            <p className="font-medium text-text-primary">{deploy.version}</p>
+                            <p className="text-sm text-text-tertiary">{deploy.environment}</p>
                           </div>
                         </div>
                         <div className="text-right text-sm">
-                          <p className="text-slate-900">{deploy.triggeredBy}</p>
-                          <p className="text-slate-500">{formatRelativeTime(deploy.triggeredAt)}</p>
+                          <p className="text-text-primary">{deploy.triggeredBy}</p>
+                          <p className="text-text-tertiary">{formatRelativeTime(deploy.triggeredAt)}</p>
                         </div>
                       </div>
                     ))}
@@ -302,22 +302,22 @@ export function ApplicationDetail() {
                 {app.dependencies.map((dep) => (
                   <div
                     key={dep.id}
-                    className="flex items-center justify-between p-3 rounded-lg border border-slate-200"
+                    className="flex items-center justify-between p-3 rounded-lg border border-border-default"
                   >
                     <div className="flex items-center gap-3">
                       <div className={cn(
                         'w-10 h-10 rounded-lg flex items-center justify-center',
-                        dep.type === 'service' && 'bg-purple-100 text-purple-600',
-                        dep.type === 'database' && 'bg-blue-100 text-blue-600',
-                        dep.type === 'cache' && 'bg-green-100 text-green-600',
-                        dep.type === 'queue' && 'bg-orange-100 text-orange-600',
-                        dep.type === 'external' && 'bg-slate-100 text-slate-600',
+                        dep.type === 'service' && 'bg-accent/10 text-accent',
+                        dep.type === 'database' && 'bg-info/10 text-info',
+                        dep.type === 'cache' && 'bg-success/10 text-success',
+                        dep.type === 'queue' && 'bg-warning/10 text-warning',
+                        dep.type === 'external' && 'bg-surface-raised text-text-secondary',
                       )}>
                         <Database className="w-5 h-5" />
                       </div>
                       <div>
-                        <p className="font-medium text-slate-900">{dep.name}</p>
-                        <p className="text-sm text-slate-500 capitalize">{dep.type}</p>
+                        <p className="font-medium text-text-primary">{dep.name}</p>
+                        <p className="text-sm text-text-tertiary capitalize">{dep.type}</p>
                       </div>
                     </div>
                     <div className="flex items-center gap-3">
@@ -341,19 +341,19 @@ export function ApplicationDetail() {
             <div className="mt-4 space-y-4">
               <Link
                 to={`/discover/teams/${app.team.id}`}
-                className="flex items-center gap-3 p-3 -mx-3 rounded-lg hover:bg-slate-50 transition-colors"
+                className="flex items-center gap-3 p-3 -mx-3 rounded-lg hover:bg-surface-raised transition-colors"
               >
-                <div className="w-10 h-10 rounded-lg bg-primary-100 flex items-center justify-center">
-                  <Users className="w-5 h-5 text-primary-600" />
+                <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center">
+                  <Users className="w-5 h-5 text-accent-text" />
                 </div>
                 <div className="flex-1">
-                  <p className="font-medium text-slate-900">{app.team.name}</p>
-                  <p className="text-sm text-slate-500">{app.team.members.length} members</p>
+                  <p className="font-medium text-text-primary">{app.team.name}</p>
+                  <p className="text-sm text-text-tertiary">{app.team.members.length} members</p>
                 </div>
-                <ChevronRight className="w-5 h-5 text-slate-400" />
+                <ChevronRight className="w-5 h-5 text-text-tertiary" />
               </Link>
               <div>
-                <p className="text-sm font-medium text-slate-500 mb-2">Owners</p>
+                <p className="text-sm font-medium text-text-tertiary mb-2">Owners</p>
                 <AvatarGroup
                   avatars={app.team.members.filter((m) => app.owners.includes(m.id)).map((m) => ({ name: m.name, src: m.avatar }))}
                   size="md"
@@ -392,7 +392,7 @@ export function ApplicationDetail() {
               )}
             </div>
             {app.compliance.lastAudit && (
-              <p className="text-sm text-slate-500 mt-3">
+              <p className="text-sm text-text-tertiary mt-3">
                 Last audit: {formatDate(app.compliance.lastAudit)}
               </p>
             )}
@@ -404,21 +404,21 @@ export function ApplicationDetail() {
               <CardHeader 
                 title="Costs" 
                 action={
-                  <Link to={`/manage/costs?app=${app.id}`} className="text-sm text-primary-600 hover:text-primary-700">
+                  <Link to={`/manage/costs?app=${app.id}`} className="text-sm text-accent-text hover:text-accent-text/80">
                     Details
                   </Link>
                 }
               />
               <div className="mt-4">
-                <p className="text-3xl font-bold text-slate-900">
+                <p className="text-3xl font-bold text-text-primary">
                   {formatCurrency(costs.currentMonth)}
                 </p>
-                <p className="text-sm text-slate-500">this month</p>
+                <p className="text-sm text-text-tertiary">this month</p>
                 {costs.budget && (
                   <div className="mt-3">
                     <div className="flex justify-between text-sm mb-1">
-                      <span className="text-slate-500">Budget</span>
-                      <span className="font-medium text-slate-900">
+                      <span className="text-text-tertiary">Budget</span>
+                      <span className="font-medium text-text-primary">
                         {formatPercentage(costs.budgetUtilization || 0)}
                       </span>
                     </div>
@@ -437,12 +437,12 @@ export function ApplicationDetail() {
             <CardHeader title="Environments" />
             <div className="mt-4 space-y-2">
               {app.environment.map((env) => (
-                <div key={env} className="flex items-center justify-between p-2 rounded-lg bg-slate-50">
+                <div key={env} className="flex items-center justify-between p-2 rounded-lg bg-surface-raised">
                   <div className="flex items-center gap-2">
-                    <Globe className="w-4 h-4 text-slate-500" />
-                    <span className="font-medium text-slate-900 capitalize">{env}</span>
+                    <Globe className="w-4 h-4 text-text-tertiary" />
+                    <span className="font-medium text-text-primary capitalize">{env}</span>
                   </div>
-                  <CheckCircle className="w-4 h-4 text-success-500" />
+                  <CheckCircle className="w-4 h-4 text-success" />
                 </div>
               ))}
             </div>

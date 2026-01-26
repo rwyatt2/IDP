@@ -31,14 +31,14 @@ const categoryIcons: Record<ExtensionCategory, React.ReactNode> = {
 };
 
 const categoryColors: Record<ExtensionCategory, string> = {
-  catalog: 'bg-blue-500/20 text-blue-400',
-  deployment: 'bg-purple-500/20 text-purple-400',
-  monitoring: 'bg-green-500/20 text-green-400',
-  security: 'bg-red-500/20 text-red-400',
-  cost: 'bg-amber-500/20 text-amber-400',
-  infrastructure: 'bg-cyan-500/20 text-cyan-400',
-  collaboration: 'bg-pink-500/20 text-pink-400',
-  automation: 'bg-orange-500/20 text-orange-400',
+  catalog: 'bg-info-subtle text-info-text',
+  deployment: 'bg-accent-subtle text-accent-text',
+  monitoring: 'bg-success-subtle text-success-text',
+  security: 'bg-error-subtle text-error-text',
+  cost: 'bg-warning-subtle text-warning-text',
+  infrastructure: 'bg-info-muted text-info-text',
+  collaboration: 'bg-accent-muted text-accent-text',
+  automation: 'bg-warning-muted text-warning-text',
 };
 
 function ExtensionCard({ extension }: { extension: Extension }) {
@@ -83,10 +83,10 @@ function ExtensionCard({ extension }: { extension: Extension }) {
           <button
             onClick={handleToggleFavorite}
             className={cn(
-              'p-1.5 rounded-lg transition-colors',
+              'p-1.5 rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-surface',
               isFavorite
-                ? 'text-amber-400 bg-amber-500/20'
-                : 'text-text-tertiary hover:text-amber-400 hover:bg-surface-raised'
+                ? 'text-warning-text bg-warning-subtle'
+                : 'text-text-tertiary hover:text-warning-text hover:bg-surface-raised'
             )}
           >
             <Star className={cn('w-5 h-5', isFavorite && 'fill-current')} />
@@ -100,7 +100,7 @@ function ExtensionCard({ extension }: { extension: Extension }) {
         
         <div className="flex items-center gap-3 text-sm text-text-tertiary mb-4">
           <div className="flex items-center gap-1">
-            <Star className="w-4 h-4 text-amber-500 fill-amber-500" />
+            <Star className="w-4 h-4 text-warning fill-warning" />
             <span>{extension.rating}</span>
           </div>
           <div className="flex items-center gap-1">
@@ -211,7 +211,7 @@ export function Extensions() {
 
       {/* Featured Banner */}
       {activeTab === 'all' && (
-        <Card className="bg-gradient-to-r from-accent/20 to-violet-600/20 border-accent/30">
+        <Card className="bg-gradient-to-r from-accent-subtle to-accent-muted border-accent-border">
           <div className="flex items-center justify-between gap-6">
             <div className="flex-1">
               <Badge variant="info" className="mb-3">
@@ -230,7 +230,7 @@ export function Extensions() {
               </Button>
             </div>
             <div className="hidden lg:flex items-center justify-center">
-              <div className="w-24 h-24 rounded-2xl bg-accent/20 flex items-center justify-center">
+              <div className="w-24 h-24 rounded-2xl bg-accent-subtle flex items-center justify-center">
                 <Zap className="w-12 h-12 text-accent" />
               </div>
             </div>
@@ -278,7 +278,7 @@ export function Extensions() {
       <TabPanel>
         {filteredExtensions.length === 0 ? (
           <div className="text-center py-12">
-            <p className="text-slate-500">No extensions found</p>
+            <p className="text-text-tertiary">No extensions found</p>
             {search && (
               <Button
                 variant="ghost"

@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { useUserStore, useNavigationStore, useDocumentationStore } from '@/stores';
 import { useClickOutside } from '@/hooks';
+import { useTheme } from '@/contexts/ThemeContext';
 import {
   Search,
   Bell,
@@ -19,6 +20,8 @@ import {
   BarChart3,
   Briefcase,
   Check,
+  Sun,
+  Moon,
 } from 'lucide-react';
 import { Avatar, Button } from '@/components/ui';
 import { usePersonaStore } from '@/stores';
@@ -33,10 +36,10 @@ const personaIcons: Record<PersonaType, React.ReactNode> = {
 };
 
 const personaColors: Record<PersonaType, string> = {
-  developer: 'text-blue-400',
-  'tech-lead': 'text-violet-400',
-  'engineering-manager': 'text-emerald-400',
-  executive: 'text-amber-400',
+  developer: 'text-info',
+  'tech-lead': 'text-accent',
+  'engineering-manager': 'text-success',
+  executive: 'text-warning',
 };
 
 export function TopNav() {
@@ -45,6 +48,7 @@ export function TopNav() {
   const { openSearch, toggleCommandPalette } = useNavigationStore();
   const { currentPersona, setPersona } = usePersonaStore();
   const { openSidebar: openHelpSidebar } = useDocumentationStore();
+  const { resolvedTheme, toggleTheme } = useTheme();
   
   const [showNotifications, setShowNotifications] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
@@ -91,14 +95,14 @@ export function TopNav() {
         <button
           onClick={openSearch}
           className="group w-full h-9 flex items-center gap-3 px-4 rounded-lg
-                     bg-zinc-900/50 border border-white/[0.06] 
-                     hover:border-white/[0.08] hover:bg-zinc-900/70
+                     bg-surface-raised border border-border-subtle 
+                     hover:border-border-default hover:bg-surface-overlay
                      transition-all duration-150 focus-visible-ring"
           aria-label="Open search dialog"
         >
-          <Search className="w-4 h-4 text-zinc-500" aria-hidden="true" />
-          <span className="flex-1 text-left text-sm text-zinc-500">Search applications, services, docs...</span>
-          <kbd className="hidden sm:flex items-center gap-1 px-2 py-0.5 rounded bg-white/[0.04] border border-white/[0.06] text-[10px] font-medium text-zinc-500" aria-hidden="true">
+          <Search className="w-4 h-4 text-text-tertiary" aria-hidden="true" />
+          <span className="flex-1 text-left text-sm text-text-tertiary">Search applications, services, docs...</span>
+          <kbd className="hidden sm:flex items-center gap-1 px-2 py-0.5 rounded bg-surface-overlay border border-border-subtle text-[10px] font-medium text-text-tertiary" aria-hidden="true">
             <Command className="w-2.5 h-2.5" />K
           </kbd>
         </button>
@@ -121,7 +125,7 @@ export function TopNav() {
         {/* Help */}
         <button
           onClick={openHelpSidebar}
-          className="p-2.5 rounded-lg text-zinc-500 hover:text-accent hover:bg-accent/10 transition-all duration-150 focus-visible-ring"
+          className="p-2.5 rounded-lg text-text-tertiary hover:text-accent hover:bg-accent/10 transition-all duration-150 focus-visible-ring"
           aria-label="Open help center (⌘/)"
           title="Help (⌘/)"
         >
@@ -131,10 +135,24 @@ export function TopNav() {
         {/* Command Palette */}
         <button
           onClick={toggleCommandPalette}
-          className="p-2.5 rounded-lg text-zinc-500 hover:text-violet-400 hover:bg-violet-500/10 transition-all duration-150 focus-visible-ring"
+          className="p-2.5 rounded-lg text-text-tertiary hover:text-accent hover:bg-accent/10 transition-all duration-150 focus-visible-ring"
           aria-label="Open command palette"
         >
           <Sparkles className="w-5 h-5" aria-hidden="true" />
+        </button>
+
+        {/* Theme Toggle */}
+        <button
+          onClick={toggleTheme}
+          className="p-2.5 rounded-lg text-text-tertiary hover:text-warning hover:bg-warning/10 transition-all duration-150 focus-visible-ring"
+          aria-label={`Switch to ${resolvedTheme === 'dark' ? 'light' : 'dark'} theme`}
+          title={`Switch to ${resolvedTheme === 'dark' ? 'light' : 'dark'} theme`}
+        >
+          {resolvedTheme === 'dark' ? (
+            <Sun className="w-5 h-5" aria-hidden="true" />
+          ) : (
+            <Moon className="w-5 h-5" aria-hidden="true" />
+          )}
         </button>
 
         {/* Notifications */}
@@ -145,8 +163,8 @@ export function TopNav() {
             className={cn(
               "relative p-2.5 rounded-lg transition-all duration-150 focus-visible-ring",
               showNotifications 
-                ? "text-zinc-300 bg-white/[0.06]" 
-                : "text-zinc-500 hover:text-zinc-400 hover:bg-white/[0.04]"
+                ? "text-text-primary bg-surface-raised" 
+                : "text-text-tertiary hover:text-text-secondary hover:bg-interactive-hover"
             )}
             aria-label={`Notifications${unreadCount > 0 ? `, ${unreadCount} unread` : ''}`}
             aria-expanded={showNotifications}
@@ -155,8 +173,7 @@ export function TopNav() {
             <Bell className="w-5 h-5" aria-hidden="true" />
             {unreadCount > 0 && (
               <span 
-                className="absolute top-1 right-1 min-w-[18px] h-[18px] rounded-full text-white text-[10px] font-bold flex items-center justify-center px-1"
-                style={{ backgroundColor: '#ef4444' }}
+                className="absolute top-1 right-1 min-w-[18px] h-[18px] rounded-full bg-error text-text-on-emphasis text-[10px] font-bold flex items-center justify-center px-1"
                 aria-hidden="true"
               >
                 {unreadCount}
@@ -232,7 +249,7 @@ export function TopNav() {
         </div>
 
         {/* Separator */}
-        <div className="w-px h-6 bg-white/[0.08] mx-2" aria-hidden="true" />
+        <div className="w-px h-6 bg-border-default mx-2" aria-hidden="true" />
 
         {/* User Menu */}
         <div ref={userMenuRef} className="relative">
@@ -242,8 +259,8 @@ export function TopNav() {
             className={cn(
               "flex items-center gap-2.5 p-1.5 rounded-lg transition-all duration-150 focus-visible-ring",
               showUserMenu 
-                ? "bg-white/[0.06]" 
-                : "hover:bg-white/[0.04]"
+                ? "bg-surface-raised" 
+                : "hover:bg-interactive-hover"
             )}
             aria-label={`User menu for ${user.name}`}
             aria-expanded={showUserMenu}
@@ -252,7 +269,7 @@ export function TopNav() {
             <Avatar src={user.avatar} name={user.name} size="sm" />
             <ChevronDown 
               className={cn(
-                "w-4 h-4 text-zinc-500 transition-transform duration-150",
+                "w-4 h-4 text-text-tertiary transition-transform duration-150",
                 showUserMenu && "rotate-180"
               )} 
               aria-hidden="true"

@@ -89,7 +89,7 @@ export function CostTrendsWidget() {
       {/* Link to Costs */}
       <Link
         to="/manage/costs"
-        className="flex items-center justify-center gap-1 text-sm text-accent hover:text-accent-hover pt-2"
+        className="flex items-center justify-center gap-1 text-sm text-accent hover:text-accent-hover pt-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 rounded"
       >
         View cost details
         <ChevronRight className="w-4 h-4" />

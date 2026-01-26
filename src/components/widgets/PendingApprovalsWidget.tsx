@@ -81,7 +81,7 @@ export function PendingApprovalsWidget() {
                 variant="ghost"
                 size="sm"
                 onClick={() => handleReject(deployment.id, deployment.applicationName, deployment.version)}
-                className="text-error hover:bg-error/10"
+                className="text-error-text hover:bg-error-subtle focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
               >
                 <XCircle className="w-4 h-4" />
               </Button>
@@ -100,7 +100,7 @@ export function PendingApprovalsWidget() {
       {pendingApprovals.length > 3 && (
         <Link
           to="/deploy/deployments?filter=pending"
-          className="flex items-center justify-center gap-1 text-sm text-accent hover:text-accent-hover pt-2"
+          className="flex items-center justify-center gap-1 text-sm text-accent hover:text-accent-hover pt-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 rounded"
         >
           View all {pendingApprovals.length} pending
           <ChevronRight className="w-4 h-4" />

@@ -62,11 +62,11 @@ export function DeploymentHistory() {
   }, []);
 
   const statusIcons = {
-    succeeded: <CheckCircle className="w-4 h-4 text-success" />,
-    failed: <XCircle className="w-4 h-4 text-error" />,
-    'in-progress': <Loader2 className="w-4 h-4 text-accent animate-spin" />,
+    succeeded: <CheckCircle className="w-4 h-4 text-success-text" />,
+    failed: <XCircle className="w-4 h-4 text-error-text" />,
+    'in-progress': <Loader2 className="w-4 h-4 text-accent-text animate-spin" />,
     pending: <Clock className="w-4 h-4 text-text-disabled" />,
-    'awaiting-approval': <Clock className="w-4 h-4 text-warning" />,
+    'awaiting-approval': <Clock className="w-4 h-4 text-warning-text" />,
     'rolled-back': <RotateCcw className="w-4 h-4 text-text-tertiary" />,
     cancelled: <XCircle className="w-4 h-4 text-text-disabled" />,
   };
@@ -117,8 +117,8 @@ export function DeploymentHistory() {
         </Card>
         <Card className="p-4">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-success/10 flex items-center justify-center">
-              <CheckCircle className="w-5 h-5 text-success" />
+            <div className="w-10 h-10 rounded-lg bg-success-subtle flex items-center justify-center">
+              <CheckCircle className="w-5 h-5 text-success-text" />
             </div>
             <div>
               <p className="text-2xl font-bold text-text-primary">{stats.successRate.toFixed(0)}%</p>
@@ -128,8 +128,8 @@ export function DeploymentHistory() {
         </Card>
         <Card className="p-4">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-error/10 flex items-center justify-center">
-              <XCircle className="w-5 h-5 text-error" />
+            <div className="w-10 h-10 rounded-lg bg-error-subtle flex items-center justify-center">
+              <XCircle className="w-5 h-5 text-error-text" />
             </div>
             <div>
               <p className="text-2xl font-bold text-text-primary">{stats.failed}</p>
@@ -139,8 +139,8 @@ export function DeploymentHistory() {
         </Card>
         <Card className="p-4">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center">
-              <Clock className="w-5 h-5 text-accent" />
+            <div className="w-10 h-10 rounded-lg bg-accent-subtle flex items-center justify-center">
+              <Clock className="w-5 h-5 text-accent-text" />
             </div>
             <div>
               <p className="text-2xl font-bold text-text-primary">
@@ -207,17 +207,17 @@ export function DeploymentHistory() {
                   <Link
                     key={deployment.id}
                     to={`/deploy/deployments/${deployment.id}`}
-                    className="flex items-center gap-4 p-4 bg-surface rounded-lg border border-border-subtle hover:border-border-default hover:bg-surface-raised transition-all relative"
+                    className="flex items-center gap-4 p-4 bg-surface rounded-lg border border-border-subtle hover:border-border-default hover:bg-surface-raised transition-all relative focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-canvas"
                   >
                     {/* Timeline dot */}
                     <div
                       className={cn(
                         'absolute -left-[31px] w-4 h-4 rounded-full border-2 border-canvas',
-                        deployment.status === 'succeeded' && 'bg-success',
-                        deployment.status === 'failed' && 'bg-error',
-                        deployment.status === 'in-progress' && 'bg-accent',
-                        (deployment.status === 'pending' || deployment.status === 'awaiting-approval') && 'bg-warning',
-                        (deployment.status === 'rolled-back' || deployment.status === 'cancelled') && 'bg-text-disabled'
+                        deployment.status === 'succeeded' && 'bg-success-subtle',
+                        deployment.status === 'failed' && 'bg-error-subtle',
+                        deployment.status === 'in-progress' && 'bg-accent-subtle',
+                        (deployment.status === 'pending' || deployment.status === 'awaiting-approval') && 'bg-warning-subtle',
+                        (deployment.status === 'rolled-back' || deployment.status === 'cancelled') && 'bg-surface-raised'
                       )}
                     />
 

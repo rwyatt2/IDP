@@ -6,10 +6,10 @@ import { AlertTriangle, AlertCircle, Info, Bell, Check } from 'lucide-react';
 import { Button } from '@/components/ui';
 
 const severityConfig = {
-  critical: { icon: <AlertTriangle className="w-4 h-4" />, color: 'text-error', bg: 'bg-error/20' },
-  error: { icon: <AlertTriangle className="w-4 h-4" />, color: 'text-error', bg: 'bg-error/20' },
-  warning: { icon: <AlertCircle className="w-4 h-4" />, color: 'text-warning', bg: 'bg-warning/20' },
-  info: { icon: <Info className="w-4 h-4" />, color: 'text-accent', bg: 'bg-accent/20' },
+  critical: { icon: <AlertTriangle className="w-4 h-4" />, color: 'text-error-text', bg: 'bg-error-subtle' },
+  error: { icon: <AlertTriangle className="w-4 h-4" />, color: 'text-error-text', bg: 'bg-error-subtle' },
+  warning: { icon: <AlertCircle className="w-4 h-4" />, color: 'text-warning-text', bg: 'bg-warning-subtle' },
+  info: { icon: <Info className="w-4 h-4" />, color: 'text-info-text', bg: 'bg-info-subtle' },
 };
 
 export function AlertsWidget() {
@@ -36,8 +36,8 @@ export function AlertsWidget() {
   if (alerts.length === 0) {
     return (
       <div className="text-center py-4">
-        <div className="w-12 h-12 rounded-full bg-success/20 flex items-center justify-center mx-auto mb-3">
-          <Bell className="w-6 h-6 text-success" />
+        <div className="w-12 h-12 rounded-full bg-success-subtle flex items-center justify-center mx-auto mb-3">
+          <Bell className="w-6 h-6 text-success-text" />
         </div>
         <p className="font-medium text-text-primary">No Active Alerts</p>
         <p className="text-sm text-text-tertiary mt-1">All systems operating normally</p>

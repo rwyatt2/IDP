@@ -134,8 +134,8 @@ export function Help() {
     <div className="space-y-8 max-w-6xl mx-auto">
       {/* Header */}
       <div className="text-center">
-        <div className="w-16 h-16 rounded-2xl bg-accent/20 flex items-center justify-center mx-auto mb-4">
-          <BookOpen className="w-8 h-8 text-accent" />
+        <div className="w-16 h-16 rounded-2xl bg-accent-subtle flex items-center justify-center mx-auto mb-4">
+          <BookOpen className="w-8 h-8 text-accent-text" />
         </div>
         <h1 className="text-3xl font-bold text-text-primary">Help Center</h1>
         <p className="text-text-tertiary mt-2 max-w-lg mx-auto">
@@ -151,12 +151,12 @@ export function Help() {
               value={search}
               onChange={(e) => handleSearch(e.target.value)}
               placeholder="Search documentation, FAQ, guides..."
-              className="w-full pl-12 pr-4 py-3.5 bg-surface-raised border border-border-subtle rounded-xl text-text-primary placeholder:text-text-tertiary focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 transition-all"
+              className="w-full pl-12 pr-4 py-3.5 bg-surface-raised border border-border-subtle rounded-xl text-text-primary placeholder:text-text-placeholder focus-visible:outline-none focus-visible:border-accent focus-visible:ring-2 focus-visible:ring-accent-subtle transition-all"
             />
             {search && (
               <button
                 onClick={() => handleSearch('')}
-                className="absolute right-4 top-1/2 -translate-y-1/2 text-text-tertiary hover:text-text-secondary"
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-text-tertiary hover:text-text-secondary focus-visible:outline-none focus-visible:text-text-primary"
               >
                 ×
               </button>
@@ -182,9 +182,9 @@ export function Help() {
                 <div className="flex items-start gap-4">
                   <div className={cn(
                     'flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center',
-                    result.type === 'article' && 'bg-accent/20 text-accent',
-                    result.type === 'faq' && 'bg-purple-500/20 text-purple-400',
-                    result.type === 'glossary' && 'bg-blue-500/20 text-blue-400',
+                    result.type === 'article' && 'bg-accent-subtle text-accent-text',
+                    result.type === 'faq' && 'bg-info-subtle text-info-text',
+                    result.type === 'glossary' && 'bg-success-subtle text-success-text',
                   )}>
                     {result.type === 'article' && <FileText className="w-5 h-5" />}
                     {result.type === 'faq' && <HelpCircle className="w-5 h-5" />}
@@ -227,33 +227,33 @@ export function Help() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <button
               onClick={() => setSearchParams({ view: 'learning' })}
-              className="p-4 bg-gradient-to-br from-accent/20 to-purple-500/20 border border-accent/30 rounded-xl hover:border-accent/50 transition-colors group"
+              className="p-4 bg-gradient-to-br from-accent-subtle to-info-subtle border border-accent-border rounded-xl hover:border-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-canvas transition-colors group"
             >
-              <GraduationCap className="w-8 h-8 text-accent mb-3" />
+              <GraduationCap className="w-8 h-8 text-accent-text mb-3" />
               <p className="font-semibold text-text-primary">Learning Paths</p>
               <p className="text-sm text-text-tertiary mt-1">Guided tutorials</p>
             </button>
             <button
               onClick={() => setSearchParams({ view: 'faq' })}
-              className="p-4 bg-surface-raised border border-border-subtle rounded-xl hover:border-border-default transition-colors"
+              className="p-4 bg-surface-raised border border-border-subtle rounded-xl hover:border-border-default focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-canvas transition-colors"
             >
-              <HelpCircle className="w-8 h-8 text-purple-400 mb-3" />
+              <HelpCircle className="w-8 h-8 text-info-text mb-3" />
               <p className="font-semibold text-text-primary">FAQ</p>
               <p className="text-sm text-text-tertiary mt-1">Common questions</p>
             </button>
             <button
               onClick={() => goToCategory('api')}
-              className="p-4 bg-surface-raised border border-border-subtle rounded-xl hover:border-border-default transition-colors"
+              className="p-4 bg-surface-raised border border-border-subtle rounded-xl hover:border-border-default focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-canvas transition-colors"
             >
-              <Code className="w-8 h-8 text-blue-400 mb-3" />
+              <Code className="w-8 h-8 text-accent-text mb-3" />
               <p className="font-semibold text-text-primary">API Reference</p>
               <p className="text-sm text-text-tertiary mt-1">Complete API docs</p>
             </button>
             <button
               onClick={() => setSearchParams({ view: 'glossary' })}
-              className="p-4 bg-surface-raised border border-border-subtle rounded-xl hover:border-border-default transition-colors"
+              className="p-4 bg-surface-raised border border-border-subtle rounded-xl hover:border-border-default focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-canvas transition-colors"
             >
-              <BookOpen className="w-8 h-8 text-green-400 mb-3" />
+              <BookOpen className="w-8 h-8 text-success-text mb-3" />
               <p className="font-semibold text-text-primary">Glossary</p>
               <p className="text-sm text-text-tertiary mt-1">Terms & definitions</p>
             </button>
@@ -263,7 +263,7 @@ export function Help() {
           <div>
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-lg font-semibold text-text-primary flex items-center gap-2">
-                <Star className="w-5 h-5 text-yellow-500" />
+                <Star className="w-5 h-5 text-warning-text" />
                 Featured Articles
               </h2>
             </div>
@@ -272,13 +272,13 @@ export function Help() {
                 <button
                   key={article.id}
                   onClick={() => goToArticle(article.id)}
-                  className="text-left p-5 bg-surface-raised border border-border-subtle rounded-xl hover:border-accent/50 transition-colors group"
+                  className="text-left p-5 bg-surface-raised border border-border-subtle rounded-xl hover:border-accent-border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-canvas transition-colors group"
                 >
                   <div className="flex items-start justify-between">
                     <Badge variant="accent" size="sm">
                       {article.contentType}
                     </Badge>
-                    <ChevronRight className="w-5 h-5 text-text-tertiary group-hover:text-accent transition-colors" />
+                    <ChevronRight className="w-5 h-5 text-text-tertiary group-hover:text-accent-text transition-colors" />
                   </div>
                   <h3 className="font-semibold text-text-primary mt-3">
                     {article.title}
@@ -313,10 +313,10 @@ export function Help() {
                   <button
                     key={category.id}
                     onClick={() => goToCategory(category.id)}
-                    className="text-left p-5 bg-surface-raised border border-border-subtle rounded-xl hover:border-accent/50 transition-colors group"
+                    className="text-left p-5 bg-surface-raised border border-border-subtle rounded-xl hover:border-accent-border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-canvas transition-colors group"
                   >
-                    <div className="w-10 h-10 rounded-lg bg-accent/20 flex items-center justify-center mb-3 group-hover:bg-accent/30 transition-colors">
-                      <Icon className="w-5 h-5 text-accent" />
+                    <div className="w-10 h-10 rounded-lg bg-accent-subtle flex items-center justify-center mb-3 group-hover:bg-accent-muted transition-colors">
+                      <Icon className="w-5 h-5 text-accent-text" />
                     </div>
                     <h3 className="font-semibold text-text-primary">
                       {category.name}
@@ -341,7 +341,7 @@ export function Help() {
                 <CardHeader 
                   title="Popular Articles"
                   description="Most read documentation"
-                  action={<TrendingUp className="w-5 h-5 text-accent" />}
+                  action={<TrendingUp className="w-5 h-5 text-accent-text" />}
                 />
                 <div className="mt-4 divide-y divide-border-subtle">
                   {popularArticles.map((article, index) => (
@@ -372,14 +372,14 @@ export function Help() {
             <Card padding="lg">
               <CardHeader 
                 title="Need More Help?"
-                action={<MessageSquare className="w-5 h-5 text-accent" />}
+                action={<MessageSquare className="w-5 h-5 text-accent-text" />}
               />
               <div className="mt-4 space-y-3">
                 <a
                   href="#"
-                  className="flex items-center gap-3 p-3 bg-surface-raised rounded-lg hover:bg-border-subtle transition-colors"
+                  className="flex items-center gap-3 p-3 bg-surface-raised rounded-lg hover:bg-surface-overlay focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent transition-colors"
                 >
-                  <MessageSquare className="w-5 h-5 text-accent" />
+                  <MessageSquare className="w-5 h-5 text-accent-text" />
                   <div>
                     <p className="font-medium text-text-primary text-sm">Live Chat</p>
                     <p className="text-xs text-text-tertiary">Talk to our team</p>
@@ -387,9 +387,9 @@ export function Help() {
                 </a>
                 <a
                   href="#"
-                  className="flex items-center gap-3 p-3 bg-surface-raised rounded-lg hover:bg-border-subtle transition-colors"
+                  className="flex items-center gap-3 p-3 bg-surface-raised rounded-lg hover:bg-surface-overlay focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent transition-colors"
                 >
-                  <Mail className="w-5 h-5 text-purple-400" />
+                  <Mail className="w-5 h-5 text-info-text" />
                   <div>
                     <p className="font-medium text-text-primary text-sm">Email Support</p>
                     <p className="text-xs text-text-tertiary">support@platform.dev</p>
@@ -397,9 +397,9 @@ export function Help() {
                 </a>
                 <a
                   href="#"
-                  className="flex items-center gap-3 p-3 bg-surface-raised rounded-lg hover:bg-border-subtle transition-colors"
+                  className="flex items-center gap-3 p-3 bg-surface-raised rounded-lg hover:bg-surface-overlay focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent transition-colors"
                 >
-                  <Users className="w-5 h-5 text-blue-400" />
+                  <Users className="w-5 h-5 text-accent-text" />
                   <div>
                     <p className="font-medium text-text-primary text-sm">Community</p>
                     <p className="text-xs text-text-tertiary">Join the discussion</p>
@@ -407,9 +407,9 @@ export function Help() {
                 </a>
                 <a
                   href="#"
-                  className="flex items-center gap-3 p-3 bg-surface-raised rounded-lg hover:bg-border-subtle transition-colors"
+                  className="flex items-center gap-3 p-3 bg-surface-raised rounded-lg hover:bg-surface-overlay focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent transition-colors"
                 >
-                  <Video className="w-5 h-5 text-green-400" />
+                  <Video className="w-5 h-5 text-success-text" />
                   <div>
                     <p className="font-medium text-text-primary text-sm">Video Tutorials</p>
                     <p className="text-xs text-text-tertiary">Watch and learn</p>
@@ -426,7 +426,7 @@ export function Help() {
         <>
           {/* Breadcrumb */}
           <div className="flex items-center gap-2 text-sm">
-            <button onClick={goHome} className="text-text-tertiary hover:text-accent">
+            <button onClick={goHome} className="text-text-tertiary hover:text-accent-text focus-visible:outline-none focus-visible:text-accent-text">
               Help Center
             </button>
             <ChevronRight className="w-4 h-4 text-text-disabled" />
@@ -435,10 +435,10 @@ export function Help() {
 
           {/* Category Header */}
           <div className="flex items-center gap-4">
-            <div className="w-14 h-14 rounded-xl bg-accent/20 flex items-center justify-center">
+            <div className="w-14 h-14 rounded-xl bg-accent-subtle flex items-center justify-center">
               {(() => {
                 const Icon = categoryIcons[currentCategory.id] || BookOpen;
-                return <Icon className="w-7 h-7 text-accent" />;
+                return <Icon className="w-7 h-7 text-accent-text" />;
               })()}
             </div>
             <div>
@@ -455,7 +455,7 @@ export function Help() {
               {currentCategory.subcategories.map((sub) => (
                 <button
                   key={sub.id}
-                  className="px-4 py-2 bg-surface-raised border border-border-subtle rounded-lg text-sm text-text-secondary hover:border-accent/50 hover:text-text-primary transition-colors"
+                  className="px-4 py-2 bg-surface-raised border border-border-subtle rounded-lg text-sm text-text-secondary hover:border-accent-border hover:text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent transition-colors"
                 >
                   {sub.name}
                   <span className="ml-2 text-text-disabled">({sub.articleCount})</span>
@@ -470,7 +470,7 @@ export function Help() {
               <button
                 key={article.id}
                 onClick={() => goToArticle(article.id)}
-                className="w-full text-left p-5 bg-surface-raised border border-border-subtle rounded-xl hover:border-accent/50 transition-colors group"
+                className="w-full text-left p-5 bg-surface-raised border border-border-subtle rounded-xl hover:border-accent-border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-canvas transition-colors group"
               >
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex-1">
@@ -485,10 +485,10 @@ export function Help() {
                         {article.difficulty}
                       </Badge>
                       {isBookmarked(article.id) && (
-                        <BookMarked className="w-4 h-4 text-accent" />
+                        <BookMarked className="w-4 h-4 text-accent-text" />
                       )}
                     </div>
-                    <h3 className="font-semibold text-text-primary group-hover:text-accent transition-colors">
+                    <h3 className="font-semibold text-text-primary group-hover:text-accent-text transition-colors">
                       {article.title}
                     </h3>
                     <p className="text-sm text-text-tertiary mt-2 line-clamp-2">
@@ -507,7 +507,7 @@ export function Help() {
                       )}
                     </div>
                   </div>
-                  <ChevronRight className="w-5 h-5 text-text-tertiary group-hover:text-accent transition-colors flex-shrink-0" />
+                  <ChevronRight className="w-5 h-5 text-text-tertiary group-hover:text-accent-text transition-colors flex-shrink-0" />
                 </div>
               </button>
             ))}
@@ -520,13 +520,13 @@ export function Help() {
         <>
           {/* Breadcrumb */}
           <div className="flex items-center gap-2 text-sm">
-            <button onClick={goHome} className="text-text-tertiary hover:text-accent">
+            <button onClick={goHome} className="text-text-tertiary hover:text-accent-text focus-visible:outline-none focus-visible:text-accent-text">
               Help Center
             </button>
             <ChevronRight className="w-4 h-4 text-text-disabled" />
             <button 
               onClick={() => goToCategory(currentArticle.category)}
-              className="text-text-tertiary hover:text-accent"
+              className="text-text-tertiary hover:text-accent-text focus-visible:outline-none focus-visible:text-accent-text"
             >
               {documentationCategories.find(c => c.id === currentArticle.category)?.name}
             </button>
@@ -569,9 +569,9 @@ export function Help() {
                   <button
                     onClick={() => toggleBookmark(currentArticle.id)}
                     className={cn(
-                      'p-2 rounded-lg transition-colors',
+                      'p-2 rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent',
                       isBookmarked(currentArticle.id)
-                        ? 'bg-accent/20 text-accent'
+                        ? 'bg-accent-subtle text-accent-text'
                         : 'hover:bg-surface-raised text-text-tertiary'
                     )}
                     title={isBookmarked(currentArticle.id) ? 'Remove bookmark' : 'Bookmark'}
@@ -594,8 +594,8 @@ export function Help() {
                         .replace(/^## (.+)$/gm, '<h2 class="text-xl font-semibold text-text-primary mt-6 mb-3">$1</h2>')
                         .replace(/^### (.+)$/gm, '<h3 class="text-lg font-medium text-text-primary mt-4 mb-2">$3</h3>')
                         .replace(/\*\*(.+?)\*\*/g, '<strong class="text-text-primary font-semibold">$1</strong>')
-                        .replace(/`(.+?)`/g, '<code class="px-1.5 py-0.5 bg-surface-raised rounded text-accent text-sm">$1</code>')
-                        .replace(/\[(.+?)\]\((.+?)\)/g, '<a href="$2" class="text-accent hover:text-accent-hover underline">$1</a>')
+                        .replace(/`(.+?)`/g, '<code class="px-1.5 py-0.5 bg-surface-raised rounded text-accent-text text-sm">$1</code>')
+                        .replace(/\[(.+?)\]\((.+?)\)/g, '<a href="$2" class="text-accent-text hover:underline">$1</a>')
                         .replace(/^\- (.+)$/gm, '<li class="ml-4 list-disc text-text-secondary">$1</li>')
                         .replace(/^\d+\. (.+)$/gm, '<li class="ml-4 list-decimal text-text-secondary">$1</li>')
                         .replace(/```(\w+)?\n([\s\S]*?)```/g, '<pre class="p-4 bg-surface-raised rounded-lg overflow-x-auto my-4"><code class="text-sm text-text-secondary">$2</code></pre>')
@@ -628,10 +628,10 @@ export function Help() {
                     <button
                       onClick={() => submitFeedback(currentArticle.id, true)}
                       className={cn(
-                        'flex items-center gap-2 px-4 py-2 rounded-lg transition-colors',
+                        'flex items-center gap-2 px-4 py-2 rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent',
                         helpfulArticles.includes(currentArticle.id)
-                          ? 'bg-success/20 text-success'
-                          : 'bg-surface-raised text-text-secondary hover:bg-border-subtle'
+                          ? 'bg-success-subtle text-success-text'
+                          : 'bg-surface-raised text-text-secondary hover:bg-surface-overlay'
                       )}
                     >
                       <ThumbsUp className="w-4 h-4" />
@@ -640,10 +640,10 @@ export function Help() {
                     <button
                       onClick={() => submitFeedback(currentArticle.id, false)}
                       className={cn(
-                        'flex items-center gap-2 px-4 py-2 rounded-lg transition-colors',
+                        'flex items-center gap-2 px-4 py-2 rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent',
                         unhelpfulArticles.includes(currentArticle.id)
-                          ? 'bg-error/20 text-error'
-                          : 'bg-surface-raised text-text-secondary hover:bg-border-subtle'
+                          ? 'bg-error-subtle text-error-text'
+                          : 'bg-surface-raised text-text-secondary hover:bg-surface-overlay'
                       )}
                     >
                       <ThumbsDown className="w-4 h-4" />
@@ -709,7 +709,7 @@ export function Help() {
               )}
 
               {/* Get Support */}
-              <Card padding="md" className="bg-gradient-to-br from-accent/10 to-purple-500/10 border-accent/30">
+              <Card padding="md" className="bg-gradient-to-br from-accent-subtle to-info-subtle border-accent-border">
                 <h3 className="font-semibold text-text-primary mb-2">Still need help?</h3>
                 <p className="text-sm text-text-tertiary mb-4">
                   Our team is here to assist you
@@ -729,7 +729,7 @@ export function Help() {
         <>
           {/* Breadcrumb */}
           <div className="flex items-center gap-2 text-sm">
-            <button onClick={goHome} className="text-text-tertiary hover:text-accent">
+            <button onClick={goHome} className="text-text-tertiary hover:text-accent-text focus-visible:outline-none focus-visible:text-accent-text">
               Help Center
             </button>
             <ChevronRight className="w-4 h-4 text-text-disabled" />
@@ -737,8 +737,8 @@ export function Help() {
           </div>
 
           <div className="flex items-center gap-4 mb-6">
-            <div className="w-14 h-14 rounded-xl bg-purple-500/20 flex items-center justify-center">
-              <HelpCircle className="w-7 h-7 text-purple-400" />
+            <div className="w-14 h-14 rounded-xl bg-info-subtle flex items-center justify-center">
+              <HelpCircle className="w-7 h-7 text-info-text" />
             </div>
             <div>
               <h2 className="text-2xl font-bold text-text-primary">
@@ -785,7 +785,7 @@ export function Help() {
                                   <button
                                     key={artId}
                                     onClick={() => goToArticle(artId)}
-                                    className="text-sm text-accent hover:text-accent-hover flex items-center gap-1"
+                                    className="text-sm text-accent-text hover:underline flex items-center gap-1 focus-visible:outline-none focus-visible:underline"
                                   >
                                     <FileText className="w-3 h-3" />
                                     {article.title}
@@ -810,7 +810,7 @@ export function Help() {
         <>
           {/* Breadcrumb */}
           <div className="flex items-center gap-2 text-sm">
-            <button onClick={goHome} className="text-text-tertiary hover:text-accent">
+            <button onClick={goHome} className="text-text-tertiary hover:text-accent-text focus-visible:outline-none focus-visible:text-accent-text">
               Help Center
             </button>
             <ChevronRight className="w-4 h-4 text-text-disabled" />
@@ -818,8 +818,8 @@ export function Help() {
           </div>
 
           <div className="flex items-center gap-4 mb-6">
-            <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-accent/20 to-purple-500/20 flex items-center justify-center">
-              <GraduationCap className="w-7 h-7 text-accent" />
+            <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-accent-subtle to-info-subtle flex items-center justify-center">
+              <GraduationCap className="w-7 h-7 text-accent-text" />
             </div>
             <div>
               <h2 className="text-2xl font-bold text-text-primary">
@@ -831,7 +831,7 @@ export function Help() {
 
           <div className="grid md:grid-cols-2 gap-6">
             {learningPaths.map((path) => (
-              <Card key={path.id} padding="lg" className="hover:border-accent/50 transition-colors">
+              <Card key={path.id} padding="lg" className="bg-surface border-border-subtle hover:border-accent-border transition-colors">
                 <div className="flex items-start justify-between mb-4">
                   <div>
                     <div className="flex items-center gap-2 mb-2">
@@ -846,8 +846,8 @@ export function Help() {
                       {path.title}
                     </h3>
                   </div>
-                  <div className="w-12 h-12 rounded-xl bg-accent/20 flex items-center justify-center">
-                    <GraduationCap className="w-6 h-6 text-accent" />
+                  <div className="w-12 h-12 rounded-xl bg-accent-subtle flex items-center justify-center">
+                    <GraduationCap className="w-6 h-6 text-accent-text" />
                   </div>
                 </div>
                 
@@ -901,7 +901,7 @@ export function Help() {
         <>
           {/* Breadcrumb */}
           <div className="flex items-center gap-2 text-sm">
-            <button onClick={goHome} className="text-text-tertiary hover:text-accent">
+            <button onClick={goHome} className="text-text-tertiary hover:text-accent-text focus-visible:outline-none focus-visible:text-accent-text">
               Help Center
             </button>
             <ChevronRight className="w-4 h-4 text-text-disabled" />
@@ -909,8 +909,8 @@ export function Help() {
           </div>
 
           <div className="flex items-center gap-4 mb-6">
-            <div className="w-14 h-14 rounded-xl bg-green-500/20 flex items-center justify-center">
-              <BookOpen className="w-7 h-7 text-green-400" />
+            <div className="w-14 h-14 rounded-xl bg-success-subtle flex items-center justify-center">
+              <BookOpen className="w-7 h-7 text-success-text" />
             </div>
             <div>
               <h2 className="text-2xl font-bold text-text-primary">

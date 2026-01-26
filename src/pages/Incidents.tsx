@@ -18,33 +18,33 @@ import type { Incident, IncidentSeverity, IncidentStatus } from '@/types';
 
 const severityConfig: Record<IncidentSeverity, { color: string; label: string; icon: React.ReactNode }> = {
   critical: {
-    color: 'bg-danger-100 text-danger-700 border-danger-200',
+    color: 'bg-error-subtle text-error-text border-error/20',
     label: 'Critical',
     icon: <AlertTriangle className="w-4 h-4" />,
   },
   high: {
-    color: 'bg-danger-50 text-danger-600 border-danger-100',
+    color: 'bg-error/10 text-error border-error/10',
     label: 'High',
     icon: <AlertCircle className="w-4 h-4" />,
   },
   medium: {
-    color: 'bg-warning-100 text-warning-700 border-warning-200',
+    color: 'bg-warning-subtle text-warning-text border-warning/20',
     label: 'Medium',
     icon: <AlertCircle className="w-4 h-4" />,
   },
   low: {
-    color: 'bg-blue-100 text-blue-700 border-blue-200',
+    color: 'bg-accent-subtle text-accent-text border-accent/20',
     label: 'Low',
     icon: <AlertCircle className="w-4 h-4" />,
   },
 };
 
 const statusConfig: Record<IncidentStatus, { color: string; label: string }> = {
-  open: { color: 'bg-danger-100 text-danger-700', label: 'Open' },
-  investigating: { color: 'bg-warning-100 text-warning-700', label: 'Investigating' },
-  identified: { color: 'bg-blue-100 text-blue-700', label: 'Identified' },
-  monitoring: { color: 'bg-primary-100 text-primary-700', label: 'Monitoring' },
-  resolved: { color: 'bg-success-100 text-success-700', label: 'Resolved' },
+  open: { color: 'bg-error-subtle text-error-text', label: 'Open' },
+  investigating: { color: 'bg-warning-subtle text-warning-text', label: 'Investigating' },
+  identified: { color: 'bg-accent-subtle text-accent-text', label: 'Identified' },
+  monitoring: { color: 'bg-accent-subtle text-accent-text', label: 'Monitoring' },
+  resolved: { color: 'bg-success-subtle text-success-text', label: 'Resolved' },
 };
 
 function IncidentCard({ incident }: { incident: Incident }) {
@@ -111,33 +111,33 @@ function IncidentCard({ incident }: { incident: Incident }) {
                 </Badge>
               )}
             </div>
-            <span className="text-xs text-slate-400">
+            <span className="text-xs text-text-tertiary">
               {formatRelativeTime(incident.createdAt)}
             </span>
           </div>
 
-          <h3 className="font-semibold text-slate-900 mb-1">{incident.title}</h3>
-          <p className="text-sm text-slate-500 line-clamp-2 mb-4">
+          <h3 className="font-semibold text-text-primary mb-1">{incident.title}</h3>
+          <p className="text-sm text-text-tertiary line-clamp-2 mb-4">
             {incident.description}
           </p>
 
           {incident.applicationName && (
-            <div className="flex items-center gap-2 text-sm text-slate-500 mb-4">
-              <span className="font-medium text-primary-600">{incident.applicationName}</span>
-              <span className="text-slate-300">•</span>
+            <div className="flex items-center gap-2 text-sm text-text-tertiary mb-4">
+              <span className="font-medium text-accent-text">{incident.applicationName}</span>
+              <span className="text-text-disabled">•</span>
               <span>{incident.team}</span>
             </div>
           )}
 
-          <div className="flex items-center justify-between pt-4 border-t border-slate-100">
+          <div className="flex items-center justify-between pt-4 border-t border-border-subtle">
             <div className="flex items-center gap-3">
               {currentAssignee ? (
-                <div className="flex items-center gap-2 text-sm text-slate-500">
+                <div className="flex items-center gap-2 text-sm text-text-tertiary">
                   <Avatar name={currentAssignee} size="sm" />
                   <span>{currentAssignee}</span>
                 </div>
               ) : (
-                <span className="text-sm text-slate-400">Unassigned</span>
+                <span className="text-sm text-text-tertiary">Unassigned</span>
               )}
             </div>
 
@@ -168,7 +168,7 @@ function IncidentCard({ incident }: { incident: Incident }) {
                   variant="ghost"
                   size="sm"
                   onClick={handleResolve}
-                  className="text-success-600"
+                  className="text-success-text"
                   title="Resolve"
                 >
                   <CheckCircle className="w-4 h-4" />
@@ -177,7 +177,7 @@ function IncidentCard({ incident }: { incident: Incident }) {
             )}
 
             {isResolved && (
-              <ChevronRight className="w-4 h-4 text-slate-400" />
+              <ChevronRight className="w-4 h-4 text-text-tertiary" />
             )}
           </div>
         </div>
@@ -257,8 +257,8 @@ export function Incidents() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">Incidents</h1>
-          <p className="text-slate-500 mt-1">
+          <h1 className="text-2xl font-bold text-text-primary">Incidents</h1>
+          <p className="text-text-tertiary mt-1">
             Track and manage incidents across your platform
           </p>
         </div>
@@ -273,16 +273,16 @@ export function Incidents() {
 
       {/* Active Incidents Summary */}
       {activeIncidents.length > 0 && (
-        <Card className="bg-danger-50 border-danger-200 p-4">
+        <Card className="bg-error/10 border-error/20 p-4">
           <div className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-xl bg-danger-100 flex items-center justify-center">
-              <AlertTriangle className="w-6 h-6 text-danger-600" />
+            <div className="w-12 h-12 rounded-xl bg-error-subtle flex items-center justify-center">
+              <AlertTriangle className="w-6 h-6 text-error" />
             </div>
             <div className="flex-1">
-              <p className="font-semibold text-danger-800">
+              <p className="font-semibold text-error-text">
                 {activeIncidents.length} Active Incident{activeIncidents.length !== 1 ? 's' : ''}
               </p>
-              <p className="text-sm text-danger-600">
+              <p className="text-sm text-error">
                 {activeIncidents.filter((i) => i.severity === 'critical').length} critical,{' '}
                 {activeIncidents.filter((i) => i.severity === 'high').length} high severity
               </p>
@@ -327,14 +327,14 @@ export function Incidents() {
           <Card className="text-center py-12">
             {activeTab === 'active' ? (
               <>
-                <CheckCircle className="w-12 h-12 text-success-500 mx-auto mb-4" />
-                <p className="font-medium text-slate-900">No Active Incidents</p>
-                <p className="text-slate-500">All systems are operating normally</p>
+                <CheckCircle className="w-12 h-12 text-success mx-auto mb-4" />
+                <p className="font-medium text-text-primary">No Active Incidents</p>
+                <p className="text-text-tertiary">All systems are operating normally</p>
               </>
             ) : (
               <>
-                <AlertTriangle className="w-12 h-12 text-slate-300 mx-auto mb-4" />
-                <p className="text-slate-500">No incidents found</p>
+                <AlertTriangle className="w-12 h-12 text-text-disabled mx-auto mb-4" />
+                <p className="text-text-tertiary">No incidents found</p>
               </>
             )}
           </Card>

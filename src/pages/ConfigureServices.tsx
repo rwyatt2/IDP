@@ -66,8 +66,8 @@ export function ConfigureServices() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">Configure Services</h1>
-          <p className="text-slate-500 mt-1">
+          <h1 className="text-2xl font-bold text-text-primary">Configure Services</h1>
+          <p className="text-text-secondary mt-1">
             Manage environment variables, resources, and service settings
           </p>
         </div>
@@ -104,18 +104,18 @@ export function ConfigureServices() {
           </div>
         </div>
         {selectedApplication && (
-          <div className="mt-4 p-4 rounded-lg bg-slate-50 flex items-center gap-4">
-            <div className="w-12 h-12 rounded-xl bg-white border border-slate-200 flex items-center justify-center">
-              <Server className="w-6 h-6 text-slate-600" />
+          <div className="mt-4 p-4 rounded-lg bg-surface-raised flex items-center gap-4">
+            <div className="w-12 h-12 rounded-xl bg-surface-overlay border border-border-default flex items-center justify-center">
+              <Server className="w-6 h-6 text-text-secondary" />
             </div>
             <div className="flex-1">
-              <h3 className="font-semibold text-slate-900">{selectedApplication.displayName}</h3>
-              <p className="text-sm text-slate-500">{selectedApplication.description}</p>
+              <h3 className="font-semibold text-text-primary">{selectedApplication.displayName}</h3>
+              <p className="text-sm text-text-secondary">{selectedApplication.description}</p>
             </div>
             <StatusBadge status={selectedApplication.status} />
             <Link
               to={`/discover/catalog/${selectedApplication.id}`}
-              className="text-primary-600 hover:text-primary-700"
+              className="text-accent-text hover:text-accent-text"
             >
               <ChevronRight className="w-5 h-5" />
             </Link>
@@ -149,36 +149,36 @@ export function ConfigureServices() {
             <Card padding="none">
               <table className="w-full">
                 <thead>
-                  <tr className="border-b border-slate-200 bg-slate-50">
-                    <th className="text-left p-4 font-medium text-slate-600">Key</th>
-                    <th className="text-left p-4 font-medium text-slate-600">Value</th>
-                    <th className="text-left p-4 font-medium text-slate-600">Type</th>
-                    <th className="text-left p-4 font-medium text-slate-600">Modified</th>
-                    <th className="text-right p-4 font-medium text-slate-600">Actions</th>
+                  <tr className="border-b border-border-default bg-surface-raised">
+                    <th className="text-left p-4 font-medium text-text-secondary">Key</th>
+                    <th className="text-left p-4 font-medium text-text-secondary">Value</th>
+                    <th className="text-left p-4 font-medium text-text-secondary">Type</th>
+                    <th className="text-left p-4 font-medium text-text-secondary">Modified</th>
+                    <th className="text-right p-4 font-medium text-text-secondary">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
                   {filteredConfigs.map((config) => (
-                    <tr key={config.id} className="border-b border-slate-100 last:border-0">
+                    <tr key={config.id} className="border-b border-border-subtle last:border-0">
                       <td className="p-4">
                         <div className="flex items-center gap-2">
                           {config.type === 'secret' ? (
-                            <Lock className="w-4 h-4 text-slate-400" />
+                            <Lock className="w-4 h-4 text-text-tertiary" />
                           ) : (
-                            <Key className="w-4 h-4 text-slate-400" />
+                            <Key className="w-4 h-4 text-text-tertiary" />
                           )}
-                          <code className="font-mono text-sm text-slate-900">{config.key}</code>
+                          <code className="font-mono text-sm text-text-primary">{config.key}</code>
                         </div>
                       </td>
                       <td className="p-4">
-                        <code className="font-mono text-sm text-slate-600">{config.value}</code>
+                        <code className="font-mono text-sm text-text-secondary">{config.value}</code>
                       </td>
                       <td className="p-4">
                         <Badge variant="neutral" size="sm">{config.type}</Badge>
                       </td>
                       <td className="p-4">
-                        <p className="text-sm text-slate-600">{config.lastModified}</p>
-                        <p className="text-xs text-slate-400">{config.modifiedBy}</p>
+                        <p className="text-sm text-text-secondary">{config.lastModified}</p>
+                        <p className="text-xs text-text-tertiary">{config.modifiedBy}</p>
                       </td>
                       <td className="p-4 text-right">
                         <Button variant="ghost" size="sm">Edit</Button>
@@ -205,17 +205,17 @@ export function ConfigureServices() {
                     className={cn(
                       'p-4 rounded-lg border-2 text-left transition-colors',
                       preset.id === 'medium'
-                        ? 'border-primary-500 bg-primary-50'
-                        : 'border-slate-200 hover:border-slate-300'
+                        ? 'border-accent-primary bg-accent-primary-subtle'
+                        : 'border-border-default hover:border-border-strong'
                     )}
                   >
                     <div className="flex items-center justify-between mb-2">
-                      <span className="font-semibold text-slate-900">{preset.name}</span>
+                      <span className="font-semibold text-text-primary">{preset.name}</span>
                       {preset.id === 'medium' && (
-                        <Check className="w-4 h-4 text-primary-600" />
+                        <Check className="w-4 h-4 text-accent-text" />
                       )}
                     </div>
-                    <div className="space-y-1 text-sm text-slate-600">
+                    <div className="space-y-1 text-sm text-text-secondary">
                       <div className="flex items-center gap-2">
                         <Cpu className="w-4 h-4" />
                         <span>{preset.cpu}</span>
@@ -225,7 +225,7 @@ export function ConfigureServices() {
                         <span>{preset.memory}</span>
                       </div>
                     </div>
-                    <p className="mt-2 text-sm font-medium text-slate-900">{preset.price}</p>
+                    <p className="mt-2 text-sm font-medium text-text-primary">{preset.price}</p>
                   </button>
                 ))}
               </div>
@@ -239,29 +239,29 @@ export function ConfigureServices() {
               <div className="mt-4 space-y-4">
                 <div>
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm text-slate-600">CPU Usage</span>
-                    <span className="text-sm font-medium text-slate-900">45%</span>
+                    <span className="text-sm text-text-secondary">CPU Usage</span>
+                    <span className="text-sm font-medium text-text-primary">45%</span>
                   </div>
-                  <div className="h-2 rounded-full bg-slate-200">
-                    <div className="h-2 rounded-full bg-primary-500" style={{ width: '45%' }} />
-                  </div>
-                </div>
-                <div>
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm text-slate-600">Memory Usage</span>
-                    <span className="text-sm font-medium text-slate-900">62%</span>
-                  </div>
-                  <div className="h-2 rounded-full bg-slate-200">
-                    <div className="h-2 rounded-full bg-primary-500" style={{ width: '62%' }} />
+                  <div className="h-2 rounded-full bg-surface-overlay">
+                    <div className="h-2 rounded-full bg-accent-primary" style={{ width: '45%' }} />
                   </div>
                 </div>
                 <div>
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm text-slate-600">Network I/O</span>
-                    <span className="text-sm font-medium text-slate-900">28%</span>
+                    <span className="text-sm text-text-secondary">Memory Usage</span>
+                    <span className="text-sm font-medium text-text-primary">62%</span>
                   </div>
-                  <div className="h-2 rounded-full bg-slate-200">
-                    <div className="h-2 rounded-full bg-primary-500" style={{ width: '28%' }} />
+                  <div className="h-2 rounded-full bg-surface-overlay">
+                    <div className="h-2 rounded-full bg-accent-primary" style={{ width: '62%' }} />
+                  </div>
+                </div>
+                <div>
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-sm text-text-secondary">Network I/O</span>
+                    <span className="text-sm font-medium text-text-primary">28%</span>
+                  </div>
+                  <div className="h-2 rounded-full bg-surface-overlay">
+                    <div className="h-2 rounded-full bg-accent-primary" style={{ width: '28%' }} />
                   </div>
                 </div>
               </div>
@@ -277,34 +277,34 @@ export function ConfigureServices() {
                 description="Configure automatic scaling rules"
               />
               <div className="mt-4 space-y-4">
-                <div className="p-4 rounded-lg bg-success-50 border border-success-200">
+                <div className="p-4 rounded-lg bg-success-subtle border border-success-border">
                   <div className="flex items-center gap-2 mb-2">
-                    <Check className="w-5 h-5 text-success-600" />
-                    <span className="font-medium text-success-800">Auto Scaling Enabled</span>
+                    <Check className="w-5 h-5 text-success-text" />
+                    <span className="font-medium text-success-text">Auto Scaling Enabled</span>
                   </div>
-                  <p className="text-sm text-success-700">
+                  <p className="text-sm text-success-text">
                     Your service will automatically scale based on demand
                   </p>
                 </div>
                 <div className="space-y-3">
-                  <div className="flex items-center justify-between p-3 rounded-lg border border-slate-200">
+                  <div className="flex items-center justify-between p-3 rounded-lg border border-border-default">
                     <div>
-                      <p className="font-medium text-slate-900">Minimum Instances</p>
-                      <p className="text-sm text-slate-500">Always keep at least this many running</p>
+                      <p className="font-medium text-text-primary">Minimum Instances</p>
+                      <p className="text-sm text-text-secondary">Always keep at least this many running</p>
                     </div>
                     <Badge variant="info">2</Badge>
                   </div>
-                  <div className="flex items-center justify-between p-3 rounded-lg border border-slate-200">
+                  <div className="flex items-center justify-between p-3 rounded-lg border border-border-default">
                     <div>
-                      <p className="font-medium text-slate-900">Maximum Instances</p>
-                      <p className="text-sm text-slate-500">Scale up to this many under load</p>
+                      <p className="font-medium text-text-primary">Maximum Instances</p>
+                      <p className="text-sm text-text-secondary">Scale up to this many under load</p>
                     </div>
                     <Badge variant="info">10</Badge>
                   </div>
-                  <div className="flex items-center justify-between p-3 rounded-lg border border-slate-200">
+                  <div className="flex items-center justify-between p-3 rounded-lg border border-border-default">
                     <div>
-                      <p className="font-medium text-slate-900">Target CPU</p>
-                      <p className="text-sm text-slate-500">Scale when CPU exceeds this</p>
+                      <p className="font-medium text-text-primary">Target CPU</p>
+                      <p className="text-sm text-text-secondary">Scale when CPU exceeds this</p>
                     </div>
                     <Badge variant="info">70%</Badge>
                   </div>
@@ -318,18 +318,18 @@ export function ConfigureServices() {
                 description="Active instances and their status"
               />
               <div className="mt-4">
-                <div className="text-center p-6 border-2 border-dashed border-slate-200 rounded-lg">
-                  <p className="text-4xl font-bold text-slate-900">3</p>
-                  <p className="text-slate-500">Running Instances</p>
+                <div className="text-center p-6 border-2 border-dashed border-border-default rounded-lg">
+                  <p className="text-4xl font-bold text-text-primary">3</p>
+                  <p className="text-text-secondary">Running Instances</p>
                 </div>
                 <div className="mt-4 grid grid-cols-3 gap-2">
                   {[1, 2, 3].map((i) => (
                     <div
                       key={i}
-                      className="p-3 rounded-lg bg-success-50 border border-success-200 text-center"
+                      className="p-3 rounded-lg bg-success-subtle border border-success-border text-center"
                     >
-                      <Server className="w-5 h-5 text-success-600 mx-auto mb-1" />
-                      <p className="text-xs text-success-700">Instance {i}</p>
+                      <Server className="w-5 h-5 text-success-text mx-auto mb-1" />
+                      <p className="text-xs text-success-text">Instance {i}</p>
                     </div>
                   ))}
                 </div>
@@ -346,38 +346,38 @@ export function ConfigureServices() {
                 description="Configure security policies and access controls"
               />
               <div className="mt-4 space-y-4">
-                <div className="flex items-center justify-between p-4 rounded-lg border border-slate-200">
+                <div className="flex items-center justify-between p-4 rounded-lg border border-border-default">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-lg bg-success-100 flex items-center justify-center">
-                      <Shield className="w-5 h-5 text-success-600" />
+                    <div className="w-10 h-10 rounded-lg bg-success-subtle flex items-center justify-center">
+                      <Shield className="w-5 h-5 text-success-text" />
                     </div>
                     <div>
-                      <p className="font-medium text-slate-900">TLS/SSL Encryption</p>
-                      <p className="text-sm text-slate-500">All traffic is encrypted in transit</p>
+                      <p className="font-medium text-text-primary">TLS/SSL Encryption</p>
+                      <p className="text-sm text-text-secondary">All traffic is encrypted in transit</p>
                     </div>
                   </div>
                   <Badge variant="success">Enabled</Badge>
                 </div>
-                <div className="flex items-center justify-between p-4 rounded-lg border border-slate-200">
+                <div className="flex items-center justify-between p-4 rounded-lg border border-border-default">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-lg bg-success-100 flex items-center justify-center">
-                      <Lock className="w-5 h-5 text-success-600" />
+                    <div className="w-10 h-10 rounded-lg bg-success-subtle flex items-center justify-center">
+                      <Lock className="w-5 h-5 text-success-text" />
                     </div>
                     <div>
-                      <p className="font-medium text-slate-900">Secret Encryption</p>
-                      <p className="text-sm text-slate-500">Secrets are encrypted at rest</p>
+                      <p className="font-medium text-text-primary">Secret Encryption</p>
+                      <p className="text-sm text-text-secondary">Secrets are encrypted at rest</p>
                     </div>
                   </div>
                   <Badge variant="success">Enabled</Badge>
                 </div>
-                <div className="flex items-center justify-between p-4 rounded-lg border border-slate-200">
+                <div className="flex items-center justify-between p-4 rounded-lg border border-border-default">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-lg bg-warning-100 flex items-center justify-center">
-                      <Network className="w-5 h-5 text-warning-600" />
+                    <div className="w-10 h-10 rounded-lg bg-warning-subtle flex items-center justify-center">
+                      <Network className="w-5 h-5 text-warning-text" />
                     </div>
                     <div>
-                      <p className="font-medium text-slate-900">Network Policy</p>
-                      <p className="text-sm text-slate-500">Restrict network access to specific services</p>
+                      <p className="font-medium text-text-primary">Network Policy</p>
+                      <p className="text-sm text-text-secondary">Restrict network access to specific services</p>
                     </div>
                   </div>
                   <Badge variant="warning">Review</Badge>

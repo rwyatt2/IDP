@@ -49,7 +49,7 @@ export function Breadcrumbs() {
         <li>
           <Link
             to="/"
-            className="p-1 rounded text-zinc-500 hover:text-zinc-300 hover:bg-white/[0.04] transition-colors focus-visible-ring"
+            className="p-1 rounded text-text-tertiary hover:text-text-secondary hover:bg-interactive-hover transition-colors focus-visible-ring"
             aria-label="Home"
           >
             <Home className="w-3.5 h-3.5" aria-hidden="true" />
@@ -57,10 +57,10 @@ export function Breadcrumbs() {
         </li>
         {breadcrumbs.map((crumb) => (
           <li key={crumb.path} className="flex items-center gap-1">
-            <ChevronRight className="w-3.5 h-3.5 text-zinc-600" aria-hidden="true" />
+            <ChevronRight className="w-3.5 h-3.5 text-text-disabled" aria-hidden="true" />
             {crumb.isLast ? (
               <span 
-                className="px-1.5 py-0.5 font-medium text-zinc-200 text-sm"
+                className="px-1.5 py-0.5 font-medium text-text-primary text-sm"
                 aria-current="page"
               >
                 {crumb.label}
@@ -68,7 +68,7 @@ export function Breadcrumbs() {
             ) : (
               <Link
                 to={crumb.path}
-                className="px-1.5 py-0.5 rounded text-zinc-500 hover:text-zinc-300 hover:bg-white/[0.04] transition-colors text-sm focus-visible-ring"
+                className="px-1.5 py-0.5 rounded text-text-tertiary hover:text-text-secondary hover:bg-interactive-hover transition-colors text-sm focus-visible-ring"
               >
                 {crumb.label}
               </Link>

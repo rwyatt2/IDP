@@ -193,8 +193,8 @@ export function Settings() {
       onClick={onToggle}
       disabled={disabled}
       className={cn(
-        'w-11 h-6 rounded-full transition-colors relative',
-        enabled ? 'bg-accent' : 'bg-surface-raised',
+        'w-11 h-6 rounded-full transition-colors relative focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-canvas',
+        enabled ? 'bg-accent' : 'bg-surface-overlay',
         disabled && 'opacity-50 cursor-not-allowed'
       )}
       aria-pressed={enabled}
@@ -202,7 +202,7 @@ export function Settings() {
       <div
         className={cn(
           'w-5 h-5 rounded-full shadow-sm absolute top-0.5 transition-transform',
-          enabled ? 'translate-x-5 bg-white' : 'translate-x-0.5 bg-text-tertiary'
+          enabled ? 'translate-x-5 bg-text-on-emphasis' : 'translate-x-0.5 bg-text-tertiary'
         )}
       />
     </button>
@@ -260,9 +260,9 @@ export function Settings() {
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
                 className={cn(
-                  'w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-left transition-colors',
+                  'w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-left transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent',
                   activeTab === tab.id
-                    ? 'bg-accent/10 text-accent'
+                    ? 'bg-accent-subtle text-accent-text'
                     : 'text-text-tertiary hover:bg-surface-raised hover:text-text-secondary'
                 )}
               >
@@ -455,16 +455,16 @@ export function Settings() {
                         key={theme.id}
                         onClick={() => updateAppearance('theme', theme.id as 'light' | 'dark' | 'system')}
                         className={cn(
-                          'p-6 rounded-xl border-2 transition-all duration-200',
+                          'p-6 rounded-xl border-2 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-canvas',
                           appearance.theme === theme.id
-                            ? 'border-accent bg-accent/10'
+                            ? 'border-accent bg-accent-subtle'
                             : 'border-border-subtle hover:border-border-default bg-surface-raised'
                         )}
                       >
                         <div className="flex flex-col items-center gap-3">
                           <div className={cn(
                             'w-14 h-14 rounded-xl flex items-center justify-center transition-colors',
-                            appearance.theme === theme.id ? 'bg-accent/20 text-accent' : 'bg-surface text-text-tertiary'
+                            appearance.theme === theme.id ? 'bg-accent-muted text-accent-text' : 'bg-surface text-text-tertiary'
                           )}>
                             {theme.icon}
                           </div>
@@ -530,9 +530,9 @@ export function Settings() {
                     <div className="flex items-center gap-3">
                       <div className={cn(
                         'w-10 h-10 rounded-lg flex items-center justify-center',
-                        security.twoFactorEnabled ? 'bg-success/20' : 'bg-warning/20'
+                        security.twoFactorEnabled ? 'bg-success-subtle' : 'bg-warning-subtle'
                       )}>
-                        <Shield className={cn('w-5 h-5', security.twoFactorEnabled ? 'text-success' : 'text-warning')} />
+                        <Shield className={cn('w-5 h-5', security.twoFactorEnabled ? 'text-success-text' : 'text-warning-text')} />
                       </div>
                       <div>
                         <p className="font-medium text-text-primary">Two-Factor Authentication</p>
@@ -582,7 +582,7 @@ export function Settings() {
                 </div>
                 <div className="p-5 space-y-3">
                   {showNewKeyModal && (
-                    <div className="p-4 rounded-lg border border-accent/30 bg-accent/5 mb-4">
+                    <div className="p-4 rounded-lg border border-accent-border bg-accent-subtle mb-4">
                       <h4 className="font-medium text-text-primary mb-3">Create New API Key</h4>
                       <div className="flex gap-3">
                         <Input
@@ -615,13 +615,13 @@ export function Settings() {
                             </code>
                             <button
                               onClick={() => setShowKeyId(showKeyId === key.id ? null : key.id)}
-                              className="text-text-disabled hover:text-text-tertiary transition-colors"
+                              className="text-text-disabled hover:text-text-tertiary focus-visible:outline-none focus-visible:text-text-secondary transition-colors"
                             >
                               {showKeyId === key.id ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
                             </button>
                             <button
                               onClick={() => handleCopyApiKey(key.key)}
-                              className="text-text-disabled hover:text-text-tertiary transition-colors"
+                              className="text-text-disabled hover:text-text-tertiary focus-visible:outline-none focus-visible:text-text-secondary transition-colors"
                             >
                               <Copy className="w-3.5 h-3.5" />
                             </button>
@@ -633,7 +633,7 @@ export function Settings() {
                         <Button 
                           variant="ghost" 
                           size="sm" 
-                          className="text-error hover:bg-error/10"
+                          className="text-error-text hover:bg-error-subtle"
                           leftIcon={<Trash2 className="w-4 h-4" />}
                           onClick={() => handleRevokeApiKey(key.id)}
                         >
@@ -678,7 +678,7 @@ export function Settings() {
                         <Button 
                           variant="ghost" 
                           size="sm"
-                          className="text-error hover:bg-error/10"
+                          className="text-error-text hover:bg-error-subtle"
                           onClick={() => handleToggleIntegration(service.id)}
                         >
                           Disconnect

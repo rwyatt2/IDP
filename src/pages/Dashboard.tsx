@@ -65,25 +65,25 @@ const personaWelcome = {
     greeting: 'Ready to ship?',
     subtitle: "Here's what needs your attention today",
     icon: <Zap className="w-5 h-5" />,
-    color: 'text-blue-400',
+    color: 'text-info',
   },
   'tech-lead': {
     greeting: 'Team Status',
     subtitle: 'Your team at a glance',
     icon: <Target className="w-5 h-5" />,
-    color: 'text-violet-400',
+    color: 'text-accent',
   },
   'engineering-manager': {
     greeting: 'Organization Overview',
     subtitle: 'Cross-team visibility and metrics',
     icon: <Target className="w-5 h-5" />,
-    color: 'text-emerald-400',
+    color: 'text-success',
   },
   executive: {
     greeting: 'Executive Summary',
     subtitle: 'Strategic technology insights',
     icon: <Target className="w-5 h-5" />,
-    color: 'text-amber-400',
+    color: 'text-warning',
   },
 };
 

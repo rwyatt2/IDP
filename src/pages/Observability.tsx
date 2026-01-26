@@ -88,20 +88,20 @@ export function Observability() {
 
       {/* Active Incidents Banner */}
       {activeIncidents.length > 0 && (
-        <Card className="bg-danger-50 border-danger-200 p-4">
+        <Card className="bg-error-subtle border-error-border p-4">
           <div className="flex items-center gap-4">
-            <div className="w-10 h-10 rounded-lg bg-danger-100 flex items-center justify-center">
-              <AlertTriangle className="w-5 h-5 text-danger-600" />
+            <div className="w-10 h-10 rounded-lg bg-error-muted flex items-center justify-center">
+              <AlertTriangle className="w-5 h-5 text-error" />
             </div>
             <div className="flex-1">
-              <p className="font-semibold text-danger-800">
+              <p className="font-semibold text-error-text">
                 {activeIncidents.length} Active Incident{activeIncidents.length !== 1 ? 's' : ''}
               </p>
-              <p className="text-sm text-danger-700">
+              <p className="text-sm text-error-text">
                 {activeIncidents[0].title}
               </p>
             </div>
-            <Link to="/manage/incidents">
+            <Link to="/manage/incidents" className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-canvas rounded-md">
               <Button variant="danger" size="sm">
                 View Incidents
               </Button>
@@ -158,7 +158,7 @@ export function Observability() {
               <CardHeader 
                 title="Service Health" 
                 action={
-                  <Link to="/discover/catalog" className="text-sm text-primary-600 hover:text-primary-700">
+                  <Link to="/discover/catalog" className="text-sm text-accent-text hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-canvas rounded">
                     View all
                   </Link>
                 }
@@ -168,7 +168,7 @@ export function Observability() {
                   <Link
                     key={app.id}
                     to={`/discover/catalog/${app.id}`}
-                    className="flex items-center gap-4 p-3 rounded-lg bg-surface-raised hover:bg-surface-raised/80 transition-colors"
+                    className="flex items-center gap-4 p-3 rounded-lg bg-surface-raised hover:bg-surface-raised/80 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-canvas"
                   >
                     <div className={cn(
                       'w-2 h-2 rounded-full',
@@ -342,7 +342,7 @@ export function Observability() {
                 </Button>
               }
             />
-            <div className="mt-4 bg-slate-900 rounded-lg p-4 max-h-96 overflow-auto font-mono text-sm">
+            <div className="mt-4 bg-code-bg rounded-lg p-4 max-h-96 overflow-auto font-mono text-sm">
               {[
                 { time: '11:30:15.234', level: 'INFO', service: 'api-gateway', message: 'Request processed successfully' },
                 { time: '11:30:15.156', level: 'DEBUG', service: 'auth-service', message: 'Token validated for user_123' },
@@ -354,18 +354,18 @@ export function Observability() {
                 { time: '11:30:12.123', level: 'DEBUG', service: 'data-pipeline', message: 'Batch job completed: 1000 records' },
               ].map((log, i) => (
                 <div key={i} className="flex gap-4 py-1">
-                  <span className="text-slate-500">{log.time}</span>
+                  <span className="text-text-disabled">{log.time}</span>
                   <span className={cn(
                     'w-12',
-                    log.level === 'INFO' && 'text-blue-400',
-                    log.level === 'DEBUG' && 'text-slate-400',
-                    log.level === 'WARN' && 'text-warning-400',
-                    log.level === 'ERROR' && 'text-danger-400'
+                    log.level === 'INFO' && 'text-info-text',
+                    log.level === 'DEBUG' && 'text-text-tertiary',
+                    log.level === 'WARN' && 'text-warning-text',
+                    log.level === 'ERROR' && 'text-error-text'
                   )}>
                     {log.level}
                   </span>
-                  <span className="text-purple-400">[{log.service}]</span>
-                  <span className="text-slate-300">{log.message}</span>
+                  <span className="text-accent-text">[{log.service}]</span>
+                  <span className="text-code-text">{log.message}</span>
                 </div>
               ))}
             </div>
@@ -382,7 +382,7 @@ export function Observability() {
                 { id: 'trace-3', name: 'POST /api/v1/notifications', duration: '1.2s', spans: 6, status: 'error' },
                 { id: 'trace-4', name: 'GET /api/v1/products', duration: '89ms', spans: 5, status: 'success' },
               ].map((trace) => (
-                <div key={trace.id} className="flex items-center gap-4 p-4 rounded-lg border border-border-subtle hover:bg-surface-raised transition-colors cursor-pointer">
+                <div key={trace.id} className="flex items-center gap-4 p-4 rounded-lg border border-border-subtle hover:bg-surface-raised transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-canvas" tabIndex={0}>
                   <div className={cn(
                     'w-2 h-2 rounded-full',
                     trace.status === 'success' && 'bg-success',

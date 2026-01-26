@@ -54,7 +54,7 @@ const navigation: NavSection[] = [
     phase: 'discover',
     label: 'Discover',
     icon: <Compass className="w-[18px] h-[18px]" aria-hidden="true" />,
-    accentColor: 'text-blue-400',
+    accentColor: 'text-info-text',
     defaultPath: '/discover/catalog',
     items: [
       { label: 'System Catalog', href: '/discover/catalog', icon: <Database className="w-4 h-4" aria-hidden="true" /> },
@@ -67,7 +67,7 @@ const navigation: NavSection[] = [
     phase: 'build',
     label: 'Build',
     icon: <Wrench className="w-[18px] h-[18px]" aria-hidden="true" />,
-    accentColor: 'text-emerald-400',
+    accentColor: 'text-success-text',
     defaultPath: '/build/create',
     items: [
       { label: 'Create App', href: '/build/create', icon: <Plus className="w-4 h-4" aria-hidden="true" /> },
@@ -80,7 +80,7 @@ const navigation: NavSection[] = [
     phase: 'deploy',
     label: 'Deploy',
     icon: <Rocket className="w-[18px] h-[18px]" aria-hidden="true" />,
-    accentColor: 'text-violet-400',
+    accentColor: 'text-accent-text',
     defaultPath: '/deploy/deployments',
     items: [
       { label: 'Releases', href: '/deploy/releases', icon: <GitPullRequest className="w-4 h-4" aria-hidden="true" /> },
@@ -94,7 +94,7 @@ const navigation: NavSection[] = [
     phase: 'manage',
     label: 'Manage',
     icon: <Gauge className="w-[18px] h-[18px]" aria-hidden="true" />,
-    accentColor: 'text-amber-400',
+    accentColor: 'text-warning-text',
     defaultPath: '/manage/observability',
     items: [
       { label: 'Observability', href: '/manage/observability', icon: <Activity className="w-4 h-4" aria-hidden="true" /> },
@@ -150,28 +150,28 @@ export function Sidebar() {
       aria-label="Main navigation"
     >
       {/* Logo */}
-      <div className="h-14 flex items-center justify-between px-3 border-b border-white/[0.04]">
+      <div className="h-14 flex items-center justify-between px-3 border-b border-border-subtle">
         {!sidebarCollapsed && (
           <NavLink to="/" className="flex items-center gap-2.5 group focus-visible-ring rounded-lg">
-            <div className="w-7 h-7 rounded-lg bg-violet-600 flex items-center justify-center">
-              <Layers className="w-4 h-4 text-white" aria-hidden="true" />
+            <div className="w-7 h-7 rounded-lg bg-accent flex items-center justify-center">
+              <Layers className="w-4 h-4 text-text-on-emphasis" aria-hidden="true" />
             </div>
-            <span className="font-semibold text-sm text-zinc-200 tracking-tight">DevPortal</span>
+            <span className="font-semibold text-sm text-text-primary tracking-tight">DevPortal</span>
           </NavLink>
         )}
         {sidebarCollapsed && (
           <NavLink 
             to="/" 
-            className="w-7 h-7 rounded-lg bg-violet-600 flex items-center justify-center mx-auto focus-visible-ring"
+            className="w-7 h-7 rounded-lg bg-accent flex items-center justify-center mx-auto focus-visible-ring"
             aria-label="DevPortal home"
           >
-            <Layers className="w-4 h-4 text-white" aria-hidden="true" />
+            <Layers className="w-4 h-4 text-text-on-emphasis" aria-hidden="true" />
           </NavLink>
         )}
         <button
           onClick={toggleSidebar}
           className={cn(
-            'p-1.5 rounded-md text-zinc-500 hover:text-zinc-400 hover:bg-white/[0.04] transition-colors focus-visible-ring',
+            'p-1.5 rounded-md text-text-tertiary hover:text-text-secondary hover:bg-interactive-hover transition-colors focus-visible-ring',
             sidebarCollapsed && 'hidden'
           )}
           aria-label={sidebarCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
@@ -212,8 +212,8 @@ export function Sidebar() {
                   'w-full flex items-center justify-between px-2.5 py-2 rounded-lg group focus-visible-ring',
                   'transition-all duration-150',
                   isSectionActive
-                    ? 'bg-white/[0.05] text-zinc-300'
-                    : 'text-zinc-500 hover:bg-white/[0.03] hover:text-zinc-400'
+                    ? 'bg-interactive-hover text-text-secondary'
+                    : 'text-text-tertiary hover:bg-interactive-hover hover:text-text-secondary'
                 )}
                 aria-expanded={!sidebarCollapsed ? isExpanded : undefined}
                 aria-controls={!sidebarCollapsed ? menuId : undefined}
@@ -227,7 +227,7 @@ export function Sidebar() {
                 {!sidebarCollapsed && (
                   <ChevronDown
                     className={cn(
-                      'w-3.5 h-3.5 text-zinc-600 transition-transform duration-150',
+                      'w-3.5 h-3.5 text-text-disabled transition-transform duration-150',
                       isExpanded ? 'rotate-0' : '-rotate-90'
                     )}
                     aria-hidden="true"
@@ -239,7 +239,7 @@ export function Sidebar() {
               {!sidebarCollapsed && isExpanded && (
                 <ul 
                   id={menuId}
-                  className="mt-0.5 ml-4 pl-2.5 border-l border-white/[0.04] space-y-0.5"
+                  className="mt-0.5 ml-4 pl-2.5 border-l border-border-subtle space-y-0.5"
                   role="list"
                 >
                   {section.items.map((item) => (
@@ -251,8 +251,8 @@ export function Sidebar() {
                             'flex items-center justify-between gap-2 px-2.5 py-1.5 rounded-md text-sm group focus-visible-ring',
                             'transition-all duration-150',
                             isActive
-                              ? 'text-zinc-200 bg-white/[0.05]'
-                              : 'text-zinc-500 hover:bg-white/[0.03] hover:text-zinc-400'
+                              ? 'text-text-primary bg-interactive-hover'
+                              : 'text-text-tertiary hover:bg-interactive-hover hover:text-text-secondary'
                           )
                         }
                       >
@@ -262,7 +262,7 @@ export function Sidebar() {
                         </div>
                         {item.badge && (
                           <span 
-                            className="min-w-[18px] h-[18px] px-1 rounded-full text-[10px] font-semibold text-white bg-accent flex items-center justify-center"
+                            className="min-w-[18px] h-[18px] px-1 rounded-full text-[10px] font-semibold text-text-on-emphasis bg-accent flex items-center justify-center"
                             aria-label={`${item.badge} items`}
                           >
                             {item.badge}
@@ -282,7 +282,7 @@ export function Sidebar() {
                     role="menu"
                     aria-label={`${section.label} submenu`}
                   >
-                    <div className="px-3 py-1.5 text-[10px] font-medium text-zinc-500 uppercase tracking-wider">
+                    <div className="px-3 py-1.5 text-[10px] font-medium text-text-tertiary uppercase tracking-wider">
                       {section.label}
                     </div>
                     {section.items.map((item) => (
@@ -293,8 +293,8 @@ export function Sidebar() {
                           cn(
                             'flex items-center gap-2 px-3 py-2 text-sm transition-colors focus-visible-ring',
                             isActive
-                              ? 'text-zinc-200 bg-white/[0.05]'
-                              : 'text-zinc-500 hover:bg-white/[0.04] hover:text-zinc-400'
+                              ? 'text-text-primary bg-interactive-hover'
+                              : 'text-text-tertiary hover:bg-interactive-hover hover:text-text-secondary'
                           )
                         }
                         role="menuitem"
@@ -302,7 +302,7 @@ export function Sidebar() {
                         {item.icon}
                         <span>{item.label}</span>
                         {item.badge && (
-                          <span className="ml-auto min-w-[18px] h-[18px] px-1 rounded-full bg-accent text-white text-[10px] font-semibold flex items-center justify-center">
+                          <span className="ml-auto min-w-[18px] h-[18px] px-1 rounded-full bg-accent text-text-on-emphasis text-[10px] font-semibold flex items-center justify-center">
                             {item.badge}
                           </span>
                         )}
@@ -316,7 +316,7 @@ export function Sidebar() {
         })}
 
         {/* Extensions Link */}
-        <div className="mt-3 pt-3 border-t border-white/[0.04]">
+        <div className="mt-3 pt-3 border-t border-border-subtle">
           <NavLink
             to="/extensions"
             className={({ isActive }) =>
@@ -333,9 +333,9 @@ export function Sidebar() {
 
         {/* Favorites */}
         {!sidebarCollapsed && favoriteExtensions.length > 0 && (
-          <div className="mt-3 pt-3 border-t border-white/[0.04]">
+          <div className="mt-3 pt-3 border-t border-border-subtle">
             <div className="px-2.5 mb-2">
-              <span className="text-[10px] font-medium text-zinc-600 uppercase tracking-wider">
+              <span className="text-[10px] font-medium text-text-disabled uppercase tracking-wider">
                 Favorites
               </span>
             </div>
@@ -348,12 +348,12 @@ export function Sidebar() {
                       cn(
                         'flex items-center gap-2 px-2.5 py-1.5 rounded-md text-sm transition-colors focus-visible-ring',
                         isActive
-                          ? 'text-amber-400 bg-amber-500/10'
-                          : 'text-zinc-500 hover:bg-white/[0.03] hover:text-zinc-400'
+                          ? 'text-warning-text bg-warning-subtle'
+                          : 'text-text-tertiary hover:bg-interactive-hover hover:text-text-secondary'
                       )
                     }
                   >
-                    <Star className="w-3.5 h-3.5 text-amber-500 fill-amber-500" aria-hidden="true" />
+                    <Star className="w-3.5 h-3.5 text-warning fill-warning" aria-hidden="true" />
                     <span className="truncate">{ext.name}</span>
                   </NavLink>
                 </li>
@@ -364,7 +364,7 @@ export function Sidebar() {
       </nav>
 
       {/* Bottom section */}
-      <div className="border-t border-white/[0.04] p-2">
+      <div className="border-t border-border-subtle p-2">
         <NavLink
           to="/settings"
           className={({ isActive }) =>
@@ -381,7 +381,7 @@ export function Sidebar() {
         {sidebarCollapsed && (
           <button
             onClick={toggleSidebar}
-            className="w-full flex items-center justify-center p-2 mt-1 rounded-md text-zinc-500 hover:text-zinc-400 hover:bg-white/[0.04] transition-colors focus-visible-ring"
+            className="w-full flex items-center justify-center p-2 mt-1 rounded-md text-text-tertiary hover:text-text-secondary hover:bg-interactive-hover transition-colors focus-visible-ring"
             aria-label="Expand sidebar"
           >
             <ChevronRight className="w-4 h-4" aria-hidden="true" />

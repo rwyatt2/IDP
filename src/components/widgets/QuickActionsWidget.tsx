@@ -87,7 +87,7 @@ export function QuickActionsWidget() {
       id: 'catalog',
       label: 'Catalog',
       icon: <Database className="w-5 h-5" />,
-      color: 'bg-cyan-500/20 text-cyan-400 hover:bg-cyan-500/30',
+      color: 'bg-info/20 text-info-text hover:bg-info/30',
       action: () => {
         navigate('/discover/catalog');
       },
@@ -96,7 +96,7 @@ export function QuickActionsWidget() {
       id: 'analytics',
       label: 'Analytics',
       icon: <BarChart3 className="w-5 h-5" />,
-      color: 'bg-pink-500/20 text-pink-400 hover:bg-pink-500/30',
+      color: 'bg-accent/20 text-accent-text hover:bg-accent/30',
       action: () => {
         navigate('/manage/analytics');
       },
@@ -104,15 +104,16 @@ export function QuickActionsWidget() {
   ];
 
   return (
-    <div className="grid grid-cols-4 gap-2">
+    <div className="grid grid-cols-4 gap-3">
       {actions.map((action) => (
         <button
           key={action.id}
           onClick={action.action}
-          className={`p-3 rounded-lg ${action.color} transition-colors flex flex-col items-center gap-1.5`}
+          className={`p-4 rounded-xl ${action.color} transition-all duration-150 flex flex-col items-center justify-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-canvas`}
+          aria-label={action.label}
         >
-          {action.icon}
-          <span className="text-xs font-medium">{action.label}</span>
+          <span aria-hidden="true">{action.icon}</span>
+          <span className="text-xs font-medium leading-none">{action.label}</span>
         </button>
       ))}
     </div>

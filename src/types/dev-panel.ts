@@ -163,8 +163,7 @@ export const PERSONA_TOURS: PersonaTour[] = [
         placement: 'center',
         spotlight: true,
         interactive: true,
-        completionTrigger: 'timer',
-        timerDuration: 6000,
+        completionTrigger: 'manual',
         tryItPrompt: "Try typing 'auth' or 'payment' to find services",
         interactiveElements: [
           { label: 'Search Input', selector: 'input[type="text"]', action: 'type', description: 'Type to search', icon: 'Type' },
@@ -196,8 +195,7 @@ export const PERSONA_TOURS: PersonaTour[] = [
         placement: 'right',
         spotlight: true,
         interactive: true,
-        completionTrigger: 'timer',
-        timerDuration: 8000,
+        completionTrigger: 'manual',
         tryItPrompt: "Select a template and enter a service name",
         interactiveElements: [
           { label: 'Template Cards', selector: '[data-tour="template-card"]', action: 'click', description: 'Choose a starter template', icon: 'Layout' },
@@ -229,8 +227,7 @@ export const PERSONA_TOURS: PersonaTour[] = [
         placement: 'center',
         spotlight: true,
         interactive: true,
-        completionTrigger: 'timer',
-        timerDuration: 6000,
+        completionTrigger: 'manual',
         tryItPrompt: "Click any deployment to see details, or try the rollback button",
         interactiveElements: [
           { label: 'Deployment Row', selector: '[data-tour="deployment-row"]', action: 'click', description: 'View deployment details', icon: 'Eye' },
@@ -276,8 +273,7 @@ export const PERSONA_TOURS: PersonaTour[] = [
         target: 'main',
         placement: 'center',
         spotlight: false,
-        completionTrigger: 'timer',
-        timerDuration: 5000,
+        completionTrigger: 'manual',
         tryItPrompt: "Explore the dashboard widgets showing your team's status",
         interactiveElements: [
           { label: 'Team Services', selector: '[data-widget="my-applications"]', action: 'click', description: 'View your team\'s services', icon: 'Layers' },
@@ -295,8 +291,7 @@ export const PERSONA_TOURS: PersonaTour[] = [
         placement: 'center',
         spotlight: true,
         interactive: true,
-        completionTrigger: 'timer',
-        timerDuration: 7000,
+        completionTrigger: 'manual',
         tryItPrompt: "Click an approval to see risk details, then approve or reject",
         interactiveElements: [
           { label: 'View Changes', selector: '[data-action="view-changes"]', action: 'click', description: 'See what changed', icon: 'GitCommit' },
@@ -329,8 +324,7 @@ export const PERSONA_TOURS: PersonaTour[] = [
         placement: 'center',
         spotlight: true,
         interactive: true,
-        completionTrigger: 'timer',
-        timerDuration: 7000,
+        completionTrigger: 'manual',
         tryItPrompt: "Click a service node to explore, or hover to see connections",
         interactiveElements: [
           { label: 'Service Node', selector: '[data-tour="service-node"]', action: 'click', description: 'View service details', icon: 'Circle' },
@@ -394,8 +388,7 @@ export const PERSONA_TOURS: PersonaTour[] = [
         target: 'main',
         placement: 'center',
         spotlight: false,
-        completionTrigger: 'timer',
-        timerDuration: 5000,
+        completionTrigger: 'manual',
         tryItPrompt: "Explore the multi-team dashboard and health indicators",
         interactiveElements: [
           { label: 'Team Comparison', selector: '[data-widget="team-comparison"]', action: 'click', description: 'Compare team metrics', icon: 'BarChart' },
@@ -427,8 +420,7 @@ export const PERSONA_TOURS: PersonaTour[] = [
         placement: 'center',
         spotlight: true,
         interactive: true,
-        completionTrigger: 'timer',
-        timerDuration: 7000,
+        completionTrigger: 'manual',
         tryItPrompt: "Click chart segments to drill down, or adjust the time range",
         interactiveElements: [
           { label: 'Cost Chart', selector: '[data-tour="cost-chart"]', action: 'click', description: 'Click to drill down', icon: 'PieChart' },
@@ -463,8 +455,7 @@ export const PERSONA_TOURS: PersonaTour[] = [
         placement: 'center',
         spotlight: true,
         interactive: true,
-        completionTrigger: 'timer',
-        timerDuration: 6000,
+        completionTrigger: 'manual',
         tryItPrompt: "Review compliance scores and pending remediations",
         interactiveElements: [
           { label: 'Compliance Tab', selector: '[data-tab="compliance"]', action: 'click', description: 'View compliance', icon: 'Shield' },
@@ -510,8 +501,7 @@ export const PERSONA_TOURS: PersonaTour[] = [
         target: 'main',
         placement: 'center',
         spotlight: false,
-        completionTrigger: 'timer',
-        timerDuration: 5000,
+        completionTrigger: 'manual',
         tryItPrompt: "Review the executive KPIs and health indicators",
         interactiveElements: [
           { label: 'Technology ROI', selector: '[data-kpi="roi"]', action: 'click', description: 'View ROI breakdown', icon: 'TrendingUp' },
@@ -528,8 +518,7 @@ export const PERSONA_TOURS: PersonaTour[] = [
         placement: 'center',
         spotlight: true,
         interactive: true,
-        completionTrigger: 'timer',
-        timerDuration: 6000,
+        completionTrigger: 'manual',
         tryItPrompt: "Click any KPI card to drill down into the details",
         interactiveElements: [
           { label: 'ROI Card', selector: '[data-kpi="technology-roi"]', action: 'click', description: 'Technology ROI analysis', icon: 'DollarSign' },
@@ -547,8 +536,7 @@ export const PERSONA_TOURS: PersonaTour[] = [
         placement: 'center',
         spotlight: true,
         interactive: true,
-        completionTrigger: 'timer',
-        timerDuration: 6000,
+        completionTrigger: 'manual',
         tryItPrompt: "Explore risk items and their business impact",
         interactiveElements: [
           { label: 'Risk Items', selector: '[data-tour="risk-item"]', action: 'click', description: 'View risk details', icon: 'AlertTriangle' },
@@ -581,8 +569,7 @@ export const PERSONA_TOURS: PersonaTour[] = [
         placement: 'center',
         spotlight: true,
         interactive: true,
-        completionTrigger: 'timer',
-        timerDuration: 6000,
+        completionTrigger: 'manual',
         tryItPrompt: "Explore the correlation between tech investments and business outcomes",
         interactiveElements: [
           { label: 'Customer Impact', selector: '[data-metric="customer"]', action: 'click', description: 'Customer satisfaction link', icon: 'Users' },

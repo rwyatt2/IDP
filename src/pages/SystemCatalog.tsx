@@ -28,10 +28,10 @@ const typeIcons: Record<ApplicationType, React.ReactNode> = {
 };
 
 const tierColors: Record<ServiceTier, string> = {
-  'tier-1': 'bg-danger-100 text-danger-700',
-  'tier-2': 'bg-warning-100 text-warning-700',
-  'tier-3': 'bg-blue-100 text-blue-700',
-  'tier-4': 'bg-slate-100 text-slate-700',
+  'tier-1': 'bg-error-subtle text-error-text',
+  'tier-2': 'bg-warning-subtle text-warning-text',
+  'tier-3': 'bg-info-subtle text-info-text',
+  'tier-4': 'bg-surface-raised text-text-secondary',
 };
 
 function ApplicationCard({ app }: { app: Application }) {
@@ -40,22 +40,22 @@ function ApplicationCard({ app }: { app: Application }) {
       <Card variant="interactive" className="h-full">
         <div className="flex items-start justify-between mb-3">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center text-slate-600">
+            <div className="w-10 h-10 rounded-lg bg-surface-raised flex items-center justify-center text-text-secondary">
               {typeIcons[app.type]}
             </div>
             <div>
-              <h3 className="font-semibold text-slate-900">{app.displayName}</h3>
-              <p className="text-sm text-slate-500">{app.name}</p>
+              <h3 className="font-semibold text-text-primary">{app.displayName}</h3>
+              <p className="text-sm text-text-tertiary">{app.name}</p>
             </div>
           </div>
           <StatusBadge status={app.status} />
         </div>
         
-        <p className="text-sm text-slate-600 line-clamp-2 mb-4">
+        <p className="text-sm text-text-secondary line-clamp-2 mb-4">
           {app.description}
         </p>
 
-        <div className="flex items-center gap-4 text-sm text-slate-500 mb-4">
+        <div className="flex items-center gap-4 text-sm text-text-tertiary mb-4">
           <div className="flex items-center gap-1">
             <Users className="w-4 h-4" />
             <span>{app.team.name}</span>
@@ -66,7 +66,7 @@ function ApplicationCard({ app }: { app: Application }) {
           </div>
         </div>
 
-        <div className="flex items-center justify-between pt-3 border-t border-slate-100">
+        <div className="flex items-center justify-between pt-3 border-t border-border-subtle">
           <div className="flex items-center gap-2">
             <Badge className={tierColors[app.tier]} size="sm">
               {app.tier.replace('tier-', 'Tier ')}
@@ -89,39 +89,39 @@ function ApplicationRow({ app }: { app: Application }) {
   return (
     <Link
       to={`/discover/catalog/${app.id}`}
-      className="flex items-center gap-4 p-4 bg-white rounded-lg border border-slate-200 hover:border-slate-300 hover:shadow-soft transition-all"
+      className="flex items-center gap-4 p-4 bg-surface-primary rounded-lg border border-border-default hover:border-border-strong hover:shadow-soft transition-all"
     >
-      <div className="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center text-slate-600 flex-shrink-0">
+      <div className="w-10 h-10 rounded-lg bg-surface-raised flex items-center justify-center text-text-secondary flex-shrink-0">
         {typeIcons[app.type]}
       </div>
       
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2">
-          <h3 className="font-medium text-slate-900 truncate">{app.displayName}</h3>
+          <h3 className="font-medium text-text-primary truncate">{app.displayName}</h3>
           <Badge className={tierColors[app.tier]} size="sm">
             {app.tier.replace('tier-', 'T')}
           </Badge>
         </div>
-        <p className="text-sm text-slate-500 truncate">{app.description}</p>
+        <p className="text-sm text-text-tertiary truncate">{app.description}</p>
       </div>
       
       <div className="hidden md:flex items-center gap-8 flex-shrink-0">
         <div className="text-sm">
-          <p className="text-slate-500">Team</p>
-          <p className="font-medium text-slate-900">{app.team.name}</p>
+          <p className="text-text-tertiary">Team</p>
+          <p className="font-medium text-text-primary">{app.team.name}</p>
         </div>
         <div className="text-sm">
-          <p className="text-slate-500">Language</p>
-          <p className="font-medium text-slate-900">{app.language}</p>
+          <p className="text-text-tertiary">Language</p>
+          <p className="font-medium text-text-primary">{app.language}</p>
         </div>
         <div className="text-sm">
-          <p className="text-slate-500">Uptime</p>
-          <p className="font-medium text-slate-900">{app.metrics.uptime}%</p>
+          <p className="text-text-tertiary">Uptime</p>
+          <p className="font-medium text-text-primary">{app.metrics.uptime}%</p>
         </div>
       </div>
       
       <StatusBadge status={app.status} />
-      <ChevronRight className="w-5 h-5 text-slate-400" />
+      <ChevronRight className="w-5 h-5 text-text-tertiary" />
     </Link>
   );
 }
@@ -180,8 +180,8 @@ export function SystemCatalog() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">System Catalog</h1>
-          <p className="text-slate-500 mt-1">
+          <h1 className="text-2xl font-bold text-text-primary">System Catalog</h1>
+          <p className="text-text-tertiary mt-1">
             Browse and manage all applications and services
           </p>
         </div>
@@ -198,39 +198,39 @@ export function SystemCatalog() {
       {stats && (
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           <Card className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-xl bg-slate-100 flex items-center justify-center">
-              <Layers className="w-6 h-6 text-slate-600" />
+            <div className="w-12 h-12 rounded-xl bg-surface-raised flex items-center justify-center">
+              <Layers className="w-6 h-6 text-text-secondary" />
             </div>
             <div>
-              <p className="text-2xl font-bold text-slate-900">{stats.total}</p>
-              <p className="text-sm text-slate-500">Total Services</p>
+              <p className="text-2xl font-bold text-text-primary">{stats.total}</p>
+              <p className="text-sm text-text-tertiary">Total Services</p>
             </div>
           </Card>
           <Card className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-xl bg-success-100 flex items-center justify-center">
-              <div className="w-3 h-3 rounded-full bg-success-500" />
+            <div className="w-12 h-12 rounded-xl bg-success-subtle flex items-center justify-center">
+              <div className="w-3 h-3 rounded-full bg-success" />
             </div>
             <div>
-              <p className="text-2xl font-bold text-slate-900">{stats.healthy}</p>
-              <p className="text-sm text-slate-500">Healthy</p>
+              <p className="text-2xl font-bold text-text-primary">{stats.healthy}</p>
+              <p className="text-sm text-text-tertiary">Healthy</p>
             </div>
           </Card>
           <Card className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-xl bg-warning-100 flex items-center justify-center">
-              <div className="w-3 h-3 rounded-full bg-warning-500" />
+            <div className="w-12 h-12 rounded-xl bg-warning-subtle flex items-center justify-center">
+              <div className="w-3 h-3 rounded-full bg-warning" />
             </div>
             <div>
-              <p className="text-2xl font-bold text-slate-900">{stats.degraded}</p>
-              <p className="text-sm text-slate-500">Degraded</p>
+              <p className="text-2xl font-bold text-text-primary">{stats.degraded}</p>
+              <p className="text-sm text-text-tertiary">Degraded</p>
             </div>
           </Card>
           <Card className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-xl bg-danger-100 flex items-center justify-center">
-              <div className="w-3 h-3 rounded-full bg-danger-500" />
+            <div className="w-12 h-12 rounded-xl bg-error-subtle flex items-center justify-center">
+              <div className="w-3 h-3 rounded-full bg-error" />
             </div>
             <div>
-              <p className="text-2xl font-bold text-slate-900">{stats.critical}</p>
-              <p className="text-sm text-slate-500">Critical</p>
+              <p className="text-2xl font-bold text-text-primary">{stats.critical}</p>
+              <p className="text-sm text-text-tertiary">Critical</p>
             </div>
           </Card>
         </div>
@@ -284,14 +284,14 @@ export function SystemCatalog() {
             ]}
             className="w-32"
           />
-          <div className="flex border border-slate-200 rounded-lg overflow-hidden">
+          <div className="flex border border-border-default rounded-lg overflow-hidden">
             <button
               onClick={() => setViewMode('grid')}
               className={cn(
                 'p-2 transition-colors',
                 viewMode === 'grid'
-                  ? 'bg-slate-100 text-slate-900'
-                  : 'text-slate-500 hover:bg-slate-50'
+                  ? 'bg-surface-raised text-text-primary'
+                  : 'text-text-tertiary hover:bg-surface-raised'
               )}
             >
               <Grid3X3 className="w-5 h-5" />
@@ -301,8 +301,8 @@ export function SystemCatalog() {
               className={cn(
                 'p-2 transition-colors',
                 viewMode === 'list'
-                  ? 'bg-slate-100 text-slate-900'
-                  : 'text-slate-500 hover:bg-slate-50'
+                  ? 'bg-surface-raised text-text-primary'
+                  : 'text-text-tertiary hover:bg-surface-raised'
               )}
             >
               <List className="w-5 h-5" />
@@ -332,7 +332,7 @@ export function SystemCatalog() {
         </div>
       ) : filteredApplications.length === 0 ? (
         <Card className="text-center py-12">
-          <p className="text-slate-500">No applications found</p>
+          <p className="text-text-tertiary">No applications found</p>
           {search && (
             <Button
               variant="ghost"

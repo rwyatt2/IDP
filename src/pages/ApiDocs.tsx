@@ -25,11 +25,11 @@ interface ApiEndpoint extends Endpoint {
 }
 
 const methodColors: Record<string, string> = {
-  GET: 'bg-green-100 text-green-700',
-  POST: 'bg-blue-100 text-blue-700',
-  PUT: 'bg-orange-100 text-orange-700',
-  DELETE: 'bg-red-100 text-red-700',
-  PATCH: 'bg-purple-100 text-purple-700',
+  GET: 'bg-success-subtle text-success-text',
+  POST: 'bg-info-subtle text-info-text',
+  PUT: 'bg-warning-subtle text-warning-text',
+  DELETE: 'bg-error-subtle text-error-text',
+  PATCH: 'bg-accent-subtle text-accent-text',
 };
 
 function EndpointCard({ endpoint, expanded, onToggle }: { 
@@ -54,15 +54,15 @@ function EndpointCard({ endpoint, expanded, onToggle }: {
     <Card padding="none" className="overflow-hidden">
       <button
         onClick={onToggle}
-        className="w-full flex items-center gap-4 p-4 text-left hover:bg-slate-50 transition-colors"
+        className="w-full flex items-center gap-4 p-4 text-left hover:bg-surface-raised transition-colors"
       >
         <Badge className={cn('font-mono text-xs', methodColors[endpoint.method])}>
           {endpoint.method}
         </Badge>
-        <code className="flex-1 font-mono text-sm text-slate-700">{endpoint.path}</code>
+        <code className="flex-1 font-mono text-sm text-text-secondary">{endpoint.path}</code>
         <div className="flex items-center gap-2">
           {endpoint.authenticated && (
-            <Lock className="w-4 h-4 text-slate-400" />
+            <Lock className="w-4 h-4 text-text-tertiary" />
           )}
           {endpoint.rateLimit && (
             <Badge variant="neutral" size="sm">
@@ -70,33 +70,33 @@ function EndpointCard({ endpoint, expanded, onToggle }: {
             </Badge>
           )}
           {expanded ? (
-            <ChevronDown className="w-4 h-4 text-slate-400" />
+            <ChevronDown className="w-4 h-4 text-text-tertiary" />
           ) : (
-            <ChevronRight className="w-4 h-4 text-slate-400" />
+            <ChevronRight className="w-4 h-4 text-text-tertiary" />
           )}
         </div>
       </button>
       
       {expanded && (
-        <div className="border-t border-slate-200 p-4 bg-slate-50 space-y-4">
+        <div className="border-t border-border-default p-4 bg-surface-raised space-y-4">
           {/* Description */}
           {endpoint.description && (
             <div>
-              <h4 className="text-sm font-medium text-slate-700 mb-1">Description</h4>
-              <p className="text-sm text-slate-600">{endpoint.description}</p>
+              <h4 className="text-sm font-medium text-text-secondary mb-1">Description</h4>
+              <p className="text-sm text-text-tertiary">{endpoint.description}</p>
             </div>
           )}
 
           {/* Service */}
           <div>
-            <h4 className="text-sm font-medium text-slate-700 mb-1">Service</h4>
-            <p className="text-sm text-slate-600">{endpoint.serviceName}</p>
+            <h4 className="text-sm font-medium text-text-secondary mb-1">Service</h4>
+            <p className="text-sm text-text-tertiary">{endpoint.serviceName}</p>
           </div>
 
           {/* Authentication */}
           <div>
-            <h4 className="text-sm font-medium text-slate-700 mb-1">Authentication</h4>
-            <p className="text-sm text-slate-600">
+            <h4 className="text-sm font-medium text-text-secondary mb-1">Authentication</h4>
+            <p className="text-sm text-text-tertiary">
               {endpoint.authenticated ? 'Required - Bearer Token' : 'Not required'}
             </p>
           </div>
@@ -104,16 +104,16 @@ function EndpointCard({ endpoint, expanded, onToggle }: {
           {/* Example */}
           <div>
             <div className="flex items-center justify-between mb-2">
-              <h4 className="text-sm font-medium text-slate-700">Example Request</h4>
+              <h4 className="text-sm font-medium text-text-secondary">Example Request</h4>
               <button
                 onClick={() => handleCopy(curlExample)}
-                className="text-xs text-slate-500 hover:text-slate-700 flex items-center gap-1"
+                className="text-xs text-text-tertiary hover:text-text-secondary flex items-center gap-1"
               >
                 {copied ? <Check className="w-3 h-3" /> : <Copy className="w-3 h-3" />}
                 {copied ? 'Copied!' : 'Copy'}
               </button>
             </div>
-            <pre className="bg-slate-900 text-slate-100 p-3 rounded-lg text-xs overflow-x-auto">
+            <pre className="bg-surface text-text-primary p-3 rounded-lg text-xs overflow-x-auto">
               {curlExample}
             </pre>
           </div>
@@ -205,8 +205,8 @@ export function ApiDocs() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">API Documentation</h1>
-          <p className="text-slate-500 mt-1">
+          <h1 className="text-2xl font-bold text-text-primary">API Documentation</h1>
+          <p className="text-text-tertiary mt-1">
             Explore and interact with service APIs
           </p>
         </div>
@@ -224,49 +224,49 @@ export function ApiDocs() {
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <Card className="p-4">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center">
-              <FileText className="w-5 h-5 text-slate-600" />
+            <div className="w-10 h-10 rounded-lg bg-surface-overlay flex items-center justify-center">
+              <FileText className="w-5 h-5 text-text-secondary" />
             </div>
             <div>
-              <p className="text-2xl font-bold text-slate-900">{allEndpoints.length}</p>
-              <p className="text-sm text-slate-500">Total Endpoints</p>
+              <p className="text-2xl font-bold text-text-primary">{allEndpoints.length}</p>
+              <p className="text-sm text-text-tertiary">Total Endpoints</p>
             </div>
           </div>
         </Card>
         <Card className="p-4">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-purple-100 flex items-center justify-center">
-              <Server className="w-5 h-5 text-purple-600" />
+            <div className="w-10 h-10 rounded-lg bg-accent-subtle flex items-center justify-center">
+              <Server className="w-5 h-5 text-accent-text" />
             </div>
             <div>
-              <p className="text-2xl font-bold text-slate-900">{services.length}</p>
-              <p className="text-sm text-slate-500">Services</p>
+              <p className="text-2xl font-bold text-text-primary">{services.length}</p>
+              <p className="text-sm text-text-tertiary">Services</p>
             </div>
           </div>
         </Card>
         <Card className="p-4">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-green-100 flex items-center justify-center">
-              <Globe className="w-5 h-5 text-green-600" />
+            <div className="w-10 h-10 rounded-lg bg-success-subtle flex items-center justify-center">
+              <Globe className="w-5 h-5 text-success-text" />
             </div>
             <div>
-              <p className="text-2xl font-bold text-slate-900">
+              <p className="text-2xl font-bold text-text-primary">
                 {allEndpoints.filter((e) => !e.authenticated).length}
               </p>
-              <p className="text-sm text-slate-500">Public</p>
+              <p className="text-sm text-text-tertiary">Public</p>
             </div>
           </div>
         </Card>
         <Card className="p-4">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center">
-              <Lock className="w-5 h-5 text-blue-600" />
+            <div className="w-10 h-10 rounded-lg bg-info-subtle flex items-center justify-center">
+              <Lock className="w-5 h-5 text-info-text" />
             </div>
             <div>
-              <p className="text-2xl font-bold text-slate-900">
+              <p className="text-2xl font-bold text-text-primary">
                 {allEndpoints.filter((e) => e.authenticated).length}
               </p>
-              <p className="text-sm text-slate-500">Protected</p>
+              <p className="text-sm text-text-tertiary">Protected</p>
             </div>
           </div>
         </Card>
@@ -304,9 +304,9 @@ export function ApiDocs() {
       <TabPanel>
         {displayEndpoints.length === 0 ? (
           <Card className="text-center py-12">
-            <FileText className="w-12 h-12 text-slate-300 mx-auto mb-4" />
-            <p className="font-medium text-slate-900">No endpoints found</p>
-            <p className="text-sm text-slate-500 mt-1">
+            <FileText className="w-12 h-12 text-text-disabled mx-auto mb-4" />
+            <p className="font-medium text-text-primary">No endpoints found</p>
+            <p className="text-sm text-text-tertiary mt-1">
               Try adjusting your search or filters
             </p>
           </Card>

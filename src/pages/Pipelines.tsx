@@ -128,25 +128,25 @@ const stageIcons: Record<string, React.ReactNode> = {
 };
 
 const statusIcons = {
-  running: <Loader2 className="w-5 h-5 text-primary-500 animate-spin" />,
-  succeeded: <CheckCircle className="w-5 h-5 text-success-500" />,
-  failed: <XCircle className="w-5 h-5 text-danger-500" />,
-  pending: <Clock className="w-5 h-5 text-slate-400" />,
-  cancelled: <XCircle className="w-5 h-5 text-slate-400" />,
-  skipped: <ArrowRight className="w-5 h-5 text-slate-400" />,
+  running: <Loader2 className="w-5 h-5 text-accent-text animate-spin" />,
+  succeeded: <CheckCircle className="w-5 h-5 text-success-text" />,
+  failed: <XCircle className="w-5 h-5 text-error-text" />,
+  pending: <Clock className="w-5 h-5 text-text-tertiary" />,
+  cancelled: <XCircle className="w-5 h-5 text-text-tertiary" />,
+  skipped: <ArrowRight className="w-5 h-5 text-text-tertiary" />,
 };
 
 function PipelineCard({ pipeline }: { pipeline: Pipeline }) {
   return (
     <Card padding="none" className="overflow-hidden">
       {/* Header */}
-      <div className="p-4 border-b border-slate-200">
+      <div className="p-4 border-b border-border-default">
         <div className="flex items-center justify-between mb-2">
           <div className="flex items-center gap-3">
             {statusIcons[pipeline.status]}
             <div>
-              <h3 className="font-semibold text-slate-900">{pipeline.applicationName}</h3>
-              <p className="text-sm text-slate-500">{pipeline.name}</p>
+              <h3 className="font-semibold text-text-primary">{pipeline.applicationName}</h3>
+              <p className="text-sm text-text-secondary">{pipeline.name}</p>
             </div>
           </div>
           <div className="flex items-center gap-2">
@@ -162,7 +162,7 @@ function PipelineCard({ pipeline }: { pipeline: Pipeline }) {
             )}
           </div>
         </div>
-        <div className="flex items-center gap-4 text-sm text-slate-500">
+        <div className="flex items-center gap-4 text-sm text-text-secondary">
           <div className="flex items-center gap-1">
             <GitBranch className="w-4 h-4" />
             <span>{pipeline.branch}</span>
@@ -179,22 +179,22 @@ function PipelineCard({ pipeline }: { pipeline: Pipeline }) {
             </>
           )}
         </div>
-        <p className="text-sm text-slate-600 mt-2 truncate">{pipeline.commitMessage}</p>
+        <p className="text-sm text-text-secondary mt-2 truncate">{pipeline.commitMessage}</p>
       </div>
 
       {/* Stages */}
-      <div className="p-4 bg-slate-50">
+      <div className="p-4 bg-surface-raised">
         <div className="flex items-center justify-between">
           {pipeline.stages.map((stage, index) => (
             <div key={stage.id} className="flex items-center">
               <div
                 className={cn(
                   'flex items-center gap-2 px-3 py-2 rounded-lg',
-                  stage.status === 'succeeded' && 'bg-success-100 text-success-700',
-                  stage.status === 'failed' && 'bg-danger-100 text-danger-700',
-                  stage.status === 'running' && 'bg-primary-100 text-primary-700',
-                  stage.status === 'pending' && 'bg-slate-200 text-slate-600',
-                  stage.status === 'skipped' && 'bg-slate-100 text-slate-400'
+                  stage.status === 'succeeded' && 'bg-success-subtle text-success-text',
+                  stage.status === 'failed' && 'bg-error-subtle text-error-text',
+                  stage.status === 'running' && 'bg-accent-subtle text-accent-text',
+                  stage.status === 'pending' && 'bg-surface-overlay text-text-secondary',
+                  stage.status === 'skipped' && 'bg-surface-raised text-text-tertiary'
                 )}
               >
                 {stage.status === 'running' ? (
@@ -210,7 +210,7 @@ function PipelineCard({ pipeline }: { pipeline: Pipeline }) {
                 )}
               </div>
               {index < pipeline.stages.length - 1 && (
-                <ArrowRight className="w-4 h-4 text-slate-300 mx-2" />
+                <ArrowRight className="w-4 h-4 text-text-disabled mx-2" />
               )}
             </div>
           ))}
@@ -249,8 +249,8 @@ export function Pipelines() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">Pipelines</h1>
-          <p className="text-slate-500 mt-1">
+          <h1 className="text-2xl font-bold text-text-primary">Pipelines</h1>
+          <p className="text-text-secondary mt-1">
             Build, test, and deploy your applications
           </p>
         </div>
@@ -268,51 +268,51 @@ export function Pipelines() {
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <Card className="p-4">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-primary-100 flex items-center justify-center">
-              <Loader2 className="w-5 h-5 text-primary-600 animate-spin" />
+            <div className="w-10 h-10 rounded-lg bg-accent-subtle flex items-center justify-center">
+              <Loader2 className="w-5 h-5 text-accent-text animate-spin" />
             </div>
             <div>
-              <p className="text-2xl font-bold text-slate-900">
+              <p className="text-2xl font-bold text-text-primary">
                 {mockPipelines.filter((p) => p.status === 'running').length}
               </p>
-              <p className="text-sm text-slate-500">Running</p>
+              <p className="text-sm text-text-secondary">Running</p>
             </div>
           </div>
         </Card>
         <Card className="p-4">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-success-100 flex items-center justify-center">
-              <CheckCircle className="w-5 h-5 text-success-600" />
+            <div className="w-10 h-10 rounded-lg bg-success-subtle flex items-center justify-center">
+              <CheckCircle className="w-5 h-5 text-success-text" />
             </div>
             <div>
-              <p className="text-2xl font-bold text-slate-900">
+              <p className="text-2xl font-bold text-text-primary">
                 {mockPipelines.filter((p) => p.status === 'succeeded').length}
               </p>
-              <p className="text-sm text-slate-500">Succeeded</p>
+              <p className="text-sm text-text-secondary">Succeeded</p>
             </div>
           </div>
         </Card>
         <Card className="p-4">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-danger-100 flex items-center justify-center">
-              <XCircle className="w-5 h-5 text-danger-600" />
+            <div className="w-10 h-10 rounded-lg bg-error-subtle flex items-center justify-center">
+              <XCircle className="w-5 h-5 text-error-text" />
             </div>
             <div>
-              <p className="text-2xl font-bold text-slate-900">
+              <p className="text-2xl font-bold text-text-primary">
                 {mockPipelines.filter((p) => p.status === 'failed').length}
               </p>
-              <p className="text-sm text-slate-500">Failed</p>
+              <p className="text-sm text-text-secondary">Failed</p>
             </div>
           </div>
         </Card>
         <Card className="p-4">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center">
-              <Clock className="w-5 h-5 text-slate-600" />
+            <div className="w-10 h-10 rounded-lg bg-surface-overlay flex items-center justify-center">
+              <Clock className="w-5 h-5 text-text-secondary" />
             </div>
             <div>
-              <p className="text-2xl font-bold text-slate-900">~8m</p>
-              <p className="text-sm text-slate-500">Avg Duration</p>
+              <p className="text-2xl font-bold text-text-primary">~8m</p>
+              <p className="text-sm text-text-secondary">Avg Duration</p>
             </div>
           </div>
         </Card>
@@ -351,12 +351,12 @@ export function Pipelines() {
             {['Node.js', 'Python', 'Go', 'Java', 'React', 'Docker'].map((template) => (
               <Card key={template} variant="hover" className="p-5">
                 <div className="flex items-center gap-3 mb-3">
-                  <div className="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center">
-                    <Terminal className="w-5 h-5 text-slate-600" />
+                  <div className="w-10 h-10 rounded-lg bg-surface-overlay flex items-center justify-center">
+                    <Terminal className="w-5 h-5 text-text-secondary" />
                   </div>
-                  <h3 className="font-semibold text-slate-900">{template} Pipeline</h3>
+                  <h3 className="font-semibold text-text-primary">{template} Pipeline</h3>
                 </div>
-                <p className="text-sm text-slate-500 mb-4">
+                <p className="text-sm text-text-secondary mb-4">
                   Standard CI/CD pipeline template for {template} applications
                 </p>
                 <Button variant="secondary" size="sm" className="w-full">
@@ -369,9 +369,9 @@ export function Pipelines() {
           <div className="space-y-4">
             {filteredPipelines.length === 0 ? (
               <Card className="text-center py-12">
-                <GitBranch className="w-12 h-12 text-slate-300 mx-auto mb-4" />
-                <p className="font-medium text-slate-900">No pipelines found</p>
-                <p className="text-sm text-slate-500 mt-1">
+                <GitBranch className="w-12 h-12 text-text-disabled mx-auto mb-4" />
+                <p className="font-medium text-text-primary">No pipelines found</p>
+                <p className="text-sm text-text-secondary mt-1">
                   {search ? 'Try adjusting your search' : 'Run a pipeline to see it here'}
                 </p>
               </Card>

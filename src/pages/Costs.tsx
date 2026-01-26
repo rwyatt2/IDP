@@ -19,7 +19,7 @@ function CostCard({ cost }: { cost: CostData }) {
   const trend = cost.trend;
 
   return (
-    <Card variant="hover" className="p-5">
+    <Card variant="hover" className="p-5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-canvas" tabIndex={0}>
       <div className="flex items-start justify-between mb-4">
         <div>
           <h3 className="font-semibold text-text-primary">{cost.applicationName}</h3>
@@ -88,46 +88,46 @@ function CostCard({ cost }: { cost: CostData }) {
         <p className="text-xs text-text-tertiary mb-2">Cost Breakdown</p>
         <div className="grid grid-cols-5 gap-1">
           <div
-            className="h-2 rounded bg-blue-500"
+            className="h-2 rounded bg-info"
             style={{ flex: cost.breakdown.compute / cost.currentMonth }}
             title={`Compute: ${formatCurrency(cost.breakdown.compute)}`}
           />
           <div
-            className="h-2 rounded bg-purple-500"
+            className="h-2 rounded bg-accent"
             style={{ flex: cost.breakdown.storage / cost.currentMonth }}
             title={`Storage: ${formatCurrency(cost.breakdown.storage)}`}
           />
           <div
-            className="h-2 rounded bg-green-500"
+            className="h-2 rounded bg-success"
             style={{ flex: cost.breakdown.network / cost.currentMonth }}
             title={`Network: ${formatCurrency(cost.breakdown.network)}`}
           />
           <div
-            className="h-2 rounded bg-orange-500"
+            className="h-2 rounded bg-warning"
             style={{ flex: cost.breakdown.database / cost.currentMonth }}
             title={`Database: ${formatCurrency(cost.breakdown.database)}`}
           />
           <div
-            className="h-2 rounded bg-slate-400"
+            className="h-2 rounded bg-text-disabled"
             style={{ flex: cost.breakdown.other / cost.currentMonth }}
             title={`Other: ${formatCurrency(cost.breakdown.other)}`}
           />
         </div>
         <div className="flex flex-wrap gap-3 mt-2 text-xs">
           <span className="flex items-center gap-1">
-            <span className="w-2 h-2 rounded bg-blue-500" />
+            <span className="w-2 h-2 rounded bg-info" />
             Compute
           </span>
           <span className="flex items-center gap-1">
-            <span className="w-2 h-2 rounded bg-purple-500" />
+            <span className="w-2 h-2 rounded bg-accent" />
             Storage
           </span>
           <span className="flex items-center gap-1">
-            <span className="w-2 h-2 rounded bg-green-500" />
+            <span className="w-2 h-2 rounded bg-success" />
             Network
           </span>
           <span className="flex items-center gap-1">
-            <span className="w-2 h-2 rounded bg-orange-500" />
+            <span className="w-2 h-2 rounded bg-warning" />
             Database
           </span>
         </div>
@@ -177,8 +177,8 @@ export function Costs() {
 
         <Card className="p-5">
           <div className="flex items-center gap-3 mb-3">
-            <div className="w-10 h-10 rounded-lg bg-purple-500/20 flex items-center justify-center">
-              <BarChart3 className="w-5 h-5 text-purple-400" />
+            <div className="w-10 h-10 rounded-lg bg-accent-subtle flex items-center justify-center">
+              <BarChart3 className="w-5 h-5 text-accent-text" />
             </div>
             <div>
               <p className="text-sm text-text-tertiary">Forecasted</p>

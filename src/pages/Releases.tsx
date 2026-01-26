@@ -119,11 +119,11 @@ const mockReleases: Release[] = [
 ];
 
 const statusConfig: Record<string, { icon: React.ReactNode; color: string; label: string }> = {
-  draft: { icon: <GitPullRequest className="w-4 h-4" />, color: 'bg-slate-100 text-slate-600', label: 'Draft' },
-  pending: { icon: <Clock className="w-4 h-4" />, color: 'bg-warning-100 text-warning-700', label: 'Pending Approval' },
-  approved: { icon: <CheckCircle className="w-4 h-4" />, color: 'bg-success-100 text-success-700', label: 'Approved' },
-  deployed: { icon: <Rocket className="w-4 h-4" />, color: 'bg-primary-100 text-primary-700', label: 'Deployed' },
-  'rolled-back': { icon: <XCircle className="w-4 h-4" />, color: 'bg-danger-100 text-danger-700', label: 'Rolled Back' },
+  draft: { icon: <GitPullRequest className="w-4 h-4" />, color: 'bg-surface-raised text-text-secondary', label: 'Draft' },
+  pending: { icon: <Clock className="w-4 h-4" />, color: 'bg-warning-subtle text-warning-text', label: 'Pending Approval' },
+  approved: { icon: <CheckCircle className="w-4 h-4" />, color: 'bg-success-subtle text-success-text', label: 'Approved' },
+  deployed: { icon: <Rocket className="w-4 h-4" />, color: 'bg-accent-subtle text-accent-text', label: 'Deployed' },
+  'rolled-back': { icon: <XCircle className="w-4 h-4" />, color: 'bg-error-subtle text-error-text', label: 'Rolled Back' },
 };
 
 function ReleaseCard({ release }: { release: Release }) {
@@ -139,26 +139,26 @@ function ReleaseCard({ release }: { release: Release }) {
               <span className="ml-1">{status.label}</span>
             </Badge>
           </div>
-          <span className="text-sm text-slate-500">
+          <span className="text-sm text-text-secondary">
             {formatRelativeTime(release.createdAt)}
           </span>
         </div>
 
         <div className="flex items-center gap-3 mb-3">
-          <Tag className="w-5 h-5 text-slate-400" />
-          <h3 className="text-lg font-semibold text-slate-900">{release.version}</h3>
-          <span className="text-slate-500">·</span>
+          <Tag className="w-5 h-5 text-text-tertiary" />
+          <h3 className="text-lg font-semibold text-text-primary">{release.version}</h3>
+          <span className="text-text-secondary">·</span>
           <Link
             to={`/discover/catalog/${release.applicationId}`}
-            className="text-primary-600 hover:text-primary-700"
+            className="text-accent-text hover:text-accent"
           >
             {release.applicationName}
           </Link>
         </div>
 
-        <p className="text-slate-600 mb-4">{release.changelog}</p>
+        <p className="text-text-secondary mb-4">{release.changelog}</p>
 
-        <div className="flex items-center gap-6 text-sm text-slate-500">
+        <div className="flex items-center gap-6 text-sm text-text-secondary">
           <div className="flex items-center gap-1.5">
             <GitCommit className="w-4 h-4" />
             <span>{release.commits} commits</span>
@@ -170,16 +170,16 @@ function ReleaseCard({ release }: { release: Release }) {
         </div>
 
         {/* Environments */}
-        <div className="flex items-center gap-3 mt-4 pt-4 border-t border-slate-100">
+        <div className="flex items-center gap-3 mt-4 pt-4 border-t border-border-subtle">
           {release.environments.map((env) => (
             <div
               key={env.name}
               className={cn(
                 'flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm',
-                env.status === 'deployed' && 'bg-success-50 text-success-700',
-                env.status === 'pending' && 'bg-warning-50 text-warning-700',
-                env.status === 'ready' && 'bg-primary-50 text-primary-700',
-                env.status === 'rolled-back' && 'bg-danger-50 text-danger-700'
+                env.status === 'deployed' && 'bg-success-subtle text-success-text',
+                env.status === 'pending' && 'bg-warning-subtle text-warning-text',
+                env.status === 'ready' && 'bg-accent-subtle text-accent-text',
+                env.status === 'rolled-back' && 'bg-error-subtle text-error-text'
               )}
             >
               <span className="capitalize font-medium">{env.name}</span>
@@ -193,10 +193,10 @@ function ReleaseCard({ release }: { release: Release }) {
       </div>
 
       {/* Actions */}
-      <div className="px-5 py-3 border-t border-slate-200 bg-slate-50 flex items-center justify-between">
+      <div className="px-5 py-3 border-t border-border-default bg-surface-raised flex items-center justify-between">
         <div className="flex items-center gap-2">
           {release.approvers.length > 0 && (
-            <div className="flex items-center gap-2 text-sm text-slate-500">
+            <div className="flex items-center gap-2 text-sm text-text-secondary">
               <span>Approved by:</span>
               <AvatarGroup
                 avatars={release.approvers.map((a) => ({ name: a }))}
@@ -256,8 +256,8 @@ export function Releases() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">Releases</h1>
-          <p className="text-slate-500 mt-1">
+          <h1 className="text-2xl font-bold text-text-primary">Releases</h1>
+          <p className="text-text-secondary mt-1">
             Manage release versions and deployments
           </p>
         </div>
@@ -270,51 +270,51 @@ export function Releases() {
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <Card className="p-4">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center">
-              <Tag className="w-5 h-5 text-slate-600" />
+            <div className="w-10 h-10 rounded-lg bg-surface-raised flex items-center justify-center">
+              <Tag className="w-5 h-5 text-text-secondary" />
             </div>
             <div>
-              <p className="text-2xl font-bold text-slate-900">{mockReleases.length}</p>
-              <p className="text-sm text-slate-500">Total Releases</p>
+              <p className="text-2xl font-bold text-text-primary">{mockReleases.length}</p>
+              <p className="text-sm text-text-secondary">Total Releases</p>
             </div>
           </div>
         </Card>
         <Card className="p-4">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-warning-100 flex items-center justify-center">
-              <Clock className="w-5 h-5 text-warning-600" />
+            <div className="w-10 h-10 rounded-lg bg-warning-subtle flex items-center justify-center">
+              <Clock className="w-5 h-5 text-warning-text" />
             </div>
             <div>
-              <p className="text-2xl font-bold text-slate-900">
+              <p className="text-2xl font-bold text-text-primary">
                 {mockReleases.filter((r) => r.status === 'pending').length}
               </p>
-              <p className="text-sm text-slate-500">Awaiting Approval</p>
+              <p className="text-sm text-text-secondary">Awaiting Approval</p>
             </div>
           </div>
         </Card>
         <Card className="p-4">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-success-100 flex items-center justify-center">
-              <CheckCircle className="w-5 h-5 text-success-600" />
+            <div className="w-10 h-10 rounded-lg bg-success-subtle flex items-center justify-center">
+              <CheckCircle className="w-5 h-5 text-success-text" />
             </div>
             <div>
-              <p className="text-2xl font-bold text-slate-900">
+              <p className="text-2xl font-bold text-text-primary">
                 {mockReleases.filter((r) => r.status === 'approved').length}
               </p>
-              <p className="text-sm text-slate-500">Ready to Deploy</p>
+              <p className="text-sm text-text-secondary">Ready to Deploy</p>
             </div>
           </div>
         </Card>
         <Card className="p-4">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-primary-100 flex items-center justify-center">
-              <Rocket className="w-5 h-5 text-primary-600" />
+            <div className="w-10 h-10 rounded-lg bg-accent-subtle flex items-center justify-center">
+              <Rocket className="w-5 h-5 text-accent-text" />
             </div>
             <div>
-              <p className="text-2xl font-bold text-slate-900">
+              <p className="text-2xl font-bold text-text-primary">
                 {mockReleases.filter((r) => r.status === 'deployed').length}
               </p>
-              <p className="text-sm text-slate-500">Deployed Today</p>
+              <p className="text-sm text-text-secondary">Deployed Today</p>
             </div>
           </div>
         </Card>
@@ -348,9 +348,9 @@ export function Releases() {
       <TabPanel>
         {filteredReleases.length === 0 ? (
           <Card className="text-center py-12">
-            <Tag className="w-12 h-12 text-slate-300 mx-auto mb-4" />
-            <p className="font-medium text-slate-900">No releases found</p>
-            <p className="text-sm text-slate-500 mt-1">
+            <Tag className="w-12 h-12 text-text-tertiary mx-auto mb-4" />
+            <p className="font-medium text-text-primary">No releases found</p>
+            <p className="text-sm text-text-secondary mt-1">
               {search ? 'Try adjusting your search' : 'Create a release to get started'}
             </p>
           </Card>

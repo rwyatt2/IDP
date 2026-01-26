@@ -45,7 +45,7 @@ export function RecentDeploymentsWidget() {
         <Link
           key={deployment.id}
           to={`/deploy/deployments/${deployment.id}`}
-          className="flex items-center gap-3 p-2 -mx-2 rounded-lg hover:bg-surface-raised transition-colors"
+          className="flex items-center gap-3 p-2 -mx-2 rounded-lg hover:bg-surface-raised transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
         >
           <div className="w-8 h-8 rounded-full bg-surface-raised flex items-center justify-center">
             {statusIcons[deployment.status as keyof typeof statusIcons] || (
@@ -70,7 +70,7 @@ export function RecentDeploymentsWidget() {
       ))}
       <Link
         to="/deploy/deployments"
-        className="flex items-center justify-center gap-1 text-sm text-accent hover:text-accent-hover pt-2"
+        className="flex items-center justify-center gap-1 text-sm text-accent hover:text-accent-hover pt-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 rounded"
       >
         View all deployments
         <ChevronRight className="w-4 h-4" />

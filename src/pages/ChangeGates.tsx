@@ -118,16 +118,16 @@ const gateTypeIcons = {
 };
 
 const gateTypeColors = {
-  approval: 'bg-purple-100 text-purple-600',
-  schedule: 'bg-blue-100 text-blue-600',
-  automated: 'bg-green-100 text-green-600',
-  manual: 'bg-orange-100 text-orange-600',
+  approval: 'bg-accent-primary-subtle text-accent-text',
+  schedule: 'bg-info-subtle text-info-text',
+  automated: 'bg-success-subtle text-success-text',
+  manual: 'bg-warning-subtle text-warning-text',
 };
 
 const statusColors = {
-  active: 'bg-success-100 text-success-700',
-  paused: 'bg-warning-100 text-warning-700',
-  disabled: 'bg-slate-100 text-slate-600',
+  active: 'bg-success-subtle text-success-text',
+  paused: 'bg-warning-subtle text-warning-text',
+  disabled: 'bg-surface-raised text-text-tertiary',
 };
 
 function GateCard({ gate }: { gate: ChangeGate }) {
@@ -140,8 +140,8 @@ function GateCard({ gate }: { gate: ChangeGate }) {
               {gateTypeIcons[gate.type]}
             </div>
             <div>
-              <h3 className="font-semibold text-slate-900">{gate.name}</h3>
-              <p className="text-sm text-slate-500 capitalize">{gate.environment}</p>
+              <h3 className="font-semibold text-text-primary">{gate.name}</h3>
+              <p className="text-sm text-text-secondary capitalize">{gate.environment}</p>
             </div>
           </div>
           <Badge className={statusColors[gate.status]} size="sm">
@@ -151,8 +151,8 @@ function GateCard({ gate }: { gate: ChangeGate }) {
 
         <div className="space-y-2 mb-4">
           {gate.rules.map((rule, i) => (
-            <div key={i} className="flex items-start gap-2 text-sm text-slate-600">
-              <CheckCircle className="w-4 h-4 text-slate-400 mt-0.5 flex-shrink-0" />
+            <div key={i} className="flex items-start gap-2 text-sm text-text-secondary">
+              <CheckCircle className="w-4 h-4 text-text-tertiary mt-0.5 flex-shrink-0" />
               <span>{rule}</span>
             </div>
           ))}
@@ -160,7 +160,7 @@ function GateCard({ gate }: { gate: ChangeGate }) {
 
         {gate.approvers && (
           <div className="flex items-center gap-2 mb-4">
-            <span className="text-sm text-slate-500">Approvers:</span>
+            <span className="text-sm text-text-secondary">Approvers:</span>
             <AvatarGroup
               avatars={gate.approvers.map((a) => ({ name: a }))}
               size="sm"
@@ -170,16 +170,16 @@ function GateCard({ gate }: { gate: ChangeGate }) {
         )}
 
         {gate.schedule && (
-          <div className="flex items-center gap-2 mb-4 text-sm text-slate-600">
+          <div className="flex items-center gap-2 mb-4 text-sm text-text-secondary">
             <Clock className="w-4 h-4" />
             <span>{gate.schedule}</span>
           </div>
         )}
       </div>
 
-      <div className="px-5 py-3 border-t border-slate-200 bg-slate-50 flex items-center justify-between">
+      <div className="px-5 py-3 border-t border-border-default bg-surface-raised flex items-center justify-between">
         {gate.lastTriggered && (
-          <span className="text-xs text-slate-500">
+          <span className="text-xs text-text-tertiary">
             Last triggered {formatRelativeTime(gate.lastTriggered)}
           </span>
         )}
@@ -219,8 +219,8 @@ export function ChangeGates() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">Change Gates</h1>
-          <p className="text-slate-500 mt-1">
+          <h1 className="text-2xl font-bold text-text-primary">Change Gates</h1>
+          <p className="text-text-secondary mt-1">
             Control and govern deployment workflows
           </p>
         </div>
@@ -233,49 +233,49 @@ export function ChangeGates() {
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <Card className="p-4">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center">
-              <ShieldCheck className="w-5 h-5 text-slate-600" />
+            <div className="w-10 h-10 rounded-lg bg-surface-raised flex items-center justify-center">
+              <ShieldCheck className="w-5 h-5 text-text-secondary" />
             </div>
             <div>
-              <p className="text-2xl font-bold text-slate-900">{mockGates.length}</p>
-              <p className="text-sm text-slate-500">Total Gates</p>
+              <p className="text-2xl font-bold text-text-primary">{mockGates.length}</p>
+              <p className="text-sm text-text-secondary">Total Gates</p>
             </div>
           </div>
         </Card>
         <Card className="p-4">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-success-100 flex items-center justify-center">
-              <CheckCircle className="w-5 h-5 text-success-600" />
+            <div className="w-10 h-10 rounded-lg bg-success-subtle flex items-center justify-center">
+              <CheckCircle className="w-5 h-5 text-success-text" />
             </div>
             <div>
-              <p className="text-2xl font-bold text-slate-900">
+              <p className="text-2xl font-bold text-text-primary">
                 {mockGates.filter((g) => g.status === 'active').length}
               </p>
-              <p className="text-sm text-slate-500">Active</p>
+              <p className="text-sm text-text-secondary">Active</p>
             </div>
           </div>
         </Card>
         <Card className="p-4">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-warning-100 flex items-center justify-center">
-              <Clock className="w-5 h-5 text-warning-600" />
+            <div className="w-10 h-10 rounded-lg bg-warning-subtle flex items-center justify-center">
+              <Clock className="w-5 h-5 text-warning-text" />
             </div>
             <div>
-              <p className="text-2xl font-bold text-slate-900">{pendingCount}</p>
-              <p className="text-sm text-slate-500">Pending Approval</p>
+              <p className="text-2xl font-bold text-text-primary">{pendingCount}</p>
+              <p className="text-sm text-text-secondary">Pending Approval</p>
             </div>
           </div>
         </Card>
         <Card className="p-4">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-purple-100 flex items-center justify-center">
-              <Users className="w-5 h-5 text-purple-600" />
+            <div className="w-10 h-10 rounded-lg bg-accent-primary-subtle flex items-center justify-center">
+              <Users className="w-5 h-5 text-accent-text" />
             </div>
             <div>
-              <p className="text-2xl font-bold text-slate-900">
+              <p className="text-2xl font-bold text-text-primary">
                 {mockGates.filter((g) => g.type === 'approval').length}
               </p>
-              <p className="text-sm text-slate-500">Approval Gates</p>
+              <p className="text-sm text-text-secondary">Approval Gates</p>
             </div>
           </div>
         </Card>
@@ -320,9 +320,9 @@ export function ChangeGates() {
           <div className="space-y-4">
             {mockPendingChanges.filter((c) => c.status === 'pending').length === 0 ? (
               <Card className="text-center py-12">
-                <CheckCircle className="w-12 h-12 text-success-500 mx-auto mb-4" />
-                <p className="font-medium text-slate-900">No pending changes</p>
-                <p className="text-sm text-slate-500 mt-1">
+                <CheckCircle className="w-12 h-12 text-success-text mx-auto mb-4" />
+                <p className="font-medium text-text-primary">No pending changes</p>
+                <p className="text-sm text-text-secondary mt-1">
                   All deployment requests have been processed
                 </p>
               </Card>
@@ -332,13 +332,13 @@ export function ChangeGates() {
                   <div className="flex items-start justify-between mb-4">
                     <div>
                       <div className="flex items-center gap-2 mb-1">
-                        <h3 className="font-semibold text-slate-900">{change.application}</h3>
+                        <h3 className="font-semibold text-text-primary">{change.application}</h3>
                         <Badge variant="info">{change.version}</Badge>
                       </div>
-                      <p className="text-sm text-slate-500">
+                      <p className="text-sm text-text-secondary">
                         Gate: {change.gate} · Requested by {change.requestedBy}
                       </p>
-                      <p className="text-xs text-slate-400 mt-1">
+                      <p className="text-xs text-text-tertiary mt-1">
                         {formatRelativeTime(change.requestedAt)}
                       </p>
                     </div>
@@ -357,7 +357,7 @@ export function ChangeGates() {
                     )}
                   </div>
                   <div className="flex items-center gap-4">
-                    <span className="text-sm text-slate-500">
+                    <span className="text-sm text-text-secondary">
                       {change.approvals.filter((a) => a.status === 'approved').length}/{change.requiredApprovals} approvals
                     </span>
                     <div className="flex items-center gap-2">
@@ -365,10 +365,10 @@ export function ChangeGates() {
                         <div key={i} className="flex items-center gap-1">
                           <Avatar name={approval.user} size="sm" />
                           {approval.status === 'approved' && (
-                            <CheckCircle className="w-4 h-4 text-success-500" />
+                            <CheckCircle className="w-4 h-4 text-success-text" />
                           )}
                           {approval.status === 'pending' && (
-                            <Clock className="w-4 h-4 text-slate-400" />
+                            <Clock className="w-4 h-4 text-text-tertiary" />
                           )}
                         </div>
                       ))}
@@ -390,18 +390,18 @@ export function ChangeGates() {
                 { action: 'requested', gate: 'Production Approval', app: 'User Dashboard v4.2.0', user: 'Taylor Kim', time: '9:00 AM' },
                 { action: 'approved', gate: 'Tier-1 Services', app: 'Auth Service v5.1.2', user: 'Sarah Chen', time: 'Yesterday' },
               ].map((item, i) => (
-                <div key={i} className="flex items-center gap-4 p-3 rounded-lg bg-slate-50">
-                  {item.action === 'approved' && <CheckCircle className="w-5 h-5 text-success-500" />}
-                  {item.action === 'passed' && <ShieldCheck className="w-5 h-5 text-success-500" />}
-                  {item.action === 'requested' && <Clock className="w-5 h-5 text-warning-500" />}
+                <div key={i} className="flex items-center gap-4 p-3 rounded-lg bg-surface-raised">
+                  {item.action === 'approved' && <CheckCircle className="w-5 h-5 text-success-text" />}
+                  {item.action === 'passed' && <ShieldCheck className="w-5 h-5 text-success-text" />}
+                  {item.action === 'requested' && <Clock className="w-5 h-5 text-warning-text" />}
                   <div className="flex-1">
-                    <p className="text-sm text-slate-900">
+                    <p className="text-sm text-text-primary">
                       <span className="font-medium">{item.app}</span> {item.action} at{' '}
                       <span className="font-medium">{item.gate}</span>
                     </p>
-                    <p className="text-xs text-slate-500">by {item.user}</p>
+                    <p className="text-xs text-text-secondary">by {item.user}</p>
                   </div>
-                  <span className="text-xs text-slate-400">{item.time}</span>
+                  <span className="text-xs text-text-tertiary">{item.time}</span>
                 </div>
               ))}
             </div>
