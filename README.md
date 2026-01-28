@@ -7,6 +7,8 @@
 
 A comprehensive, accessible, and award-winning Internal Developer Platform that serves as a unified entry point for all developer tools and services. Built with modern React, TypeScript, and a robust design system.
 
+> **Current Status:** This is a **frontend prototype** with mock data. Backend API integration is required for production deployment. See the [Developer Handoff Guide](docs/DEVELOPER_HANDOFF.md) for complete integration instructions.
+
 ## Table of Contents
 
 - [Overview](#overview)
@@ -51,6 +53,15 @@ npm run dev
 
 # The app will be available at http://localhost:3000
 ```
+
+### For Developers: Backend Integration
+
+If you're a developer integrating the backend API, start with:
+
+1. **Read the [Developer Handoff Guide](docs/DEVELOPER_HANDOFF.md)** - Complete guide for backend integration
+2. **Check the [Glossary](docs/GLOSSARY.md)** - Explanation of all technical terms and acronyms
+3. **Review Type Definitions** - See `src/types/index.ts` for all data models
+4. **Review API Hooks** - See `src/hooks/use-api.ts` for integration points
 
 ### Available Scripts
 
@@ -168,6 +179,8 @@ Comprehensive documentation is available in the `/docs` directory:
 | [Testing](docs/TESTING.md) | Testing strategy and guidelines |
 | [Deployment](docs/DEPLOYMENT.md) | Build and deployment procedures |
 | [Security](docs/SECURITY.md) | Security guidelines and best practices |
+| [Developer Handoff](docs/DEVELOPER_HANDOFF.md) | **Complete guide for backend integration and production deployment** |
+| [Glossary](docs/GLOSSARY.md) | **Explanation of all acronyms and technical terms** |
 | [Contributing](CONTRIBUTING.md) | Contribution guidelines |
 
 ### Architecture Decision Records (ADRs)

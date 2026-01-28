@@ -111,6 +111,18 @@ export const documentationCategories: DocumentationCategory[] = [
     slug: 'api',
     articleCount: 20,
   },
+  {
+    id: 'for-developers',
+    name: 'For Developers',
+    description: 'Backend integration guide and technical documentation',
+    icon: 'Wrench',
+    slug: 'for-developers',
+    articleCount: 2,
+    subcategories: [
+      { id: 'dev-handoff', name: 'Developer Handoff', slug: 'handoff', articleCount: 1 },
+      { id: 'dev-glossary', name: 'Glossary', slug: 'glossary', articleCount: 1 },
+    ],
+  },
 ];
 
 // ============================================================================
@@ -714,6 +726,537 @@ The platform provides automated recommendations:
     author: 'Platform Team',
     views: 4320,
     helpfulVotes: 367,
+  },
+  // For Developers
+  {
+    id: 'dev-handoff-guide',
+    slug: 'developer-handoff-guide',
+    title: 'Developer Handoff Guide',
+    description: 'Complete guide for integrating the backend API and deploying to production',
+    content: `
+# Developer Handoff Guide
+
+This guide provides everything a developer needs to integrate the backend API and deploy this Internal Developer Platform to production.
+
+## Current State
+
+✅ **What's Complete:**
+- Frontend prototype is complete and fully functional
+- All data is mocked in \`src/data/mock-data.ts\`
+- API hooks in \`src/hooks/use-api.ts\` simulate network calls with delays
+- All TypeScript types are defined in \`src/types/index.ts\`
+- Design system is fully implemented
+- All UI components are built and accessible
+
+❌ **What Needs to Be Built:**
+- Backend API server
+- Database schema and migrations
+- Authentication system
+- Real API endpoints
+- WebSocket/SSE for real-time updates
+- File upload handling
+- Production deployment infrastructure
+
+## API Specification Required
+
+The backend needs to implement the following endpoints:
+
+### Authentication Endpoints
+- \`POST /api/auth/login\` - User login
+- \`POST /api/auth/logout\` - User logout
+- \`GET /api/auth/me\` - Get current user
+- \`POST /api/auth/refresh\` - Refresh authentication token
+
+### Application Endpoints
+- \`GET /api/applications\` - List all applications
+- \`GET /api/applications/:id\` - Get application details
+- \`GET /api/applications/owned\` - Get user's applications
+- \`GET /api/applications/team/:teamId\` - Get team's applications
+- \`POST /api/applications\` - Create application
+- \`PUT /api/applications/:id\` - Update application
+- \`DELETE /api/applications/:id\` - Delete application
+
+### Deployment Endpoints
+- \`GET /api/deployments\` - List deployments
+- \`GET /api/deployments/:id\` - Get deployment details
+- \`GET /api/deployments/recent\` - Recent deployments
+- \`GET /api/deployments/application/:id\` - Deployments for application
+- \`POST /api/deployments\` - Create deployment
+- \`POST /api/deployments/:id/approve\` - Approve deployment
+- \`POST /api/deployments/:id/rollback\` - Rollback deployment
+
+### Incident Endpoints
+- \`GET /api/incidents\` - List incidents
+- \`GET /api/incidents/:id\` - Get incident details
+- \`GET /api/incidents/active\` - Active incidents
+- \`POST /api/incidents\` - Create incident
+- \`PUT /api/incidents/:id\` - Update incident
+- \`POST /api/incidents/:id/resolve\` - Resolve incident
+
+### Cost Endpoints
+- \`GET /api/costs\` - Cost data
+- \`GET /api/costs/application/:id\` - Costs for application
+- \`GET /api/costs/total\` - Total cost summary
+- \`GET /api/costs/trends\` - Cost trends over time
+
+### Search Endpoint
+- \`GET /api/search?q=:query\` - Global search
+
+### Extension Endpoints
+- \`GET /api/extensions\` - List extensions
+- \`GET /api/extensions/:id\` - Get extension details
+- \`POST /api/extensions/:id/install\` - Install extension
+- \`DELETE /api/extensions/:id\` - Uninstall extension
+
+### User & Team Endpoints
+- \`GET /api/users/me\` - Current user
+- \`PUT /api/users/me/preferences\` - Update preferences
+- \`GET /api/teams\` - List teams
+- \`GET /api/teams/:id\` - Get team details
+
+## Environment Variables
+
+Create \`.env.example\` file:
+
+\`\`\`bash
+# API Configuration
+VITE_API_URL=http://localhost:3001/api
+VITE_API_TIMEOUT=30000
+
+# Environment
+VITE_ENVIRONMENT=development
+
+# Feature Flags
+VITE_FEATURE_NEW_DASHBOARD=false
+VITE_FEATURE_BETA_ANALYTICS=false
+
+# Analytics (optional)
+VITE_ANALYTICS_ID=
+VITE_SENTRY_DSN=
+
+# Authentication
+VITE_AUTH_PROVIDER=oauth  # or 'basic', 'saml'
+VITE_AUTH_DOMAIN=
+\`\`\`
+
+**Note:** All environment variables in Vite must be prefixed with \`VITE_\` to be accessible in the frontend.
+
+## Authentication & Authorization
+
+### Requirements
+
+- **JWT-based authentication** (or OAuth 2.0)
+- **Token refresh mechanism** to keep users logged in
+- **Role-based access control (RBAC)** - Different permissions for Developer, Tech Lead, Manager, Executive
+- **Permission system** - See \`User.permissions\` in types
+
+### Implementation Steps
+
+1. **Create API Client** (\`src/lib/api-client.ts\`):
+   - Axios instance with interceptors
+   - Add Authorization header automatically
+   - Handle token refresh
+   - Handle 401/403 errors (redirect to login)
+
+2. **Update API Hooks** (\`src/hooks/use-api.ts\`):
+   - Replace mock data with actual API calls
+   - Use the API client
+   - Handle loading/error states properly
+
+3. **Authentication Flow**:
+   - User logs in → Backend returns JWT token
+   - Store token in localStorage or httpOnly cookie
+   - Include token in all API requests
+   - Refresh token before expiration
+   - Handle token expiration gracefully
+
+## Data Models
+
+All TypeScript interfaces are defined in \`src/types/index.ts\`. The backend should match these exactly:
+
+- **User** - User profile, preferences, permissions
+- **Application** - Service/application metadata
+- **Deployment** - Deployment records
+- **Incident** - Incident management
+- **CostData** - Cost tracking
+- **Extension** - Extension marketplace
+- **Team** - Team information
+- **Activity** - Activity feed
+- **Notification** - User notifications
+
+See \`src/types/index.ts\` for complete type definitions.
+
+## Integration Points to Replace
+
+### File: \`src/hooks/use-api.ts\`
+
+Replace all mock implementations with real API calls:
+
+- \`useApplications()\` → \`GET /api/applications\`
+- \`useApplication(id)\` → \`GET /api/applications/:id\`
+- \`useDeployment(id)\` → \`GET /api/deployments/:id\`
+- \`useIncidents()\` → \`GET /api/incidents\`
+- \`useCostData()\` → \`GET /api/costs\`
+- All mutations → POST/PUT/DELETE endpoints
+
+### File: \`src/data/mock-data.ts\`
+
+- **Keep for development/testing** - Useful for local development
+- **Remove from production builds** - Not needed in production
+- **Use as seed data** - Can be used to populate backend database
+
+## Real-time Updates
+
+### Consider WebSocket/SSE for:
+
+- **Deployment status updates** - Real-time deployment progress
+- **Incident updates** - New incidents, status changes
+- **System health metrics** - Live health data
+- **Notifications** - Real-time notifications
+
+## Deployment Checklist
+
+### Pre-Deployment
+
+- [ ] API endpoints implemented and tested
+- [ ] Authentication working end-to-end
+- [ ] Environment variables configured
+- [ ] CORS configured on backend
+- [ ] Error handling implemented
+- [ ] Loading states implemented
+- [ ] Error boundaries in place
+- [ ] All mock data replaced with API calls
+
+### Build Configuration
+
+- [ ] Update \`vite.config.ts\` with production API URL
+- [ ] Configure build optimizations
+- [ ] Set up source maps (for debugging)
+- [ ] Configure asset hashing
+
+### Deployment Options
+
+**Option 1: Static Hosting** (Recommended for SPA)
+- Vercel, Netlify, AWS S3 + CloudFront
+- Requires SPA routing support (all routes → \`index.html\`)
+- HTTPS enabled
+- Security headers configured
+
+**Option 2: Container Deployment**
+- Docker + Kubernetes
+- Nginx configuration for SPA routing
+- Health check endpoints
+
+**Required for All Options:**
+- SPA routing support (all routes serve \`index.html\`)
+- HTTPS enabled
+- Security headers configured
+- CORS properly configured
+
+## Performance Requirements
+
+- **Initial load:** < 2 seconds
+- **Time to Interactive (TTI):** < 3 seconds
+- **API response time:** < 500ms (p95)
+- **Bundle size:** < 500KB gzipped
+
+## Security Requirements
+
+- **HTTPS only** - All traffic encrypted
+- **Secure cookie handling** - httpOnly, secure flags
+- **XSS protection** - Input sanitization, React's built-in protections
+- **CSRF protection** - Tokens/headers
+- **Content Security Policy (CSP)** - Restrict resource loading
+- **Input validation** - Validate all user input
+- **Rate limiting** - Prevent API abuse
+
+## Quick Start for Developer
+
+\`\`\`bash
+# 1. Clone and install
+git clone <repo>
+cd internal-developer-platform
+npm install
+
+# 2. Review mock data structure
+# See: src/data/mock-data.ts
+
+# 3. Review API hooks
+# See: src/hooks/use-api.ts
+
+# 4. Review types
+# See: src/types/index.ts
+
+# 5. Set up environment
+cp .env.example .env
+# Configure VITE_API_URL
+
+# 6. Start development
+npm run dev
+
+# 7. Replace mock implementations
+# Update src/hooks/use-api.ts with real API calls
+\`\`\`
+
+## Critical Integration Points
+
+1. **Authentication** - \`src/stores/user-store.ts\` - User authentication state
+2. **API Calls** - \`src/hooks/use-api.ts\` - All data fetching
+3. **Real-time Updates** - WebSocket or SSE implementation
+4. **File Uploads** - Extension screenshots, user avatars
+5. **Search** - Global search endpoint
+6. **Notifications** - Real-time notification system
+
+---
+
+For more details, see the full documentation in \`docs/DEVELOPER_HANDOFF.md\` in the repository.
+    `,
+    contentType: 'guide',
+    category: 'for-developers',
+    subcategory: 'handoff',
+    tags: ['backend', 'integration', 'api', 'deployment', 'handoff'],
+    personas: ['developer'],
+    difficulty: 'intermediate',
+    estimatedReadTime: 15,
+    lastUpdated: '2026-01-26',
+    author: 'Design Team',
+    featured: true,
+    views: 0,
+    helpfulVotes: 0,
+  },
+  {
+    id: 'dev-glossary',
+    slug: 'glossary',
+    title: 'Glossary: Acronyms and Technical Terms',
+    description: 'Complete explanation of all acronyms and technical terms used in the project',
+    content: `
+# Glossary: Acronyms and Technical Terms
+
+This document explains all acronyms and technical terms used throughout the project documentation and codebase.
+
+## Acronyms
+
+### **API (Application Programming Interface)**
+- **What it is:** The way the frontend communicates with the backend server
+- **In this project:** Endpoints like \`/api/applications\` that return data to the frontend
+- **Think of it as:** A menu at a restaurant - you order (request) and get food (data) back
+
+### **JWT (JSON Web Token)**
+- **What it is:** A secure way to prove who you are without sending your password every time
+- **In this project:** Used to verify the user is logged in
+- **Think of it as:** A temporary ID badge that expires after a certain time
+
+### **OAuth 2.0**
+- **What it is:** A standard way to let users sign in with external services (Google, GitHub, etc.)
+- **In this project:** One option for authentication
+- **Think of it as:** "Sign in with Google" buttons you see on websites
+
+### **SAML (Security Assertion Markup Language)**
+- **What it is:** An enterprise authentication standard used by large companies
+- **In this project:** Another authentication option for corporate environments
+- **Think of it as:** Corporate single sign-on (SSO) systems
+
+### **RBAC (Role-Based Access Control)**
+- **What it is:** Permissions based on user roles (Developer, Tech Lead, Manager, Executive)
+- **In this project:** Controls what each persona can do
+- **Think of it as:** Different key cards for different access levels in a building
+
+### **CORS (Cross-Origin Resource Sharing)**
+- **What it is:** Browser security that allows requests from your frontend domain to your backend domain
+- **In this project:** Must be configured so the frontend can call the backend API
+- **Think of it as:** A security guard checking IDs before allowing access
+
+### **XSS (Cross-Site Scripting)**
+- **What it is:** A security attack where malicious scripts run in the browser
+- **In this project:** Prevented by sanitizing user input and using React's built-in protections
+- **Think of it as:** Someone trying to inject harmful code into your website
+
+### **CSRF (Cross-Site Request Forgery)**
+- **What it is:** A security attack that tricks users into performing actions they didn't intend
+- **In this project:** Prevented with tokens/headers
+- **Think of it as:** Someone tricking you into clicking a button that does something you don't want
+
+### **CSP (Content Security Policy)**
+- **What it is:** HTTP headers that restrict which resources can load
+- **In this project:** Helps prevent XSS and other attacks
+- **Think of it as:** A whitelist of allowed resources
+
+### **SSE (Server-Sent Events)**
+- **What it is:** A way for the server to push updates to the browser (one-way)
+- **In this project:** Alternative to WebSockets for real-time updates
+- **Think of it as:** A one-way radio broadcast from server to browser
+
+### **HTTPS (HyperText Transfer Protocol Secure)**
+- **What it is:** Encrypted HTTP (the secure version)
+- **In this project:** Required in production
+- **Think of it as:** A secure, encrypted connection (the lock icon in your browser)
+
+### **ERD (Entity Relationship Diagram)**
+- **What it is:** A visual diagram showing database tables and how they relate
+- **In this project:** Helps the developer understand data structure
+- **Think of it as:** A map of how data is organized
+
+### **OpenAPI/Swagger**
+- **What it is:** A standard format for documenting APIs
+- **In this project:** Used to document backend endpoints
+- **Think of it as:** A detailed instruction manual for the API
+
+### **E2E (End-to-End)**
+- **What it is:** Testing that simulates a full user journey
+- **In this project:** Tests like "user logs in, creates app, deploys it"
+- **Think of it as:** Testing the entire flow from start to finish
+
+### **p95 (95th Percentile)**
+- **What it is:** 95% of requests are faster than this value
+- **In this project:** API response time target
+- **Think of it as:** "95% of the time, it's faster than this"
+
+### **gzipped**
+- **What it is:** Compressed file format to reduce size
+- **In this project:** Bundle size target after compression
+- **Think of it as:** Zipping a file to make it smaller
+
+## Technical Terms
+
+### **Frontend**
+- **What it is:** The part of the application users see and interact with (in the browser)
+- **In this project:** The React app you've built
+- **Think of it as:** The storefront of a shop
+
+### **Backend**
+- **What it is:** The server that handles business logic and data storage
+- **In this project:** Needs to be built by the developer
+- **Think of it as:** The warehouse and office behind the storefront
+
+### **Mock Data**
+- **What it is:** Fake data used for development and testing
+- **In this project:** Located in \`src/data/mock-data.ts\`, will be replaced with real API calls
+- **Think of it as:** Placeholder content used during design
+
+### **API Endpoints**
+- **What it is:** URLs the frontend calls to get/send data
+- **Example:** \`GET /api/applications\` returns a list of applications
+- **Think of it as:** Specific addresses you visit to get specific information
+
+### **Authentication**
+- **What it is:** Verifying who the user is (login process)
+- **In this project:** Handled by the backend
+- **Think of it as:** Showing your ID to prove who you are
+
+### **Authorization**
+- **What it is:** Determining what the user can do (permissions)
+- **In this project:** Based on user roles and permissions
+- **Think of it as:** Checking if you have permission to enter a restricted area
+
+### **Token Refresh**
+- **What it is:** Getting a new authentication token before the old one expires
+- **In this project:** Keeps users logged in without re-authenticating
+- **Think of it as:** Renewing your ID badge before it expires
+
+### **State Management**
+- **What it is:** How the app stores and updates data
+- **In this project:** Zustand for UI state, TanStack Query for server data
+- **Think of it as:** A filing system for app data
+
+### **Query Cache**
+- **What it is:** Storing API responses to avoid duplicate requests
+- **In this project:** TanStack Query handles this automatically
+- **Think of it as:** Remembering answers so you don't have to ask again
+
+### **SPA (Single Page Application)**
+- **What it is:** An app that loads once and updates content without full page reloads
+- **In this project:** The entire app is a SPA
+- **Think of it as:** A single page that changes content dynamically
+
+### **Code Splitting**
+- **What it is:** Breaking the app into smaller chunks loaded on demand
+- **In this project:** Improves initial load time
+- **Think of it as:** Loading only what you need, when you need it
+
+### **Bundle Size**
+- **What it is:** Total size of JavaScript files sent to the browser
+- **In this project:** Target is under 500KB after compression
+- **Think of it as:** The total weight of your app's code
+
+### **Environment Variables**
+- **What it is:** Configuration values that change per environment (dev/staging/prod)
+- **In this project:** API URLs, feature flags, etc.
+- **Think of it as:** Settings that change based on where the app runs
+
+### **WebSocket**
+- **What it is:** A persistent connection for real-time, two-way communication
+- **In this project:** For live updates (deployments, incidents)
+- **Think of it as:** A phone call that stays open for instant communication
+
+### **Deployment Pipeline**
+- **What it is:** Automated steps to build, test, and deploy
+- **In this project:** CI/CD (Continuous Integration/Continuous Deployment)
+- **Think of it as:** An assembly line for deploying your app
+
+### **CI/CD (Continuous Integration/Continuous Deployment)**
+- **What it is:** Automating testing and deployment
+- **In this project:** Push code → tests run → deploy if tests pass
+- **Think of it as:** An automated factory that builds and ships your app
+
+## In Simple Terms: What Each Part Does
+
+### **Frontend (What You Built)**
+- The user interface that users see and interact with
+- Makes requests to the backend for data
+- Handles user interactions and displays information
+
+### **Backend (What Developer Needs to Build)**
+- The server that stores data and handles business logic
+- Receives requests from the frontend
+- Returns data or performs actions
+
+### **API (The Connection)**
+- The contract between frontend and backend
+- Defines what data can be requested and how
+
+### **Authentication (Login)**
+- Verifies who the user is
+- Issues tokens to prove identity
+
+### **Authorization (Permissions)**
+- Determines what the user can do
+- Based on roles and permissions
+
+### **Database**
+- Where data is stored
+- Tables for users, applications, deployments, etc.
+
+### **Deployment (Going Live)**
+- Process of putting the app on a server so users can access it
+- Includes building, testing, and publishing
+
+### **Monitoring (Watching the App)**
+- Tracking errors, performance, and usage
+- Helps catch and fix issues quickly
+
+## The Flow: How Everything Works Together
+
+1. **User opens the app** → Frontend loads
+2. **User logs in** → Frontend sends credentials → Backend verifies → Returns token
+3. **User views dashboard** → Frontend requests data → Backend queries database → Returns data → Frontend displays it
+4. **User creates an app** → Frontend sends data → Backend saves to database → Returns confirmation → Frontend updates UI
+
+---
+
+For the complete glossary with all terms, see \`docs/GLOSSARY.md\` in the repository.
+    `,
+    contentType: 'reference',
+    category: 'for-developers',
+    subcategory: 'glossary',
+    tags: ['glossary', 'terms', 'acronyms', 'reference'],
+    personas: ['developer', 'tech-lead', 'manager'],
+    difficulty: 'beginner',
+    estimatedReadTime: 10,
+    lastUpdated: '2026-01-26',
+    author: 'Design Team',
+    featured: true,
+    views: 0,
+    helpfulVotes: 0,
   },
 ];
 
